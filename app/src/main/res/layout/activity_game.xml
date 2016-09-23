@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.GameActivity">
+
+    <LinearLayout
+        android:id="@+id/buttonBar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:background="@mipmap/panel_bg"
+        android:baselineAligned="true"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Score"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:paddingLeft="5sp"
+            android:background="@android:color/transparent"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/game_score"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="16sp"
+            android:background="@android:color/transparent"
+            android:paddingLeft="5sp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/required"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:paddingLeft="5sp"
+            android:layout_weight="1"/>
+
+
+        <TextView
+            android:id="@+id/game_required_pipe_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="15"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="16sp"
+            android:background="@android:color/transparent"
+            android:paddingLeft="5sp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Next"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:paddingLeft="5sp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/next_pipe_image"
+            android:src="@mipmap/blank"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/next_coming_pipe"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="5sp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Time"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:paddingLeft="5sp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/game_time_remain"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="90"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="16sp"
+            android:background="@android:color/transparent"
+            android:paddingLeft="5sp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/wrench_image"
+            android:src="@mipmap/wrench"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="Count of wrench"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="5sp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/wrench_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="3"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="16sp"
+            android:background="@android:color/transparent"
+            android:paddingLeft="5sp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+
+    <GridView
+        android:id="@+id/pipe_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:verticalSpacing="0dp"
+        android:horizontalSpacing="0dp"
+        android:stretchMode="columnWidth">
+
+    </GridView>
+
+</LinearLayout>

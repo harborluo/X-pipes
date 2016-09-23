@@ -23,6 +23,13 @@ public class GameData implements Serializable{
         return name;
     }
 
+    public boolean isOver(){
+        if(getSecondRemain()>0) {
+            return false;
+        }
+        return !isPassed();
+    }
+
     public void setName(String name) {
         this.name = name;
     }

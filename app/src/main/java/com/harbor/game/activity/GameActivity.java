@@ -125,8 +125,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 }else{
                     //TODO popup dialog to next level
                     gameData = gameData.nextLevel();
-                    this.gameScoreTextView.setText("0");
-                   // gameData.setName(fileName);
                 }
 
             }
@@ -135,7 +133,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
         }
 
-        initGame(!(gameData.getSecondRemain()==0 && gameData.isPassed()==false));
+        initGame(!gameData.isOver());
 
     }
 
@@ -165,6 +163,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
         if(startTimer==false){
             return;
         }
+
+        GameActivity.this.gameScoreTextView.setText("0");
 
         timer = new CountDownTimer(gameData.getSecondRemain() * 1000, 1000) {
             @Override
@@ -328,6 +328,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                     if(animationTaskList.size() -  gameData.getMissionCount() > 0){
 
                         gameData = gameData.nextLevel();
+
                         Toast.makeText(GameActivity.this, "Get ready for next level "+gameData.getLevel(), Toast.LENGTH_LONG).show();
 
                         new Handler().postDelayed(new Runnable() {
@@ -365,7 +366,14 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
         String path = Utils.getDefaultFilePath();
 
-        Utils.saveObject(this.gameData,   path + File.separator + gameData.getName());
+        if(gameData.isOver()==false){
+            Utils.saveObject(this.gameData,   path + File.separator + gameData.getName());
+        }else {
+            File file = new File(path + File.separator + gameData.getName());
+            if(file.exists()){
+                file.delete();
+            }
+        }
 
     }
 }

@@ -38,6 +38,8 @@ public class LoadGameActivity extends Activity implements View.OnClickListener{
         for(File f : files){
 
             TextView view = new TextView(this);
+//            view.setHeight(20);
+//            view.setElegantTextHeight(true);
             view.setText(f.getName());
             view.setOnClickListener(this);
             layout.addView(view);

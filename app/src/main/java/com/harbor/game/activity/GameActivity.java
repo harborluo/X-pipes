@@ -125,6 +125,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 }else{
                     //TODO popup dialog to next level
                     gameData = gameData.nextLevel();
+                    this.gameScoreTextView.setText("0");
                    // gameData.setName(fileName);
                 }
 

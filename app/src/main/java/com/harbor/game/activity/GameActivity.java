@@ -2,7 +2,7 @@ package com.harbor.game.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.AudioManager;
+import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -85,7 +85,14 @@ public class GameActivity extends Activity implements View.OnClickListener {
         nextPipe = (ImageView) findViewById(R.id.next_pipe_image);
         gameScoreTextView = (TextView) findViewById(R.id.game_score) ;
 
-        soundPool = new SoundPool(5, AudioManager.STREAM_SYSTEM, 5);
+        AudioAttributes attributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build();
+
+        soundPool = new  SoundPool.Builder().setAudioAttributes(attributes).setMaxStreams(10).build();
+        //new SoundPool(1, AudioManager.STREAM_SYSTEM, 0);
+
         soundResources.put(1, soundPool.load(this, R.raw.pipe_dropped, 1));
         soundResources.put(2, soundPool.load(this, R.raw.pipe_pick_up, 1));
         soundResources.put(3, soundPool.load(this, R.raw.single_pipe_passed, 1));

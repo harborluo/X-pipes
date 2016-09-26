@@ -28,11 +28,6 @@ public class ImageAdapter extends BaseAdapter {
         this.mContext = c;
         this.listener = listener;
         this.imageWidth = imageWidth;
-//      //  this.count=count;
-//        itemCache = new Integer[count];
-//        for(int i=0;i<count;i++ ){
-//            itemCache[i] =  R.mipmap.blank;
-//        }
         this.itemCache = data;
 
     }
@@ -65,8 +60,6 @@ public class ImageAdapter extends BaseAdapter {
         imageView.setOnClickListener(listener);
 
         imageView.setTag(itemCache[position]);
-
-       // itemCache[position] = R.mipmap.blank;
 
         return imageView;
     }

@@ -289,6 +289,10 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
         gameData.setPassed(animationTaskList.size()-gameData.getMissionCount()>0);
 
+        for(Integer[] task : animationTaskList){
+            gameData.addTotalScore(task[2]);
+        }
+
         //play animation
         Runnable runnable = new Runnable() {
             int i = 0;

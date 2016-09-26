@@ -13,6 +13,23 @@ public class GameData implements Serializable{
 
     private String name = null;
 
+    private int totalScore = 0;
+
+    private Date dateCreated = new Date();
+
+    public String getDateCreated(){
+        DateFormat format = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+        return format.format(this.dateCreated);
+    }
+
+    public int getTotalScore(){
+        return this.totalScore;
+    }
+
+    public void addTotalScore(int score){
+        this.totalScore= this.totalScore + score;
+    }
+
     public String getName() {
 
         if(this.name==null){
@@ -67,44 +84,22 @@ public class GameData implements Serializable{
         this.secondRemain --;
     }
 
-//    public int getPipeWidth() {
-//        return pipeWidth;
-//    }
 
-//    public void setPipeWidth(int pipeWidth) {
-//        this.pipeWidth = pipeWidth;
-//    }
 
     public int getNumOfRows() {
         return numOfRows;
     }
 
-//    public void setNumOfRows(int numOfRows) {
-//        this.numOfRows = numOfRows;
-//    }
-
     public int getNumOfColumns() {
         return numOfColumns;
     }
-
-//    public void setNumOfColumns(int numOfColumns) {
-//        this.numOfColumns = numOfColumns;
-//    }
 
     public Integer[] getData() {
         return data;
     }
 
-//    public void setData(Integer[] data) {
-//        this.data = data;
-//    }
-
     public int getLevel() {
         return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
     }
 
     private void generateHeadPipe() {
@@ -212,6 +207,7 @@ public class GameData implements Serializable{
 
     public GameData nextLevel() {
         GameData next = new GameData(this.level+1,this.numOfRows,this.getNumOfColumns());
+        next.addTotalScore(this.totalScore);
         next.setName(this.getName());
         return next;
     }

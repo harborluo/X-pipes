@@ -13,6 +13,9 @@ public class ScoreCalculator {
     Integer[] data;
     private int numOfRows=3, numOfColumns=3;
 
+    /**
+     * Integer[]{pos, targetImage, score}
+     */
     private List<Integer[]> animationTaskList = new ArrayList<>();
 
     /**/
@@ -36,7 +39,7 @@ public class ScoreCalculator {
 
         String direction = "";
 
-        int score = 0;
+//        int score = 0;
 
         switch (headImageResource){
             case R.mipmap.head_down :{

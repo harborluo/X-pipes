@@ -36,6 +36,8 @@ public class GameDataAdapter extends ArrayAdapter<GameData> {
         TextView scoreTextView = (TextView) rowView.findViewById(R.id.txtScore);
         TextView dateTextView = (TextView) rowView.findViewById(R.id.txtDate);
 
+
+
         levelTextView.setText(games.get(position).getLevel()+"");
         scoreTextView.setText(games.get(position).getTotalScore()+"");
         dateTextView.setText(games.get(position).getDateCreated());

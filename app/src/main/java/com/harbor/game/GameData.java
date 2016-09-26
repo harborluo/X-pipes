@@ -181,7 +181,7 @@ public class GameData implements Serializable{
         this.numOfColumns = numOfColumns;
         this.level = level;
 
-        this.secondRemain = 60 + (level - 1) * 15;
+        this.secondRemain = 45 + (level - 1) * 15;
         this.wrenchCount = 3 + level -1;
         this.missionCount = 15 + (level -1 ) * 5;
 

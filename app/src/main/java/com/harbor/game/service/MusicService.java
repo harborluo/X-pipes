@@ -50,6 +50,7 @@ public class MusicService extends Service{
         mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mp, int what, int extra) {
+                mp.reset();
                 mp.release();
                 stopSelf();
                 return false;
@@ -67,7 +68,7 @@ public class MusicService extends Service{
         if(isReady){
             //将背景音乐设置为循环播放
             mediaPlayer.setLooping(true);
-            mediaPlayer.setVolume(100,100);
+            mediaPlayer.setVolume(50,50);
 
         }
     }
@@ -102,7 +103,9 @@ public class MusicService extends Service{
                 mediaPlayer.stop();
             }
             //释放媒体播放器资源
+            mediaPlayer.reset();
             mediaPlayer.release();
+            mediaPlayer=null;
             //Toast.makeText(this, "停止播放背景音乐", Toast.LENGTH_LONG).show();
         }
     }

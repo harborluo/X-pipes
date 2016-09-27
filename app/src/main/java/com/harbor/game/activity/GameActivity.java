@@ -71,8 +71,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
     CountDownTimer timer = null;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -215,8 +213,17 @@ public class GameActivity extends Activity implements View.OnClickListener {
     }
 
     private void generateNextPipe() {
-        Random random = new Random();
-        int nextImage = pipeImages[random.nextInt(pipeImages.length)];
+
+        int nextImage = 0;
+        if(gameData.getNextPipe()!=R.mipmap.blank){
+            nextImage = gameData.getNextPipe();
+            gameData.setNextPipe(R.mipmap.blank);
+        }else{
+            Random random = new Random();
+             nextImage = pipeImages[random.nextInt(pipeImages.length)];
+        }
+
+
         nextPipe.setImageResource(nextImage);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(pipeWidth *7/10, pipeWidth *7/10);
         nextPipe.setLayoutParams(layoutParams);
@@ -378,6 +385,9 @@ public class GameActivity extends Activity implements View.OnClickListener {
         String path = Utils.getDefaultFilePath();
 
         if(gameData.isOver()==false){
+
+            gameData.setNextPipe((int) this.nextPipe.getTag());
+
             Utils.saveObject(this.gameData,   path + File.separator + gameData.getName());
         }else {
             File file = new File(path + File.separator + gameData.getName());

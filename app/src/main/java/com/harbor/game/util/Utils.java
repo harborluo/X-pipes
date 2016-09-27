@@ -64,7 +64,7 @@ public class Utils {
             Object obj = ois.readObject();
             ois.close();
 
-            return obj;
+            return  obj;
 
         }catch(Exception e){
             e.printStackTrace();
@@ -73,18 +73,24 @@ public class Utils {
     }
 
     public static void buildDialog(DialogInterface.OnClickListener listener, Context ctx, String title, String message,
-                                   String positiveButtonText, String negativeButtonText) {
+                                   String... buttonText) {
         AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
         builder.setTitle(title);
         builder.setMessage(message);
 
 
-
-        builder.setPositiveButton(positiveButtonText, listener);
-
-        if(negativeButtonText!=null){
-            builder.setNegativeButton(negativeButtonText, listener);
+        if(buttonText.length==1){
+            builder.setNeutralButton(buttonText[0],listener);
+        }else if(buttonText.length==2){
+            builder.setPositiveButton(buttonText[0],listener);
+            builder.setNegativeButton(buttonText[1],listener);
         }
+
+//        builder.setPositiveButton(positiveButtonText, listener);
+
+//        if(negativeButtonText!=null){
+//            builder.setNegativeButton(negativeButtonText, listener);
+//        }
 
 //        AlertDialog dialog = builder.create();
 //
@@ -102,6 +108,7 @@ public class Utils {
 //            cancelButton.setVisibility(View.INVISIBLE);
 //        }
         AlertDialog dialog = builder.create();
+
 
 
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;

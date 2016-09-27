@@ -11,6 +11,16 @@ import java.util.Random;
  */
 public class GameData implements Serializable{
 
+    private int nextPipe = R.mipmap.blank;
+
+    public int getNextPipe() {
+        return nextPipe;
+    }
+
+    public void setNextPipe(int nextPipe) {
+        this.nextPipe = nextPipe;
+    }
+
     private String name = null;
 
     private int totalScore = 0;

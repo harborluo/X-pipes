@@ -20,7 +20,6 @@ import java.util.List;
 
 public class LoadGameActivity extends Activity implements AdapterView.OnItemClickListener, DialogInterface.OnClickListener {
 
-
     ListView listView = null;
 
     @Override
@@ -48,19 +47,11 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
         File[] files = dir.listFiles(new FileFilter() {
             @Override
             public boolean accept(File file) {
-//                file.delete();
+ //               file.delete();
 //                return false;
                 return file.getName().endsWith(".pipe");
             }
         });
-
-        if(files.length==0){
-
-            Utils.buildDialog(this, this,"Notification","No saved games found.","OK",null);
-
-            return;
-        }
-
 
         List<GameData> gamesList = new ArrayList<>(files.length);
         for(File f : files){
@@ -71,6 +62,11 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
         GameDataAdapter adapter = new GameDataAdapter(LoadGameActivity.this, gamesList);
 
         listView.setAdapter(adapter);
+
+        if(files.length==0){
+            Utils.buildDialog(this, this,"Notification","No saved games found.","OK");
+        }
+
         /*
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

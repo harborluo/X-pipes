@@ -1,6 +1,7 @@
 package com.harbor.game.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +18,8 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoadGameActivity extends Activity implements AdapterView.OnItemClickListener {
+public class LoadGameActivity extends Activity implements AdapterView.OnItemClickListener, DialogInterface.OnClickListener {
+
 
     ListView listView = null;
 
@@ -52,6 +54,13 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
             }
         });
 
+        if(files.length==0){
+
+            Utils.buildDialog(this, this,"Notification","No saved games found.","OK",null);
+
+            return;
+        }
+
 
         List<GameData> gamesList = new ArrayList<>(files.length);
         for(File f : files){
@@ -60,8 +69,6 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
         }
 
         GameDataAdapter adapter = new GameDataAdapter(LoadGameActivity.this, gamesList);
-
-
 
         listView.setAdapter(adapter);
         /*
@@ -100,5 +107,9 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
 
     }
 
+    @Override
+    public void onClick(DialogInterface dialogInterface, int i) {
+        LoadGameActivity.this.finish();
 
+    }
 }

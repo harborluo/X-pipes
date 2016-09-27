@@ -1,9 +1,13 @@
 package com.harbor.game.util;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Environment;
 import android.util.TypedValue;
+
+import com.harbor.game.R;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -67,4 +71,43 @@ public class Utils {
         }
         return null;
     }
+
+    public static void buildDialog(DialogInterface.OnClickListener listener, Context ctx, String title, String message,
+                                   String positiveButtonText, String negativeButtonText) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+        builder.setTitle(title);
+        builder.setMessage(message);
+
+
+
+        builder.setPositiveButton(positiveButtonText, listener);
+
+        if(negativeButtonText!=null){
+            builder.setNegativeButton(negativeButtonText, listener);
+        }
+
+//        AlertDialog dialog = builder.create();
+//
+//        dialog.setContentView(R.layout.message_dialog);
+//
+//        Button okButton = (Button) dialog.findViewById(R.id.dialog_ok);
+//        okButton.setText(positiveButtonText);
+//        okButton
+//
+//        Button cancelButton = (Button) dialog.findViewById(R.id.dialog_cancel);
+//        if(negativeButtonText!=null){
+//            cancelButton.setText(negativeButtonText);
+//            cancelButton.setOnClickListener(listener);
+//        }else{
+//            cancelButton.setVisibility(View.INVISIBLE);
+//        }
+        AlertDialog dialog = builder.create();
+
+
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.show();
+
+    }
+
+
 }

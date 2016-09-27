@@ -17,7 +17,7 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoadGameActivity extends Activity /*implements View.OnClickListener*/{
+public class LoadGameActivity extends Activity implements AdapterView.OnItemClickListener {
 
     ListView listView = null;
 
@@ -27,6 +27,7 @@ public class LoadGameActivity extends Activity /*implements View.OnClickListener
         setContentView(R.layout.activity_load_game);
 
         listView = (ListView) findViewById(R.id.listView);
+        listView.setOnItemClickListener(this);
 
        initGameList();
 
@@ -61,22 +62,43 @@ public class LoadGameActivity extends Activity /*implements View.OnClickListener
         GameDataAdapter adapter = new GameDataAdapter(LoadGameActivity.this, gamesList);
 
 
+
         listView.setAdapter(adapter);
+        /*
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //  Toast.makeText(MainActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
+
+             //   Toast.makeText(LoadGameActivity.this, "You Clicked at " +  position, Toast.LENGTH_SHORT).show();
 
                 GameData game = (GameData) parent.getItemAtPosition(position);
 
-                String fileName = game.getName();// ((TextView)view).getText().toString();
+                String fileName = game.getName();
                 Intent intent = new Intent(LoadGameActivity.this, GameActivity.class);
                 intent.putExtra("fileName",fileName);
                 startActivity(intent);
 
             }
         });
+        */
+
+
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        //Toast.makeText(LoadGameActivity.this, "You Clicked at " +  position, Toast.LENGTH_SHORT).show();
+
+        GameData game = (GameData) parent.getItemAtPosition(position);
+
+        String fileName = game.getName();
+        Intent intent = new Intent(LoadGameActivity.this, GameActivity.class);
+        intent.putExtra("fileName",fileName);
+        startActivity(intent);
+
+    }
+
 
 }

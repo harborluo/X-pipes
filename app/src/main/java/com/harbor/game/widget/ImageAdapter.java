@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
 public class ImageAdapter extends BaseAdapter {
@@ -57,7 +58,22 @@ public class ImageAdapter extends BaseAdapter {
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setLayoutParams(new GridView.LayoutParams(this.imageWidth, this.imageWidth));
         imageView.setId(position);
-        imageView.setOnClickListener(listener);
+
+        if(listener!=null){
+            imageView.setOnClickListener(listener);
+        }
+
+        else{
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(mContext, "You Clicked at image....", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            imageView.setOnClickListener(null);
+        }
+
 
         imageView.setTag(itemCache[position]);
 

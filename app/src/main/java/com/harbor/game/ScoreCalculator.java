@@ -10,26 +10,28 @@ public class ScoreCalculator {
 
     int headerPosition;
     int headImageResource;
-    Integer[] data;
+    int[] data;
     private int numOfRows=3, numOfColumns=3;
 
     /**
      * Integer[]{pos, targetImage, score}
      */
-    private List<Integer[]> animationTaskList = new ArrayList<>();
+    private List<int[]> animationTaskList = new ArrayList<>();
 
     /**/
-    public ScoreCalculator(GameData data){
+    public ScoreCalculator(GameData game){
 
-        this.headerPosition = data.getHeadPosition();
-        this.headImageResource = data.getHeadImage();
-        this.data = data.getData();
-        this.numOfRows = data.getNumOfRows();
-        this.numOfColumns = data.getNumOfColumns();
+        this.headerPosition = game.getHeadPosition();
+        this.headImageResource = game.getHeadImage();
+
+        this.data = game.getData().clone();
+
+        this.numOfRows = game.getNumOfRows();
+        this.numOfColumns = game.getNumOfColumns();
 
     }
 
-    public List<Integer[]> getAnimationTaskList() {
+    public List<int[]> getAnimationTaskList() {
         return animationTaskList;
     }
 
@@ -69,7 +71,7 @@ public class ScoreCalculator {
         data[headerPosition] = head_on_image;
 
         //TODO add animation task here
-        animationTaskList.add(new Integer[]{headerPosition, head_on_image, 0 });
+        animationTaskList.add(new int[]{headerPosition, head_on_image, 0 });
 
         int rowPos = headerPosition/numOfColumns;
         int colPos = headerPosition%numOfColumns;
@@ -221,7 +223,7 @@ public class ScoreCalculator {
             //TODO add animation task here
             score = targetImage==R.mipmap.cross_full_on?50:10;
 
-            animationTaskList.add(new Integer[]{pos, targetImage, score});
+            animationTaskList.add(new int[]{pos, targetImage, score});
 
             data[pos] = targetImage;
 

@@ -9,6 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.harbor.game.R;
+import com.harbor.game.util.Utils;
+
+import java.io.File;
+import java.io.FileFilter;
 
 public class HelpActivity extends Activity implements View.OnClickListener {
 
@@ -58,6 +62,24 @@ public class HelpActivity extends Activity implements View.OnClickListener {
             }
         };
         handler.postDelayed(runnable, 0); //for initial delay..
+
+
+        String path = Utils.getDefaultFilePath();
+
+        File dir = new File(path);
+
+        File[] files = dir.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                // file.delete();
+                // return false;
+                if(file.getName().endsWith(".pipe")){
+                    file.delete();
+                }
+
+                return false;
+            }
+        });
 
     }
 

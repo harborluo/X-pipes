@@ -22,10 +22,10 @@ public class ImageAdapter extends BaseAdapter {
     //private int count;
 
     // all Images in array
-    public Integer[] itemCache = null;
+    public int[] itemCache = null;
 
     // Constructor
-    public ImageAdapter(Context c, View.OnClickListener listener, int imageWidth, Integer[] data) {
+    public ImageAdapter(Context c, View.OnClickListener listener, int imageWidth, int[] data) {
         this.mContext = c;
         this.listener = listener;
         this.imageWidth = imageWidth;

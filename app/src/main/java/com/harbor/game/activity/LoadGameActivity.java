@@ -47,8 +47,8 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
         File[] files = dir.listFiles(new FileFilter() {
             @Override
             public boolean accept(File file) {
- //               file.delete();
-//                return false;
+               // file.delete();
+               // return false;
                 return file.getName().endsWith(".pipe");
             }
         });

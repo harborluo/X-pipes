@@ -61,7 +61,7 @@ public class GameData implements Serializable{
         this.name = name;
     }
 
-    private Integer[] headImages = {
+    private int[] headImages = {
             R.mipmap.head_left,
             R.mipmap.head_right,
             R.mipmap.head_up,
@@ -74,11 +74,11 @@ public class GameData implements Serializable{
 
     private int numOfRows = 3, numOfColumns = 3;
 
-    private Integer[] data;
+    private int[] data;
 
     private int level;
 
-    private Integer headPosition=0, headImage=0;
+    private int headPosition=0, headImage=0;
 
     private int missionCount = 15;
 
@@ -104,7 +104,7 @@ public class GameData implements Serializable{
         return numOfColumns;
     }
 
-    public Integer[] getData() {
+    public int[] getData() {
         return data;
     }
 
@@ -164,11 +164,11 @@ public class GameData implements Serializable{
        // return result;
     }
 
-    public Integer getHeadPosition() {
+    public int getHeadPosition() {
         return headPosition;
     }
 
-    public Integer getHeadImage() {
+    public int getHeadImage() {
         return headImage;
     }
 
@@ -176,9 +176,9 @@ public class GameData implements Serializable{
         this.data[pos] = imageResourceId;
     }
 
-    private Integer wrenchCount = 3;
+    private int wrenchCount = 3;
 
-    public Integer getWrenchCount() {
+    public int getWrenchCount() {
         return wrenchCount;
     }
 
@@ -195,7 +195,7 @@ public class GameData implements Serializable{
         this.wrenchCount = 3 + level -1;
         this.missionCount = 15 + (level -1 ) * 5;
 
-        data = new Integer[numOfRows * numOfColumns];
+        data = new int[numOfRows * numOfColumns];
 
         for (int i = 0; i < data.length; i++) {
             data[i] = R.mipmap.blank;

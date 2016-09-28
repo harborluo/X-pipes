@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -38,7 +39,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
 //    private Handler mainHandler= new Handler();
 
-    public Integer[] pipeImages = {
+    public int[] pipeImages = {
             R.mipmap.cross,
             R.mipmap.right_down,
             R.mipmap.right_up,
@@ -113,9 +114,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
             numOfRows = screenHeight/pipeWidth -1;
 
-//            while (screenHeight - numOfRows * pipeWidth > pipeWidth * 1.5) {
-//                numOfRows++;
-//            }
             gameData = new GameData(1, numOfRows, numOfColumns);
         }else{
             gameData = (GameData)  Utils.readObject(Utils.getDefaultFilePath() + File.separator + fileName);
@@ -144,6 +142,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
     private void initGame(boolean startTimer){
 
+        Log.i(TAG, "initGame: head["+ gameData.getHeadPosition()+"]="+gameData.getHeadImage());
+
         DisplayMetrics displayMetrics = this.getApplicationContext().getResources().getDisplayMetrics();
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
@@ -151,7 +151,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
         gridView.setNumColumns(gameData.getNumOfColumns());
         gridView.setAdapter(new ImageAdapter(this, this, pipeWidth, gameData.getData()));
 
-        game_required_pipe_count.setText(gameData.getMissionCount()+"");
+       // game_required_pipe_count.setText(gameData.getMissionCount()+"");
+        refreshMissionCount();
 
         generateNextPipe();
 
@@ -230,6 +231,30 @@ public class GameActivity extends Activity implements View.OnClickListener {
         nextPipe.setTag(nextImage);
     }
 
+    public void refreshMissionCount(){
+
+        int requiredCount = gameData.getMissionCount();
+
+      //  Log.i(TAG, "refreshMissionCount: before head["+ gameData.getHeadPosition()+"]="+gameData.getHeadImage());
+
+        ScoreCalculator calculator = new ScoreCalculator(gameData);
+
+        calculator.execute();
+
+      //  Log.i(TAG, "refreshMissionCount: after head["+ gameData.getHeadPosition()+"]="+gameData.getHeadImage());
+
+        int remain = requiredCount - calculator.getAnimationTaskList().size() + 1;
+
+        Log.i(TAG, "getAnimationTaskList size is : " + calculator.getAnimationTaskList().size());
+
+        if(remain < 0){
+            remain = 0;
+        }
+
+        game_required_pipe_count.setText("" + remain);
+
+    }
+
     @Override
     public void onClick(View view) {
 
@@ -239,7 +264,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
         ImageView imageView = (ImageView) view;
 
-        Integer currentImage = (Integer) imageView.getTag();
+        int currentImage = (int) imageView.getTag();
 
         if (currentImage == R.mipmap.head_down
                 || currentImage == R.mipmap.head_up
@@ -262,6 +287,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
             generateNextPipe();
 
             gameData.setDataImage(view.getId(),nextImage);
+
+            refreshMissionCount();
 
         } else if (reduceWrenchCount() == true) {
 
@@ -299,11 +326,11 @@ public class GameActivity extends Activity implements View.OnClickListener {
         ScoreCalculator calculator = new ScoreCalculator(gameData);
 
         calculator.execute();
-        final List<Integer[]> animationTaskList = calculator.getAnimationTaskList();
+        final List<int[]> animationTaskList = calculator.getAnimationTaskList();
 
         gameData.setPassed(animationTaskList.size()-gameData.getMissionCount()>0);
 
-        for(Integer[] task : animationTaskList){
+        for(int[] task : animationTaskList){
             gameData.addTotalScore(task[2]);
         }
 
@@ -318,7 +345,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                     return;
                 }
 
-                Integer[] task = animationTaskList.get(i);
+                int[] task = animationTaskList.get(i);
 
                 ImageView imgView = (ImageView) gridView.findViewById(task[0]);
 
@@ -328,14 +355,14 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
                 total += task[2];
 
-                if (task[2] > 0 ) {
-                    int req = Integer.parseInt(game_required_pipe_count.getText().toString());
+              //  if (task[2] > 0 ) {
+                 //   int req = Integer.parseInt(game_required_pipe_count.getText().toString());
 
-                    if (req > 0) {
-                        req--;
-                        game_required_pipe_count.setText(req + "");
-                    }
-                }
+                 //   if (req > 0) {
+                  //      req--;
+                  //      game_required_pipe_count.setText(req + "");
+                  //  }
+           //     }
 
                 gameScoreTextView.setText(total+"");
 

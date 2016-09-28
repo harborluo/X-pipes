@@ -117,22 +117,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
             gameData = new GameData(1, numOfRows, numOfColumns);
         }else{
             gameData = (GameData)  Utils.readObject(Utils.getDefaultFilePath() + File.separator + fileName);
-/**
-            if(gameData.getSecondRemain()==0){
 
-                if(gameData.isPassed()==false){
-
-                    //TODO show game over dialog here
-                    Toast.makeText(this, "GAME OVER", Toast.LENGTH_LONG).show();
-                 //  return ;
-                }else{
-                    //TODO popup dialog to next level
-                    //gameData = gameData.nextLevel();
-                    Utils.showDialog(GameActivity.this,GameActivity.this, "Get ready for next level "+(gameData.getLevel()+1),"Next level","Back");
-                }
-
-            }
-*/
             pipeWidth = screenWidth / gameData.getNumOfColumns();
 
         }
@@ -366,15 +351,6 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
                 total += task[2];
 
-              //  if (task[2] > 0 ) {
-                 //   int req = Integer.parseInt(game_required_pipe_count.getText().toString());
-
-                 //   if (req > 0) {
-                  //      req--;
-                  //      game_required_pipe_count.setText(req + "");
-                  //  }
-           //     }
-
                 gameScoreTextView.setText(total+"");
 
                 i++;
@@ -383,23 +359,8 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
                    // Toast.makeText(GameActivity.this, "Your score is: " + total, Toast.LENGTH_LONG).show();
 
                     if(animationTaskList.size() -  gameData.getMissionCount() > 0){
-
                         Utils.showDialog(GameActivity.this,GameActivity.this, "Get ready for next level "+(gameData.getLevel()+1),"Next level","Back");
-
-                        /*
-                        Toast.makeText(GameActivity.this, "Get ready for next level "+gameData.getLevel(), Toast.LENGTH_LONG).show();
-
-                        gameData = gameData.nextLevel();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                initGame(true);
-                            }
-                        },3000);
-*/
-
                     }else{
-                        //Toast.makeText(GameActivity.this, "GAME OVER", Toast.LENGTH_LONG).show();
                         Utils.showDialog(GameActivity.this,GameActivity.this,"Game Over.","Back","Play again");
                     }
 

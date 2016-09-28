@@ -91,6 +91,11 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
     public void buttonClicked(String buttonText) {
         Log.i(TAG, "buttonClicked: "+buttonText);
         this.finish();
+        if("Start new game".equals(buttonText)){
+            Intent intent = new Intent();
+            intent.setAction("game");
+            startActivity(intent);
+        }
     }
 
 }

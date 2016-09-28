@@ -241,7 +241,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
         calculator.execute();
 
-      //  Log.i(TAG, "refreshMissionCount: after head["+ gameData.getHeadPosition()+"]="+gameData.getHeadImage());
+        Log.i(TAG, "refreshMissionCount: requiredCount, = "+ requiredCount+", finishedCount = "+(calculator.getAnimationTaskList().size()-1));
 
         int remain = requiredCount - calculator.getAnimationTaskList().size() + 1;
 
@@ -288,8 +288,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
             gameData.setDataImage(view.getId(),nextImage);
 
-            refreshMissionCount();
-
         } else if (reduceWrenchCount() == true) {
 
             //pick up the current pipe
@@ -306,6 +304,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
             }, 0);
 
         }
+
+        refreshMissionCount();
 
     }
 

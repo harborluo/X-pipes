@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 
 public class ImageAdapter extends BaseAdapter {
@@ -52,7 +51,7 @@ public class ImageAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
+/**
         ImageView imageView = new ImageView(mContext);
         imageView.setImageResource(itemCache[position]);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -78,5 +77,26 @@ public class ImageAdapter extends BaseAdapter {
         imageView.setTag(itemCache[position]);
 
         return imageView;
+ **/
+        if(convertView==null){
+            ImageView imageView = new ImageView(mContext);
+            imageView.setImageResource(itemCache[position]);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setLayoutParams(new GridView.LayoutParams(this.imageWidth, this.imageWidth));
+            imageView.setId(position);
+
+            if(listener!=null){
+                imageView.setOnClickListener(listener);
+            }
+
+            imageView.setTag(itemCache[position]);
+
+            return imageView;
+
+        }
+            return  convertView;
+
+
+
     }
 }

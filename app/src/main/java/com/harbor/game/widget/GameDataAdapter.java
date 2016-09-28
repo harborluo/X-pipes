@@ -30,44 +30,59 @@ public class GameDataAdapter extends ArrayAdapter<GameData> {
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup parent) {
-        LayoutInflater inflater = context.getLayoutInflater();
-        View rowView= inflater.inflate(R.layout.single_game_data, null, true);
+    public View getView(int position, View convertView, ViewGroup parent) {
 
-        TextView levelTextView = (TextView) rowView.findViewById(R.id.txtLev);
-        TextView scoreTextView = (TextView) rowView.findViewById(R.id.txtScore);
-        TextView dateTextView = (TextView) rowView.findViewById(R.id.txtDate);
+        ViewHolder viewHolder=null;
+        GameData gameData = games.get(position);
 
-        GridView gridView = (GridView) rowView.findViewById(R.id.preview_container);
+        if(convertView==null){
+
+            viewHolder = new ViewHolder();
+
+            LayoutInflater inflater = context.getLayoutInflater();
+            convertView = inflater.inflate(R.layout.single_game_data, null, true);
+
+            viewHolder.levelTextView = (TextView) convertView.findViewById(R.id.txtLev);
+            viewHolder.scoreTextView = (TextView) convertView.findViewById(R.id.txtScore);
+            viewHolder.dateTextView = (TextView) convertView.findViewById(R.id.txtDate);
+            viewHolder.gridView = (GridView) convertView.findViewById(R.id.preview_container);
+
+
+
+            convertView.setTag(viewHolder);
+
+        }else{
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
 
         DisplayMetrics displayMetrics = context.getApplicationContext().getResources().getDisplayMetrics();
         int screenWidth = displayMetrics.widthPixels;
-    //    int screenHeight = displayMetrics.heightPixels;
-
-        GameData gameData = games.get(position);
 
         int pipeWidth = screenWidth/4/gameData.getNumOfColumns();
 
-//        pipeWidth=10;
-
-       // gridView.setLayoutParams(new GridView.LayoutParams(pipeWidth+gameData.getNumOfColumns(), pipeWidth+gameData.getNumOfRows()));
-
-        ViewGroup.LayoutParams params = gridView.getLayoutParams();
+        ViewGroup.LayoutParams params = viewHolder.gridView.getLayoutParams();
         // 设置高度
         params.height = pipeWidth * gameData.getNumOfRows();
         params.width = pipeWidth  * gameData.getNumOfColumns();
 
         // 设置参数
-        gridView.setLayoutParams(params);
+        viewHolder.gridView.setLayoutParams(params);
 
-        gridView.setNumColumns(gameData.getNumOfColumns());
-        gridView.setAdapter(new ImageAdapter(context, null, pipeWidth, gameData.getData()));
+        viewHolder.gridView.setNumColumns(gameData.getNumOfColumns());
+        viewHolder.gridView.setAdapter(new ImageAdapter(context, null, pipeWidth, gameData.getData()));
 
-        levelTextView.setText("Level : " + gameData.getLevel());
-        scoreTextView.setText("Score : "+gameData.getTotalScore()+"");
-        dateTextView.setText(gameData.getDateCreated());
+        viewHolder.levelTextView.setText("Level : " + gameData.getLevel());
+        viewHolder.scoreTextView.setText("Score : "+gameData.getTotalScore()+"");
+        viewHolder.dateTextView.setText(gameData.getDateCreated());
 
-        return rowView;
+        return convertView;
+    }
+
+    class ViewHolder{
+        TextView levelTextView;
+        TextView scoreTextView ;
+        TextView dateTextView ;
+        GridView gridView  ;
     }
 
 }

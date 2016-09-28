@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:background="@color/game_fg_color"
+    android:foreground="@color/game_font_color"
     android:descendantFocusability="blocksDescendants">
 
     <com.harbor.game.widget.NonScrollableGridView
@@ -25,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:gravity="center_vertical|left"
-            android:textColor="@color/white"
+            android:textColor="@color/game_font_color"
             android:textSize="16dp" />
 
         <TextView
@@ -33,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:gravity="center_vertical|left"
-            android:textColor="@color/white"
+            android:textColor="@color/game_font_color"
             android:textSize="16dp" />
 
         <TextView
@@ -41,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:gravity="center_vertical|left"
-            android:textColor="@color/white"
+            android:textColor="@color/game_font_color"
             android:textSize="16dp" />
 
     </LinearLayout>

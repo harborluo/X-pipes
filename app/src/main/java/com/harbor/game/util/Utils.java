@@ -1,13 +1,19 @@
 package com.harbor.game.util;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Environment;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.harbor.game.R;
+import com.harbor.game.widget.DialogButtonListener;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -112,6 +118,51 @@ public class Utils {
 
 
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.show();
+
+    }
+
+    public static void showDialog(Activity context, final DialogButtonListener listener,String message, String... buttonText){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        // Get the layout inflater
+        LayoutInflater inflater = LayoutInflater.from(context);
+
+        View view = inflater.inflate(R.layout.message_dialog,null);
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the
+        // dialog layout
+    //    builder.setTitle(title);
+        builder.setCancelable(false);
+      //  builder.setIcon(R.mipmap.ic_launcher);
+        builder.setView(view);
+
+        final AlertDialog dialog = builder.create();
+
+        final Button okButton = (Button) view.findViewById(R.id.dialog_ok);
+
+        TextView textView = (TextView) view.findViewById(R.id.dialog_message);
+        textView.setText(message);
+
+        okButton.setText(buttonText[0]);
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                listener.buttonClicked(okButton.getText().toString());
+            }
+        });
+
+        final Button cancelButton = (Button) view.findViewById(R.id.dialog_cancel);
+        cancelButton.setText(buttonText[1]);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    listener.buttonClicked(cancelButton.getText().toString());
+                }
+            });
+
+        dialog .getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.show();
 
     }

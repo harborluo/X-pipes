@@ -22,6 +22,7 @@ import com.harbor.game.ScoreCalculator;
 import com.harbor.game.handler.AnimationHandler;
 import com.harbor.game.service.MusicService;
 import com.harbor.game.util.Utils;
+import com.harbor.game.widget.DialogButtonListener;
 import com.harbor.game.widget.ImageAdapter;
 
 import java.io.File;
@@ -33,7 +34,7 @@ import java.util.Random;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class GameActivity extends Activity implements View.OnClickListener {
+public class GameActivity extends Activity implements View.OnClickListener, DialogButtonListener {
 
     private static String TAG = "GameActivity";
 
@@ -334,6 +335,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
             gameData.addTotalScore(task[2]);
         }
 
+        saveGame();
+
         //play animation
         Runnable runnable = new Runnable() {
             int i = 0;
@@ -372,20 +375,23 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
                     if(animationTaskList.size() -  gameData.getMissionCount() > 0){
 
-                        gameData = gameData.nextLevel();
+                        Utils.showDialog(GameActivity.this,GameActivity.this, "Get ready for next level "+(gameData.getLevel()+1),"Back","Next level");
 
+                        /*
                         Toast.makeText(GameActivity.this, "Get ready for next level "+gameData.getLevel(), Toast.LENGTH_LONG).show();
 
+                        gameData = gameData.nextLevel();
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 initGame(true);
                             }
                         },3000);
-
+*/
 
                     }else{
-                        Toast.makeText(GameActivity.this, "GAME OVER", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(GameActivity.this, "GAME OVER", Toast.LENGTH_LONG).show();
+                        Utils.showDialog(GameActivity.this,GameActivity.this,"Game Over.","Back","Play again");
                     }
 
                     return;
@@ -407,7 +413,16 @@ public class GameActivity extends Activity implements View.OnClickListener {
         super.onBackPressed();
 
         //send message to stop the running handler
+
+
         animationHandler.sendEmptyMessage(0);
+
+        saveGame();
+
+    }
+
+    private void saveGame(){
+
 
         String path = Utils.getDefaultFilePath();
 
@@ -422,6 +437,32 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 file.delete();
             }
         }
+    }
+
+    @Override
+    public void buttonClicked(String buttonText) {
+        Log.i(TAG, "buttonClicked: "+buttonText);
+        if(buttonText.equals("Back")){
+            this.finish();
+        }else if("Play again".equals(buttonText)){
+            //Start a new game
+            this.gameData = new GameData(1, gameData.getNumOfRows(), gameData.getNumOfColumns());
+            initGame(true);
+        }else if("Next level".equals(buttonText)){
+           // initGame(this.gameData.isOver()!=false);
+            gameData = gameData.nextLevel();
+            initGame(true);
+
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+     //   animationHandler.sendEmptyMessage(0);
+
+     //   Utils.showDialog(GameActivity.this,GameActivity.this,"Game paused","Back","Continue");
 
     }
 }

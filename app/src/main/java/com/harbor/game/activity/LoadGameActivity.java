@@ -1,9 +1,9 @@
 package com.harbor.game.activity;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.harbor.game.GameData;
 import com.harbor.game.R;
 import com.harbor.game.util.Utils;
+import com.harbor.game.widget.DialogButtonListener;
 import com.harbor.game.widget.GameDataAdapter;
 
 import java.io.File;
@@ -18,9 +19,11 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoadGameActivity extends Activity implements AdapterView.OnItemClickListener, DialogInterface.OnClickListener {
+public class LoadGameActivity extends Activity implements AdapterView.OnItemClickListener, DialogButtonListener {
 
     ListView listView = null;
+
+    private String TAG ="LoadGameActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,28 +67,9 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
         listView.setAdapter(adapter);
 
         if(files.length==0){
-            Utils.buildDialog(this, this,"Notification","No saved games found.","OK");
+//            Utils.buildDialog(this, this,"Notification","No saved games found.","OK");
+            Utils.showDialog(this,this,"No saved games found.","Back","Start new game");
         }
-
-        /*
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-             //   Toast.makeText(LoadGameActivity.this, "You Clicked at " +  position, Toast.LENGTH_SHORT).show();
-
-                GameData game = (GameData) parent.getItemAtPosition(position);
-
-                String fileName = game.getName();
-                Intent intent = new Intent(LoadGameActivity.this, GameActivity.class);
-                intent.putExtra("fileName",fileName);
-                startActivity(intent);
-
-            }
-        });
-        */
-
 
     }
 
@@ -104,8 +88,9 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
     }
 
     @Override
-    public void onClick(DialogInterface dialogInterface, int i) {
-        LoadGameActivity.this.finish();
-
+    public void buttonClicked(String buttonText) {
+        Log.i(TAG, "buttonClicked: "+buttonText);
+        this.finish();
     }
+
 }

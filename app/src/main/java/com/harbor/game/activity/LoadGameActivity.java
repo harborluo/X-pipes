@@ -68,7 +68,7 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
 
         if(files.length==0){
 //            Utils.buildDialog(this, this,"Notification","No saved games found.","OK");
-            Utils.showDialog(this,this,"No saved games found.","Back","Start new game");
+            Utils.showDialog(this,this,"No saved games found.","Start new game","Back");
         }
 
     }

@@ -131,9 +131,8 @@ public class Utils {
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the
         // dialog layout
-    //    builder.setTitle(title);
         builder.setCancelable(false);
-      //  builder.setIcon(R.mipmap.ic_launcher);
+
         builder.setView(view);
 
         final AlertDialog dialog = builder.create();

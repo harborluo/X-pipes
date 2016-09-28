@@ -14,7 +14,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.harbor.game.GameData;
 import com.harbor.game.R;
@@ -118,7 +117,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
             gameData = new GameData(1, numOfRows, numOfColumns);
         }else{
             gameData = (GameData)  Utils.readObject(Utils.getDefaultFilePath() + File.separator + fileName);
-
+/**
             if(gameData.getSecondRemain()==0){
 
                 if(gameData.isPassed()==false){
@@ -128,20 +127,21 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
                  //  return ;
                 }else{
                     //TODO popup dialog to next level
-                    gameData = gameData.nextLevel();
+                    //gameData = gameData.nextLevel();
+                    Utils.showDialog(GameActivity.this,GameActivity.this, "Get ready for next level "+(gameData.getLevel()+1),"Next level","Back");
                 }
 
             }
-
+*/
             pipeWidth = screenWidth / gameData.getNumOfColumns();
 
         }
 
-        initGame(!gameData.isOver());
+        initGame(!gameData.isOver(),gameData.getSecondRemain()>0);
 
     }
 
-    private void initGame(boolean startTimer){
+    private void initGame(boolean startTimer, final boolean animationOn){
 
         Log.i(TAG, "initGame: head["+ gameData.getHeadPosition()+"]="+gameData.getHeadImage());
 
@@ -180,7 +180,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
                 timeRemainTextView.setText(gameData.getSecondRemain() + "");
                 Intent intent = new Intent(GameActivity.this, MusicService.class);
                 stopService(intent);
-                calculateScore();
+                calculateScore( animationOn);
             }
 
             @Override
@@ -322,7 +322,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
         return false;
     }
 
-    public void calculateScore() {
+    public void calculateScore( final boolean animationOn) {
 
         ScoreCalculator calculator = new ScoreCalculator(gameData);
 
@@ -335,7 +335,9 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
             gameData.addTotalScore(task[2]);
         }
 
-        saveGame();
+        if(animationOn==true){
+            saveGame();
+        }
 
         //play animation
         Runnable runnable = new Runnable() {
@@ -352,9 +354,15 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
                 ImageView imgView = (ImageView) gridView.findViewById(task[0]);
 
-                imgView.setImageResource(task[1]);
+                if(imgView!=null){
+                    imgView.setImageResource(task[1]);
+                }
+
                 int soundId = task[2]==50?soundResources.get(4):soundResources.get(3);
-                soundPool.play(soundId, 0.7f, 0.7f, 0, 0, 1);
+
+                if(animationOn==true){
+                    soundPool.play(soundId, 0.7f, 0.7f, 0, 0, 1);
+                }
 
                 total += task[2];
 
@@ -370,12 +378,13 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
                 gameScoreTextView.setText(total+"");
 
                 i++;
+
                 if (i > animationTaskList.size() - 1 ) {
                    // Toast.makeText(GameActivity.this, "Your score is: " + total, Toast.LENGTH_LONG).show();
 
                     if(animationTaskList.size() -  gameData.getMissionCount() > 0){
 
-                        Utils.showDialog(GameActivity.this,GameActivity.this, "Get ready for next level "+(gameData.getLevel()+1),"Back","Next level");
+                        Utils.showDialog(GameActivity.this,GameActivity.this, "Get ready for next level "+(gameData.getLevel()+1),"Next level","Back");
 
                         /*
                         Toast.makeText(GameActivity.this, "Get ready for next level "+gameData.getLevel(), Toast.LENGTH_LONG).show();
@@ -396,7 +405,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
                     return;
                 }
-                animationHandler.postDelayed(this, 800);  //for interval...
+                animationHandler.postDelayed(this, animationOn ? 800 : 0);  //for interval...
             }
         };
         animationHandler.postDelayed(runnable, 0); //for initial delay..
@@ -414,7 +423,6 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
         //send message to stop the running handler
 
-
         animationHandler.sendEmptyMessage(0);
 
         saveGame();
@@ -422,7 +430,6 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
     }
 
     private void saveGame(){
-
 
         String path = Utils.getDefaultFilePath();
 
@@ -447,11 +454,11 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
         }else if("Play again".equals(buttonText)){
             //Start a new game
             this.gameData = new GameData(1, gameData.getNumOfRows(), gameData.getNumOfColumns());
-            initGame(true);
+            initGame(true,true);
         }else if("Next level".equals(buttonText)){
            // initGame(this.gameData.isOver()!=false);
             gameData = gameData.nextLevel();
-            initGame(true);
+            initGame(true,true);
 
         }
     }

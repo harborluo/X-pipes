@@ -122,7 +122,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
         }
 
-        initGame(!gameData.isOver(),gameData.getSecondRemain()>0);
+        initGame(true, gameData.getSecondRemain()>0);
 
     }
 
@@ -361,7 +361,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
                     if(animationTaskList.size() -  gameData.getMissionCount() > 0){
                         Utils.showDialog(GameActivity.this,GameActivity.this, "Get ready for next level "+(gameData.getLevel()+1),"Next level","Back");
                     }else{
-                        Utils.showDialog(GameActivity.this,GameActivity.this,"Game Over.","Back","Play again");
+                        Utils.showDialog(GameActivity.this,GameActivity.this,"Game Over.","Play again","Back");
                     }
 
                     return;
@@ -394,17 +394,15 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
         String path = Utils.getDefaultFilePath();
 
-        if(gameData.isOver()==false){
+      //  if(gameData.isOver()==false){
 
             gameData.setNextPipe((int) this.nextPipe.getTag());
 
             Utils.saveObject(this.gameData,   path + File.separator + gameData.getName());
-        }else {
-            File file = new File(path + File.separator + gameData.getName());
-            if(file.exists()){
-                file.delete();
-            }
-        }
+
+         //   Toast.makeText(GameActivity.this, "Game saved", Toast.LENGTH_LONG).show();
+
+      //  }
     }
 
     @Override
@@ -413,6 +411,13 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
         if(buttonText.equals("Back")){
             this.finish();
         }else if("Play again".equals(buttonText)){
+
+            String path = Utils.getDefaultFilePath();
+            File file = new File(path + File.separator + gameData.getName());
+            if(file.exists()){
+                file.delete();
+            }
+
             //Start a new game
             this.gameData = new GameData(1, gameData.getNumOfRows(), gameData.getNumOfColumns());
             initGame(true,true);

@@ -15,7 +15,7 @@ import com.harbor.game.service.MusicService;
 
 public class MainActivity extends Activity implements View.OnClickListener{
 
-    Button btn_quit_game,btn_new_game, btn_help, btn_load = null;
+    Button btn_quit_game,btn_new_game, btn_help, btn_load, btn_setting = null;
 
     @Override
     protected void onPause() {
@@ -41,12 +41,19 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
         btn_quit_game = (Button) findViewById(R.id.btn_quit_game);
         btn_quit_game.setOnClickListener(this);
+
         btn_new_game = (Button) findViewById(R.id.btn_new_game);
         btn_new_game.setOnClickListener(this);
+
         btn_help = (Button) findViewById(R.id.btn_help);
         btn_help.setOnClickListener(this);
+
         btn_load = (Button) findViewById(R.id.btn_load_game);
         btn_load.setOnClickListener(this);
+
+        btn_setting = (Button) findViewById(R.id.btn_setting);
+        btn_setting.setOnClickListener(this);
+
 
         Intent intent = new Intent(getApplicationContext(),MusicService.class);
         intent.putExtra("music",R.raw.main_background);
@@ -84,6 +91,11 @@ public class MainActivity extends Activity implements View.OnClickListener{
             break;
             case R.id.btn_load_game :{
                 Intent intent = new Intent(MainActivity.this,LoadGameActivity.class);
+                startActivity(intent);
+            }
+            break;
+            case R.id.btn_setting:{
+                Intent intent = new Intent(MainActivity.this,SettingActivity.class);
                 startActivity(intent);
             }
             break;

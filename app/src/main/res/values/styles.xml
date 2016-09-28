@@ -29,8 +29,9 @@
         <item name="android:windowExitAnimation">@anim/slide_bottom</item>
     </style>
 
-
-
+    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
 
 
 </resources>

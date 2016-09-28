@@ -359,9 +359,9 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
                    // Toast.makeText(GameActivity.this, "Your score is: " + total, Toast.LENGTH_LONG).show();
 
                     if(animationTaskList.size() -  gameData.getMissionCount() > 0){
-                        Utils.showDialog(GameActivity.this,GameActivity.this, "Get ready for next level "+(gameData.getLevel()+1),"Next level","Back");
+                        Utils.showDialog(GameActivity.this,GameActivity.this, "Level succeeded, try next level "+(gameData.getLevel()+1),"Next level","Back");
                     }else{
-                        Utils.showDialog(GameActivity.this,GameActivity.this,"Game Over.","Play again","Back");
+                        Utils.showDialog(GameActivity.this,GameActivity.this,"Game over, your score is " + total+".","Play again","Back");
                     }
 
                     return;

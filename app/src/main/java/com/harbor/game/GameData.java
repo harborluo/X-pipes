@@ -97,8 +97,6 @@ public class GameData implements Serializable{
         this.secondRemain --;
     }
 
-
-
     public int getNumOfRows() {
         return numOfRows;
     }

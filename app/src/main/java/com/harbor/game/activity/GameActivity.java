@@ -190,17 +190,12 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
         };
 
-        Intent intent = new Intent(this, MusicService.class);
-        intent.putExtra("music", R.raw.smooth_count_down);
-        startService(intent);
+//        Intent intent = new Intent(this, MusicService.class);
+//        intent.putExtra("music", R.raw.smooth_count_down);
+//        startService(intent);
+//
+//        timer.start();
 
-        timer.start();
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
     }
 
     private void generateNextPipe() {
@@ -434,17 +429,50 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
             gameData = gameData.nextLevel();
             initGame(true,true);
 
+        }else if("Continue".equals(buttonText)){
+            Intent intent = new Intent(this, MusicService.class);
+            intent.putExtra("music", R.raw.smooth_count_down);
+            startService(intent);
+            timer.start();
+            GAME_PAUSED=false;
         }
     }
+
+    boolean GAME_PAUSED = false;
 
     @Override
     protected void onPause() {
         super.onPause();
 
+        GAME_PAUSED = true;
+
+        Log.i(TAG, "onPause event fired." );
+
+        //stop background music
+        Intent intent = new Intent(GameActivity.this, MusicService.class);
+        stopService(intent);
+        timer.cancel();
+
      //   animationHandler.sendEmptyMessage(0);
 
-     //   Utils.showDialog(GameActivity.this,GameActivity.this,"Game paused","Back","Continue");
+    }
 
+    @Override
+    protected void onResume() {
+
+        super.onResume();
+
+        if(GAME_PAUSED==true){
+            //wait for the user to click the continue button.
+            Utils.showDialog(GameActivity.this,GameActivity.this,"Game paused", "Continue", "Back");
+            return;
+        }
+
+        Intent intent = new Intent(this, MusicService.class);
+        intent.putExtra("music", R.raw.smooth_count_down);
+        startService(intent);
+
+        timer.start();
     }
 }
 

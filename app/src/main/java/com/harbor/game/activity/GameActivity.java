@@ -446,12 +446,15 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
         GAME_PAUSED = true;
 
-        Log.i(TAG, "onPause event fired." );
+        Log.i(TAG, "onPause event fired, save game automatically." );
+
 
         //stop background music
         Intent intent = new Intent(GameActivity.this, MusicService.class);
         stopService(intent);
         timer.cancel();
+
+        saveGame();
 
      //   animationHandler.sendEmptyMessage(0);
 

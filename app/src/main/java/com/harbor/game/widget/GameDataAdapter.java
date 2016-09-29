@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.harbor.game.GameData;
@@ -46,8 +47,13 @@ public class GameDataAdapter extends ArrayAdapter<GameData> {
             convertView = inflater.inflate(R.layout.single_game_data, null, true);
 
             viewHolder.levelTextView = (TextView) convertView.findViewById(R.id.txtLev);
+            viewHolder.reqTextView = (TextView) convertView.findViewById(R.id.txtReq);
             viewHolder.scoreTextView = (TextView) convertView.findViewById(R.id.txtScore);
-            viewHolder.dateTextView = (TextView) convertView.findViewById(R.id.txtDate);
+
+           // viewHolder.dateTextView = (TextView) convertView.findViewById(R.id.txtDate);
+            viewHolder.secondsTextView = (TextView) convertView.findViewById(R.id.txtSeconds);
+            viewHolder.progressBar = (ProgressBar) convertView.findViewById(R.id.gameProgressBar);
+
             viewHolder.gridView = (GridView) convertView.findViewById(R.id.preview_container);
 
             convertView.setTag(viewHolder);
@@ -74,18 +80,24 @@ public class GameDataAdapter extends ArrayAdapter<GameData> {
         viewHolder.gridView.setNumColumns(gameData.getNumOfColumns());
         viewHolder.gridView.setAdapter(new ImageAdapter(context, null, pipeWidth, gameData.getData()));
 
-        viewHolder.levelTextView.setText("Level : " + gameData.getLevel());
-        viewHolder.scoreTextView.setText("Score : "+gameData.getTotalScore()+"");
-        viewHolder.dateTextView.setText(gameData.getDateCreated());
+        viewHolder.levelTextView.setText("" + gameData.getLevel());
+        viewHolder.reqTextView.setText(""+gameData.getMissionCount());
+        viewHolder.scoreTextView.setText(""+gameData.getTotalScore());
+       // viewHolder.dateTextView.setText(gameData.getDateCreated());
+        viewHolder.secondsTextView.setText(gameData.getSecondRemain()+"");
+        viewHolder.progressBar.setProgress(gameData.getProgress());
 
         return convertView;
     }
 
     class ViewHolder{
         TextView levelTextView;
+        TextView reqTextView;
         TextView scoreTextView ;
-        TextView dateTextView ;
+        TextView secondsTextView ;
+      //  TextView dateTextView ;
         GridView gridView  ;
+        ProgressBar progressBar;
     }
 
 }

@@ -71,6 +71,8 @@ public class GameData implements Serializable{
     private int secondRemain = 0;
 
 //    private int pipeWidth = 0;
+    private int progress=0;
+
 
     private int numOfRows = 3, numOfColumns = 3;
 
@@ -96,6 +98,8 @@ public class GameData implements Serializable{
         }
         this.secondRemain --;
     }
+
+
 
     public int getNumOfRows() {
         return numOfRows;
@@ -192,8 +196,8 @@ public class GameData implements Serializable{
         this.numOfColumns = numOfColumns;
         this.level = level;
 
-        this.secondRemain = 45 + (level - 1) * 15;
-        this.wrenchCount = 3 + level -1;
+        this.secondRemain = 60 + (level - 1) * 15;
+        this.wrenchCount = 3 + level - 1;
         this.missionCount = 15 + (level -1 ) * 5;
 
         data = new int[numOfRows * numOfColumns];
@@ -221,5 +225,13 @@ public class GameData implements Serializable{
         next.addTotalScore(this.totalScore);
         next.setName(this.getName());
         return next;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress>100?100:progress;
     }
 }

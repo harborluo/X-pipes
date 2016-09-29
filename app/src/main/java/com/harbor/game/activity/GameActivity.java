@@ -233,6 +233,10 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
         Log.i(TAG, "getAnimationTaskList size is : " + calculator.getAnimationTaskList().size());
 
+        int progress = (calculator.getAnimationTaskList().size()-1) * 100 / gameData.getMissionCount() ;
+
+        gameData.setProgress(progress);
+
         if(remain < 0){
             remain = 0;
         }

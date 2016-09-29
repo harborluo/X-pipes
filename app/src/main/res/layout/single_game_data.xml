@@ -16,19 +16,150 @@
         android:verticalSpacing="0dp">
     </GridView>
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10px"
+        android:paddingRight="10px">
+
+        <TableRow android:layout_height="35dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/white"
+                android:layout_weight="2"
+                android:text="Level"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/txtLev"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/game_font_color"
+                android:textSize="16dp" />
+
+        </TableRow>
+
+        <TableRow android:layout_height="35dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/white"
+                android:layout_weight="2"
+                android:text="Required"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/txtReq"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/game_font_color"
+                android:textSize="16dp" />
+
+        </TableRow>
+
+        <TableRow android:layout_height="35dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/white"
+                android:layout_weight="2"
+                android:text="Score"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/txtScore"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/game_font_color"
+                android:textSize="16dp" />
+
+
+        </TableRow>
+
+        <TableRow android:layout_height="35dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/white"
+                android:layout_weight="2"
+                android:text="Time"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/txtSeconds"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/game_font_color"
+                android:textSize="16dp" />
+
+        </TableRow>
+
+        <TableRow android:layout_height="35dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/white"
+                android:layout_weight="2"
+                android:text="Progress"
+                android:textSize="16dp" />
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleHorizontal"
+                android:progressDrawable="@drawable/bar_color"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="3"
+                android:id="@+id/gameProgressBar"
+                />
+
+
+            <!--
+                        <TextView
+                            android:id="@+id/txtDate"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"
+                            android:gravity="center_vertical|left"
+                            android:textColor="@color/game_font_color"
+                            android:textSize="16dp" />
+            -->
+
+        </TableRow>
+
+    </TableLayout>
+<!--
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:paddingLeft="10px">
 
-        <TextView
-            android:id="@+id/txtLev"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:gravity="center_vertical|left"
-            android:textColor="@color/game_font_color"
-            android:textSize="16dp" />
+<TextView
+                android:id="@+id/txtLev"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="center_vertical|left"
+                android:textColor="@color/game_font_color"
+                android:textSize="16dp" />
 
         <TextView
             android:id="@+id/txtScore"
@@ -47,5 +178,5 @@
             android:textSize="16dp" />
 
     </LinearLayout>
-
+-->
 </LinearLayout>

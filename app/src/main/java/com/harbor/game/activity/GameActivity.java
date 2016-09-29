@@ -99,11 +99,13 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
        // String fileName = getIntent().getStringExtra("fileName");
 
-        this.gameData = (GameData) getIntent().getSerializableExtra("gameDate");
 
         DisplayMetrics displayMetrics = this.getApplicationContext().getResources().getDisplayMetrics();
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
+
+       // this.gameData = (GameData) getIntent().getSerializableExtra("gameDate");
+        this.gameData = getIntent().getParcelableExtra("gameDate");
 
         if(gameData==null){
             int numOfRows = 3, numOfColumns = 3;

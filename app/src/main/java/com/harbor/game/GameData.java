@@ -1,5 +1,8 @@
 package com.harbor.game;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -9,9 +12,63 @@ import java.util.Random;
 /**
  * Created by harbor on 8/30/2016.
  */
-public class GameData implements Serializable{
+public class GameData implements Serializable, Parcelable{
 
     private int nextPipe = R.mipmap.blank;
+
+    protected GameData(Parcel in) {
+        nextPipe = in.readInt();
+        name = in.readString();
+        totalScore = in.readInt();
+        headImages = in.createIntArray();
+        secondRemain = in.readInt();
+        progress = in.readInt();
+        numOfRows = in.readInt();
+        numOfColumns = in.readInt();
+        data = in.createIntArray();
+        level = in.readInt();
+        headPosition = in.readInt();
+        headImage = in.readInt();
+        missionCount = in.readInt();
+        wrenchCount = in.readInt();
+        passed = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(nextPipe);
+        dest.writeString(name);
+        dest.writeInt(totalScore);
+        dest.writeIntArray(headImages);
+        dest.writeInt(secondRemain);
+        dest.writeInt(progress);
+        dest.writeInt(numOfRows);
+        dest.writeInt(numOfColumns);
+        dest.writeIntArray(data);
+        dest.writeInt(level);
+        dest.writeInt(headPosition);
+        dest.writeInt(headImage);
+        dest.writeInt(missionCount);
+        dest.writeInt(wrenchCount);
+        dest.writeByte((byte) (passed ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<GameData> CREATOR = new Creator<GameData>() {
+        @Override
+        public GameData createFromParcel(Parcel in) {
+            return new GameData(in);
+        }
+
+        @Override
+        public GameData[] newArray(int size) {
+            return new GameData[size];
+        }
+    };
 
     public int getNextPipe() {
         return nextPipe;

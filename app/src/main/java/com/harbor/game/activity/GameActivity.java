@@ -97,13 +97,15 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
         soundResources.put(3, soundPool.load(this, R.raw.single_pipe_passed, 1));
         soundResources.put(4, soundPool.load(this, R.raw.double_pipe_passed, 1));
 
-        String fileName = getIntent().getStringExtra("fileName");
+       // String fileName = getIntent().getStringExtra("fileName");
+
+        this.gameData = (GameData) getIntent().getSerializableExtra("gameDate");
 
         DisplayMetrics displayMetrics = this.getApplicationContext().getResources().getDisplayMetrics();
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
 
-        if(fileName==null||fileName.length()==0){
+        if(gameData==null){
             int numOfRows = 3, numOfColumns = 3;
             pipeWidth = screenWidth / numOfColumns;
 
@@ -116,7 +118,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
             gameData = new GameData(1, numOfRows, numOfColumns);
         }else{
-            gameData = (GameData)  Utils.readObject(Utils.getDefaultFilePath() + File.separator + fileName);
+           // gameData = (GameData)  Utils.readObject(Utils.getDefaultFilePath() + File.separator + fileName);
 
             pipeWidth = screenWidth / gameData.getNumOfColumns();
 

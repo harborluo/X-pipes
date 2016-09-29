@@ -80,9 +80,10 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
 
         GameData game = (GameData) parent.getItemAtPosition(position);
 
-        String fileName = game.getName();
         Intent intent = new Intent(LoadGameActivity.this, GameActivity.class);
-        intent.putExtra("fileName",fileName);
+        //String fileName = game.getName();
+        //intent.putExtra("fileName",fileName);
+        intent.putExtra("gameDate",game);
         startActivity(intent);
 
     }

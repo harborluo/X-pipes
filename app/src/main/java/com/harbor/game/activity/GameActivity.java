@@ -369,7 +369,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
                     return;
                 }
-                animationHandler.postDelayed(this, animationOn ? 800 : 0);  //for interval...
+                animationHandler.postDelayed(this, animationOn ? 800 : 50);  //for interval...
             }
         };
         animationHandler.postDelayed(runnable, 0); //for initial delay..

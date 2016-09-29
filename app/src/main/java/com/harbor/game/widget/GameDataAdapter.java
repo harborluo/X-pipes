@@ -65,7 +65,7 @@ public class GameDataAdapter extends ArrayAdapter<GameData> {
         DisplayMetrics displayMetrics = context.getApplicationContext().getResources().getDisplayMetrics();
         int screenWidth = displayMetrics.widthPixels;
 
-        int pipeWidth = screenWidth/3/gameData.getNumOfColumns();
+        int pipeWidth = screenWidth / 4 / gameData.getNumOfColumns();
 
         Log.i(TAG, "getView: pipeWidth = " + pipeWidth);
 

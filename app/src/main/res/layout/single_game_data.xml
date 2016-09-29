@@ -17,11 +17,12 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:paddingLeft="10px"
-        android:paddingRight="10px">
+        android:paddingRight="10px"
+        android:stretchColumns="*">
 
-        <TableRow>
+        <TableRow android:layout_weight="1" android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="0dp"
@@ -43,7 +44,7 @@
 
         </TableRow>
 
-        <TableRow>
+        <TableRow android:layout_weight="1" android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="0dp"
@@ -65,7 +66,7 @@
 
         </TableRow>
 
-        <TableRow>
+        <TableRow android:layout_weight="1" android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="0dp"
@@ -88,7 +89,7 @@
 
         </TableRow>
 
-        <TableRow>
+        <TableRow android:layout_weight="1" android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="0dp"
@@ -110,7 +111,7 @@
 
         </TableRow>
 
-        <TableRow>
+        <TableRow android:layout_weight="1" android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="0dp"

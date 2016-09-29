@@ -7,14 +7,14 @@
     android:foreground="@color/game_font_color"
     android:descendantFocusability="blocksDescendants">
 
-    <com.harbor.game.widget.NonScrollableGridView
+    <GridView
         android:id="@+id/preview_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:horizontalSpacing="0dp"
         android:stretchMode="columnWidth"
         android:verticalSpacing="0dp">
-    </com.harbor.game.widget.NonScrollableGridView>
+    </GridView>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -2,6 +2,7 @@ package com.harbor.game.widget;
 
 import android.app.Activity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ public class GameDataAdapter extends ArrayAdapter<GameData> {
         this.games = games;
     }
 
+    private String TAG = "GameDataAdapter";
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -47,8 +50,6 @@ public class GameDataAdapter extends ArrayAdapter<GameData> {
             viewHolder.dateTextView = (TextView) convertView.findViewById(R.id.txtDate);
             viewHolder.gridView = (GridView) convertView.findViewById(R.id.preview_container);
 
-
-
             convertView.setTag(viewHolder);
 
         }else{
@@ -58,7 +59,9 @@ public class GameDataAdapter extends ArrayAdapter<GameData> {
         DisplayMetrics displayMetrics = context.getApplicationContext().getResources().getDisplayMetrics();
         int screenWidth = displayMetrics.widthPixels;
 
-        int pipeWidth = screenWidth/4/gameData.getNumOfColumns();
+        int pipeWidth = screenWidth/3/gameData.getNumOfColumns();
+
+        Log.i(TAG, "getView: pipeWidth = " + pipeWidth);
 
         ViewGroup.LayoutParams params = viewHolder.gridView.getLayoutParams();
         // 设置高度

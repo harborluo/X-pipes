@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">X-pipes</string>
-
-    <string name="title_activity_game_activiy">GameActiviy</string>
-    <string name="level">Lev</string>
+    <string name="app_name">X-pipes</string><string name="level">Lev</string>
     <string name="required">Req</string>
+<!--
+    <string name="title_activity_game_activiy">GameActiviy</string>
+
     <string name="next_coming_pipe">Next coming pipe</string>
+    -->
 </resources>

@@ -415,6 +415,8 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
         Log.i(TAG, "buttonClicked: "+buttonText);
         if(buttonText.equals("Back")){
             this.finish();
+            return;
+
         }else if("Play again".equals(buttonText)){
 
             String path = Utils.getDefaultFilePath();
@@ -435,9 +437,9 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
             Intent intent = new Intent(this, MusicService.class);
             intent.putExtra("music", R.raw.smooth_count_down);
             startService(intent);
-            timer.start();
-            GAME_PAUSED=false;
         }
+        timer.start();
+        GAME_PAUSED=false;
     }
 
     boolean GAME_PAUSED = false;

@@ -208,9 +208,9 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
         };
 
-//        Intent intent = new Intent(this, MusicService.class);
-//        intent.putExtra("music", R.raw.smooth_count_down);
-//        startService(intent);
+        Intent intent = new Intent(this, MusicService.class);
+        intent.putExtra("music", gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
+        startService(intent);
 //
 //        timer.start();
 
@@ -455,6 +455,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
             initGame(true,true);
 
         }else if("Continue".equals(buttonText)){
+            //Game pauses, only start up music service is enough
             Intent intent = new Intent(this, MusicService.class);
             intent.putExtra("music", R.raw.smooth_count_down);
             startService(intent);

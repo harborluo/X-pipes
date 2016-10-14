@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Environment;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.harbor.game.R;
 import com.harbor.game.widget.DialogButtonListener;
+import com.harbor.game.widget.DialogMonitor;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -123,6 +125,18 @@ public class Utils {
     }
 
     public static void showDialog(Activity context, final DialogButtonListener listener,String message, String... buttonText){
+
+        if(context instanceof DialogMonitor){
+            DialogMonitor dialog = (DialogMonitor) context;
+            if(dialog.isDialogPrompted()==true){
+                return;
+            }else{
+                dialog.onShow();
+            }
+        }
+
+        Log.d("Util", "showDialog: for activity :" + context.getLocalClassName());
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         // Get the layout inflater
         LayoutInflater inflater = LayoutInflater.from(context);

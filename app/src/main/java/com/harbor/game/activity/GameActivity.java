@@ -22,6 +22,7 @@ import com.harbor.game.handler.AnimationHandler;
 import com.harbor.game.service.MusicService;
 import com.harbor.game.util.Utils;
 import com.harbor.game.widget.DialogButtonListener;
+import com.harbor.game.widget.DialogMonitor;
 import com.harbor.game.widget.ImageAdapter;
 
 import java.io.File;
@@ -33,11 +34,28 @@ import java.util.Random;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class GameActivity extends Activity implements View.OnClickListener, DialogButtonListener {
+public class GameActivity extends Activity implements View.OnClickListener, DialogButtonListener, DialogMonitor {
 
     private static String TAG = "GameActivity";
 
-//    private Handler mainHandler= new Handler();
+    private boolean dialogShow = false;
+
+    @Override
+    public void onShow() {
+        dialogShow = true;
+    }
+
+    @Override
+    public boolean isDialogPrompted() {
+        return dialogShow;
+    }
+
+    @Override
+    public void onClose() {
+        dialogShow =false;
+    }
+
+    //    private Handler mainHandler= new Handler();
 
     public int[] pipeImages = {
             R.mipmap.cross,
@@ -412,6 +430,9 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
     @Override
     public void buttonClicked(String buttonText) {
+
+        onClose();
+
         Log.i(TAG, "buttonClicked: "+buttonText);
         if(buttonText.equals("Back")){
             this.finish();

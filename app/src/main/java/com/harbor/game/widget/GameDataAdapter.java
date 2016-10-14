@@ -55,6 +55,7 @@ public class GameDataAdapter extends ArrayAdapter<GameData> {
             viewHolder.progressBar = (ProgressBar) convertView.findViewById(R.id.gameProgressBar);
 
             viewHolder.gridView = (GridView) convertView.findViewById(R.id.preview_container);
+            viewHolder.gridView.setTag(position);
 
             convertView.setTag(viewHolder);
 

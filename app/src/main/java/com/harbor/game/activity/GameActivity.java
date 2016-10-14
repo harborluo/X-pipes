@@ -319,8 +319,10 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
         gameData.setPassed(animationTaskList.size()-gameData.getMissionCount()>0);
 
-        for(int[] task : animationTaskList){
-            gameData.addTotalScore(task[2]);
+        if(animationOn){
+            for(int[] task : animationTaskList){
+                gameData.addTotalScore(task[2]);
+            }
         }
 
         if(animationOn==true){
@@ -369,7 +371,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
                     return;
                 }
-                animationHandler.postDelayed(this, animationOn ? 800 : 50);  //for interval...
+                animationHandler.postDelayed(this, animationOn ? 800 : 10);  //for interval...
             }
         };
         animationHandler.postDelayed(runnable, 0); //for initial delay..

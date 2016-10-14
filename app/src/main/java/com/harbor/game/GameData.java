@@ -150,7 +150,7 @@ public class GameData implements Serializable, Parcelable{
     }
 
     public void decreaseSecondRemain() {
-        if(this.secondRemain<0){
+        if(this.secondRemain<1){
             return;
         }
         this.secondRemain --;
@@ -245,6 +245,9 @@ public class GameData implements Serializable, Parcelable{
     }
 
     public void decreaseWrenchCount(){
+        if(this.wrenchCount<1){
+            return;
+        }
         this.wrenchCount--;
     }
 

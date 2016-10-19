@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Environment;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.harbor.game.R;
+import com.harbor.game.service.MusicService;
 import com.harbor.game.widget.DialogButtonListener;
 import com.harbor.game.widget.DialogMonitor;
 
@@ -178,6 +180,12 @@ public class Utils {
         dialog .getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.show();
 
+    }
+
+    public static void startMusiceService(Context ctx,int musicResourceId){
+        Intent intent = new Intent(ctx, MusicService.class);
+        intent.putExtra("music", R.raw.smooth_count_down);
+        ctx.startService(intent);
     }
 
 

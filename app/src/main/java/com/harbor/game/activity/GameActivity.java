@@ -115,9 +115,6 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
         soundResources.put(3, soundPool.load(this, R.raw.single_pipe_passed, 1));
         soundResources.put(4, soundPool.load(this, R.raw.double_pipe_passed, 1));
 
-       // String fileName = getIntent().getStringExtra("fileName");
-
-
         DisplayMetrics displayMetrics = this.getApplicationContext().getResources().getDisplayMetrics();
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
@@ -126,7 +123,8 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
         this.gameData = getIntent().getParcelableExtra("gameDate");
 
         if(gameData==null){
-            int numOfRows = 3, numOfColumns = 3;
+
+            int numOfRows , numOfColumns = 3;
             pipeWidth = screenWidth / numOfColumns;
 
             while (pipeWidth > 90) {
@@ -138,7 +136,6 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
             gameData = new GameData(1, numOfRows, numOfColumns);
         }else{
-           // gameData = (GameData)  Utils.readObject(Utils.getDefaultFilePath() + File.separator + fileName);
 
             pipeWidth = screenWidth / gameData.getNumOfColumns();
 
@@ -183,6 +180,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
         timer = new CountDownTimer(gameData.getSecondRemain() * 1000, 1000) {
             @Override
             public void onFinish() {
+                Log.i(TAG, "Game time onFinish: ");
                 gameData.decreaseSecondRemain();
                 timeRemainTextView.setText(gameData.getSecondRemain() + "");
                 Intent intent = new Intent(GameActivity.this, MusicService.class);
@@ -199,18 +197,14 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
                 }
 
                 if (gameData.getSecondRemain() == 10) {
-                    Intent intent = new Intent(GameActivity.this, MusicService.class);
-                    intent.putExtra("music", R.raw.hurry_count_down);
-                    startService(intent);
+                    Utils.startMusiceService(GameActivity.this, R.raw.hurry_count_down);
                 }
 
             }
 
         };
 
-        Intent intent = new Intent(this, MusicService.class);
-        intent.putExtra("music", gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
-        startService(intent);
+        Utils.startMusiceService(GameActivity.this, gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
 //
 //        timer.start();
 
@@ -218,7 +212,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
     private void generateNextPipe() {
 
-        int nextImage = 0;
+        int nextImage;
         if(gameData.getNextPipe()!=R.mipmap.blank){
             nextImage = gameData.getNextPipe();
             gameData.setNextPipe(R.mipmap.blank);
@@ -379,7 +373,6 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
                 i++;
 
                 if (i > animationTaskList.size() - 1 ) {
-                   // Toast.makeText(GameActivity.this, "Your score is: " + total, Toast.LENGTH_LONG).show();
 
                     if(animationTaskList.size() -  gameData.getMissionCount() > 0){
                         Utils.showDialog(GameActivity.this,GameActivity.this, "Level succeeded, try next level "+(gameData.getLevel()+1),"Next level","Back");
@@ -389,11 +382,10 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
                     return;
                 }
-                animationHandler.postDelayed(this, animationOn ? 800 : 10);  //for interval...
+                animationHandler.postDelayed(this, animationOn ? 800 : 0);  //for interval...
             }
         };
         animationHandler.postDelayed(runnable, 0); //for initial delay..
-
     }
 
     @Override
@@ -416,16 +408,9 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
     private void saveGame(){
 
         String path = Utils.getDefaultFilePath();
+        gameData.setNextPipe((int) this.nextPipe.getTag());
+        Utils.saveObject(this.gameData,   path + File.separator + gameData.getName());
 
-      //  if(gameData.isOver()==false){
-
-            gameData.setNextPipe((int) this.nextPipe.getTag());
-
-            Utils.saveObject(this.gameData,   path + File.separator + gameData.getName());
-
-         //   Toast.makeText(GameActivity.this, "Game saved", Toast.LENGTH_LONG).show();
-
-      //  }
     }
 
     @Override
@@ -434,10 +419,10 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
         onClose();
 
         Log.i(TAG, "buttonClicked: "+buttonText);
+
         if(buttonText.equals("Back")){
             this.finish();
             return;
-
         }else if("Play again".equals(buttonText)){
 
             String path = Utils.getDefaultFilePath();
@@ -456,9 +441,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
         }else if("Continue".equals(buttonText)){
             //Game pauses, only start up music service is enough
-            Intent intent = new Intent(this, MusicService.class);
-            intent.putExtra("music", R.raw.smooth_count_down);
-            startService(intent);
+            Utils.startMusiceService(this, gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
         }
         timer.start();
         GAME_PAUSED=false;
@@ -474,7 +457,6 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
         Log.i(TAG, "onPause event fired, save game automatically." );
 
-
         //stop background music
         Intent intent = new Intent(GameActivity.this, MusicService.class);
         stopService(intent);
@@ -489,6 +471,8 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
     @Override
     protected void onResume() {
 
+        Log.i(TAG, "onResume called.");
+
         super.onResume();
 
         if(GAME_PAUSED==true){
@@ -497,13 +481,9 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
             return;
         }
 
-        Intent intent = new Intent(this, MusicService.class);
-        intent.putExtra("music",gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
-        startService(intent);
+        Utils.startMusiceService(this, gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
 
         timer.start();
     }
 
-
 }
-

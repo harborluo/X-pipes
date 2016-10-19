@@ -498,10 +498,12 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
         }
 
         Intent intent = new Intent(this, MusicService.class);
-        intent.putExtra("music", R.raw.smooth_count_down);
+        intent.putExtra("music",gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
         startService(intent);
 
         timer.start();
     }
+
+
 }
 

@@ -197,21 +197,31 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
             @Override
             public void onTick(long millisUntilFinished) {
-                gameData.decreaseSecondRemain();
-                timeRemainTextView.setText("" + gameData.getSecondRemain());
+
                 if (GameActivity.this.isFinishing()) {
                     this.cancel();
                 }
 
+                gameData.decreaseSecondRemain();
+                timeRemainTextView.setText("" + gameData.getSecondRemain());
+
+                Log.i(TAG, "onTick: seconds remain is "+gameData.getSecondRemain());
                 if (gameData.getSecondRemain() == 10) {
-                    Utils.startMusicService(GameActivity.this, R.raw.hurry_count_down);
+                    Log.i(TAG, "onTick: change background music as  hurry_count_down");
+//                    Utils.startMusicService(GameActivity.this, R.raw.hurry_count_down);
+                    Intent intent = new Intent(GameActivity.this, MusicService.class);
+                    intent.putExtra("music", R.raw.hurry_count_down);
+                    GameActivity.this.startService(intent);
                 }
 
             }
 
         };
 
-        Utils.startMusicService(GameActivity.this, gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
+        Intent intent = new Intent(GameActivity.this, MusicService.class);
+        intent.putExtra("music", gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
+        GameActivity.this.startService(intent);
+//        Utils.startMusicService(GameActivity.this, gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
 //
 //        timer.start();
 
@@ -448,7 +458,10 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
         }else if("Continue".equals(buttonText)){
             //Game pauses, only start up music service is enough
-            Utils.startMusicService(this, gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
+//            Utils.startMusicService(this, gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
+            Intent intent = new Intent(GameActivity.this, MusicService.class);
+            intent.putExtra("music", gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
+            GameActivity.this.startService(intent);
         }
         timer.start();
         GAME_PAUSED=false;
@@ -488,7 +501,10 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
             return;
         }
 
-        Utils.startMusicService(this, gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
+//        Utils.startMusicService(this, gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
+        Intent intent = new Intent(GameActivity.this, MusicService.class);
+        intent.putExtra("music", gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
+        GameActivity.this.startService(intent);
 
         timer.start();
     }

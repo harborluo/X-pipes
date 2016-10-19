@@ -10,16 +10,11 @@
         android:layout_height="match_parent">
 
         <TableRow
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center_vertical">
 
-            <TextView
-                android:layout_weight="1"
-                android:text="Language"
-                android:textColor="@color/game_font_color" />
-
             <RadioGroup
-                android:layout_weight="3"
+
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -28,6 +23,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:textColor="@color/game_font_color"
                     android:text="English" />
 
                 <RadioButton
@@ -35,78 +31,76 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Chinese" />
+                    android:textColor="@color/game_font_color"
+                    android:text="中文" />
+
             </RadioGroup>
         </TableRow>
 
         <TableRow
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center_vertical">
-
-            <TextView
-                android:layout_weight="1"
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Background music"
-                android:textColor="@color/game_font_color" />
-
-            <Switch
-                android:id="@+id/game_music_switch"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content" />
+                android:id="@+id/checkBox_bg_music"
+                android:textColor="@color/game_font_color"
+                android:layout_column="0"
+                android:checked="true" />
         </TableRow>
 
         <TableRow
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center_vertical">
 
-            <TextView
-                android:layout_weight="1"
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Sound"
-                android:textColor="@color/game_font_color" />
+                android:id="@+id/checkBox_sound"
+                android:textColor="@color/game_font_color"
+                android:layout_column="0"
+                android:checked="true" />
 
-            <Switch
-                android:id="@+id/game_sound_switch"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content" />
         </TableRow>
 
         <TableRow
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center_vertical">
 
-            <TextView
-                android:layout_weight="1"
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Game score animation"
-                android:textColor="@color/game_font_color" />
+                android:id="@+id/checkBox_animation"
+                android:textColor="@color/game_font_color"
+                android:layout_column="0"
+                android:checked="true" />
 
-            <Switch
-                android:id="@+id/game_score_animation_switch"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content" />
         </TableRow>
 
         <TableRow
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:gravity="center_vertical">
 
             <Button
                 android:id="@+id/btn_reset_setting"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="Reset"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
-                android:padding="5dp"/>
+               />
 
             <Button
                 android:id="@+id/btn_save_setting"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="Save"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
-                android:padding="5dp"/>
+               />
 
         </TableRow>
 

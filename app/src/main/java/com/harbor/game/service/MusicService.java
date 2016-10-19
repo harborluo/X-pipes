@@ -32,6 +32,7 @@ public class MusicService extends Service{
             if(mediaPlayer.isPlaying()){
                 //停止播放音乐
                 mediaPlayer.stop();
+
             }
             //释放媒体播放器资源
             mediaPlayer.release();

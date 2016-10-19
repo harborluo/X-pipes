@@ -182,7 +182,7 @@ public class Utils {
 
     }
 
-    public static void startMusiceService(Context ctx,int musicResourceId){
+    public static void startMusicService(Context ctx,int musicResourceId){
         Intent intent = new Intent(ctx, MusicService.class);
         intent.putExtra("music", R.raw.smooth_count_down);
         ctx.startService(intent);

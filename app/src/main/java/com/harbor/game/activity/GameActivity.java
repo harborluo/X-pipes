@@ -204,14 +204,14 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
                 }
 
                 if (gameData.getSecondRemain() == 10) {
-                    Utils.startMusiceService(GameActivity.this, R.raw.hurry_count_down);
+                    Utils.startMusicService(GameActivity.this, R.raw.hurry_count_down);
                 }
 
             }
 
         };
 
-        Utils.startMusiceService(GameActivity.this, gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
+        Utils.startMusicService(GameActivity.this, gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
 //
 //        timer.start();
 
@@ -448,7 +448,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
         }else if("Continue".equals(buttonText)){
             //Game pauses, only start up music service is enough
-            Utils.startMusiceService(this, gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
+            Utils.startMusicService(this, gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
         }
         timer.start();
         GAME_PAUSED=false;
@@ -488,7 +488,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
             return;
         }
 
-        Utils.startMusiceService(this, gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
+        Utils.startMusicService(this, gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
 
         timer.start();
     }

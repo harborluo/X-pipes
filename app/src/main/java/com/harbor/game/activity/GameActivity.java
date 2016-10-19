@@ -38,6 +38,8 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
     private static String TAG = "GameActivity";
 
+    private int MAX_PIPE_WIDTH = 100;
+
     private boolean dialogShow = false;
 
     @Override
@@ -127,7 +129,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
             int numOfRows , numOfColumns = 3;
             pipeWidth = screenWidth / numOfColumns;
 
-            while (pipeWidth > 90) {
+            while (pipeWidth > MAX_PIPE_WIDTH) {
                 numOfColumns++;
                 pipeWidth = screenWidth / numOfColumns;
             }
@@ -140,6 +142,8 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
             pipeWidth = screenWidth / gameData.getNumOfColumns();
 
         }
+
+        Log.i(TAG, "onCreate: pipeWidth = " + pipeWidth+", rows = " +gameData.getNumOfRows()+", cols = "+gameData.getNumOfColumns());
 
         initGame(true, gameData.getSecondRemain()>0);
 
@@ -162,7 +166,10 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
         generateNextPipe();
 
         LinearLayout panelButtonBar = (LinearLayout) findViewById(R.id.buttonBar);
-        panelButtonBar.setLayoutParams(new LinearLayout.LayoutParams(screenWidth, screenHeight - pipeWidth * gameData.getNumOfRows()));
+        int panelHeight = screenHeight - pipeWidth * gameData.getNumOfRows();
+        panelButtonBar.setLayoutParams(new LinearLayout.LayoutParams(screenWidth, panelHeight));
+
+        Log.i(TAG, "initGame: panelHeight = "+ panelHeight);
 
         ImageView wrenchImageView = (ImageView) findViewById(R.id.wrench_image);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(pipeWidth * 8 / 10, pipeWidth * 8 / 10);

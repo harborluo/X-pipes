@@ -60,6 +60,21 @@
 
             <TextView
                 android:layout_weight="1"
+                android:text="Sound"
+                android:textColor="@color/game_font_color" />
+
+            <Switch
+                android:id="@+id/game_sound_switch"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow
+            android:layout_weight="1"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_weight="1"
                 android:text="Game score animation"
                 android:textColor="@color/game_font_color" />
 
@@ -75,31 +90,26 @@
 
             <Button
                 android:id="@+id/btn_reset_setting"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:layout_weight="1"
-                android:height="40dp"
-                android:background="@drawable/game_button"
                 android:text="Reset"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
-                android:padding="10dp"/>
+                android:padding="5dp"/>
 
             <Button
                 android:id="@+id/btn_save_setting"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:layout_weight="1"
-                android:height="40dp"
-                android:background="@drawable/game_button"
                 android:text="Save"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
-                android:padding="10dp"/>
+                android:padding="5dp"/>
 
         </TableRow>
 
     </TableLayout>
+
 </FrameLayout>

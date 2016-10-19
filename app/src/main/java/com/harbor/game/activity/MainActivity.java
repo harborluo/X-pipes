@@ -3,9 +3,11 @@ package com.harbor.game.activity;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -95,8 +97,9 @@ public class MainActivity extends Activity implements View.OnClickListener{
             }
             break;
             case R.id.btn_setting:{
-                Intent intent = new Intent(MainActivity.this,SettingActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(MainActivity.this,SettingActivity.class);
+//                startActivity(intent);
+                showSettingDialog();
             }
             break;
 
@@ -130,4 +133,42 @@ public class MainActivity extends Activity implements View.OnClickListener{
         Intent intent = new Intent(this, MusicService.class);
         stopService(intent);
     }
+
+    private void showSettingDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // Get the layout inflater
+        LayoutInflater inflater = LayoutInflater.from(this);
+
+        View view = inflater.inflate(R.layout.activity_setting,null);
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the
+        // dialog layout
+        builder.setCancelable(false);
+
+        builder.setView(view);
+
+        final AlertDialog dialog = builder.create();
+
+        final Button saveButton = (Button) view.findViewById(R.id.btn_save_setting);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+
+            }
+        });
+
+        final Button resetButton = (Button) view.findViewById(R.id.btn_reset_setting);
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog .getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.show();
+
+    }
+
 }

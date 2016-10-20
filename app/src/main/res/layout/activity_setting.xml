@@ -2,19 +2,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/game_bg_color"
+    android:background="@color/game_fg_color"
     tools:context="com.harbor.game.activity.SettingActivity">
 
-    <TableLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <TableRow
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:gravity="center_vertical">
+            android:orientation="horizontal">
 
             <RadioGroup
-
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -35,27 +39,32 @@
                     android:text="中文" />
 
             </RadioGroup>
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:gravity="center_vertical">
+            android:orientation="horizontal">
+
             <CheckBox
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Background music"
                 android:id="@+id/checkBox_bg_music"
                 android:textColor="@color/game_font_color"
                 android:layout_column="0"
                 android:checked="true" />
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:gravity="center_vertical">
+            android:orientation="horizontal">
 
             <CheckBox
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Sound"
                 android:id="@+id/checkBox_sound"
@@ -63,14 +72,16 @@
                 android:layout_column="0"
                 android:checked="true" />
 
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:gravity="center_vertical">
+            android:orientation="horizontal">
 
             <CheckBox
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Game score animation"
                 android:id="@+id/checkBox_animation"
@@ -78,32 +89,42 @@
                 android:layout_column="0"
                 android:checked="true" />
 
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:gravity="center_vertical">
+            android:orientation="horizontal">
 
             <Button
+                android:layout_height="wrap_content"
                 android:id="@+id/btn_reset_setting"
                 android:layout_width="match_parent"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:text="Reset"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
+                android:textColor="@color/game_font_color"
+                android:background="@color/game_bg_color"
+                android:gravity="center_vertical|center"
                />
 
             <Button
+                android:layout_height="wrap_content"
                 android:id="@+id/btn_save_setting"
+                android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:text="Save"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
+                android:textColor="@color/game_font_color"
+                android:background="@color/game_bg_color"
+                android:gravity="center_vertical|center"
                />
 
-        </TableRow>
+        </LinearLayout>
 
-    </TableLayout>
+    </LinearLayout>
 
 </FrameLayout>

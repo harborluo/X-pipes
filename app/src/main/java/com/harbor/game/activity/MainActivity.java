@@ -2,7 +2,6 @@
 package com.harbor.game.activity;
 
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,28 +17,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.harbor.game.R;
-import com.harbor.game.service.MusicService;
 import com.harbor.game.util.ApplicationConfig;
 
-public class MainActivity extends Activity implements View.OnClickListener{
+public class MainActivity extends AbstractActivity implements View.OnClickListener{
 
     Button btn_quit_game,btn_new_game, btn_help, btn_load, btn_setting = null;
 
     @Override
     protected void onPause() {
         super.onPause();
-        Intent intent = new Intent(this, MusicService.class);
-        intent.putExtra("music",R.raw.main_background);
-        stopService(intent);
+//        Intent intent = new Intent(this, MusicService.class);
+//        intent.putExtra("music",R.raw.main_background);
+//        stopService(intent);
 
+//        playMusic(-1);
+        stopMusic();
     }
+
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Intent intent = new Intent(this, MusicService.class);
-        intent.putExtra("music",R.raw.main_background);
-        startService(intent);
+//        Intent intent = new Intent(this, MusicService.class);
+//        intent.putExtra("music",R.raw.main_background);
+//        startService(intent);
+        playMusic(R.raw.main_background);
     }
 
     @Override
@@ -63,18 +65,19 @@ public class MainActivity extends Activity implements View.OnClickListener{
         btn_setting.setOnClickListener(this);
 
 
-        Intent intent = new Intent(getApplicationContext(),MusicService.class);
-        intent.putExtra("music",R.raw.main_background);
-        startService(intent);
-
+//        Intent intent = new Intent(getApplicationContext(),MusicService.class);
+//        intent.putExtra("music",R.raw.main_background);
+//        startService(intent);
+        playMusic(R.raw.main_background);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Intent intent = new Intent(getApplicationContext(),MusicService.class);
-        intent.putExtra("music",R.raw.main_background);
-        startService(intent);
+//        Intent intent = new Intent(getApplicationContext(),MusicService.class);
+//        intent.putExtra("music",R.raw.main_background);
+//        startService(intent);
+        playMusic(R.raw.main_background);
     }
 
     @Override
@@ -136,8 +139,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Intent intent = new Intent(this, MusicService.class);
-        stopService(intent);
+//        Intent intent = new Intent(this, MusicService.class);
+//        stopService(intent);
+//        playMusic(-1);
+        stopMusic();
     }
 
     private void showSettingDialog(){

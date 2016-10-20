@@ -1,7 +1,5 @@
 package com.harbor.game.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -19,7 +17,6 @@ import com.harbor.game.GameData;
 import com.harbor.game.R;
 import com.harbor.game.ScoreCalculator;
 import com.harbor.game.handler.AnimationHandler;
-import com.harbor.game.service.MusicService;
 import com.harbor.game.util.Utils;
 import com.harbor.game.widget.DialogButtonListener;
 import com.harbor.game.widget.DialogMonitor;
@@ -34,7 +31,7 @@ import java.util.Random;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class GameActivity extends Activity implements View.OnClickListener, DialogButtonListener, DialogMonitor {
+public class GameActivity extends AbstractActivity implements View.OnClickListener, DialogButtonListener, DialogMonitor {
 
     private static String TAG = "GameActivity";
 
@@ -189,7 +186,8 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
                 Log.i(TAG, "Game time onFinish: ");
                 gameData.decreaseSecondRemain();
                 timeRemainTextView.setText(gameData.getSecondRemain() + "");
-                playMusic(-1);
+                //playMusic(-1);
+                stopMusic();
                 calculateScore( animationOn);
             }
 
@@ -403,8 +401,8 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
     @Override
     public void onBackPressed() {
-
-        playMusic(-1);
+        stopMusic();
+//        playMusic(-1);
         timer.cancel();
 
         super.onBackPressed();
@@ -465,7 +463,8 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
         super.onPause();
         GAME_PAUSED = true;
         Log.i(TAG, "onPause event fired, save game automatically." );
-        playMusic(-1);
+//        playMusic(-1);
+        stopMusic();
         timer.cancel();
         saveGame();
      //   animationHandler.sendEmptyMessage(0);
@@ -489,20 +488,20 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
         timer.start();
     }
 
-    /**
-     * @param musicResourceId, set as  -1 to stop background music
-     */
-    private void playMusic(int musicResourceId){
-
-        if(musicResourceId==-1){
-            Intent intent = new Intent(GameActivity.this, MusicService.class);
-            stopService(intent);
-            return;
-        }
-
-        Intent intent = new Intent(GameActivity.this, MusicService.class);
-        intent.putExtra("music", musicResourceId);
-        startService(intent);
-    }
+//    /**
+//     * @param musicResourceId, set as  -1 to stop background music
+//     */
+//    private void playMusic(int musicResourceId){
+//
+//        if(musicResourceId==-1){
+//            Intent intent = new Intent(GameActivity.this, MusicService.class);
+//            stopService(intent);
+//            return;
+//        }
+//
+//        Intent intent = new Intent(GameActivity.this, MusicService.class);
+//        intent.putExtra("music", musicResourceId);
+//        startService(intent);
+//    }
 
 }

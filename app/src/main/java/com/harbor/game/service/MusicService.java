@@ -117,6 +117,9 @@ public class MusicService extends Service{
 
     @Override
     public void onDestroy() {
+
+        Log.i("MusicService", "onDestroy: music service shut down.");
+
         //当调用Context的stopService或Service内部执行stopSelf方法时就会触发onDestroy回调方法
         super.onDestroy();
         if(mediaPlayer != null){

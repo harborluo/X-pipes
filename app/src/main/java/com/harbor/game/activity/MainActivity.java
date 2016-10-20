@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,25 +24,20 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
 
     Button btn_quit_game,btn_new_game, btn_help, btn_load, btn_setting = null;
 
+    private static String TAG = "MainActivity";
+
     @Override
     protected void onPause() {
         super.onPause();
-//        Intent intent = new Intent(this, MusicService.class);
-//        intent.putExtra("music",R.raw.main_background);
-//        stopService(intent);
-
-//        playMusic(-1);
         stopMusic();
+        Log.d(TAG, "onPause: ");
     }
-
 
     @Override
     protected void onRestart() {
         super.onRestart();
-//        Intent intent = new Intent(this, MusicService.class);
-//        intent.putExtra("music",R.raw.main_background);
-//        startService(intent);
-        playMusic(R.raw.main_background);
+       // playMusic(R.raw.main_background);
+        Log.d(TAG, "onRestart: ");
     }
 
     @Override
@@ -63,20 +59,16 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
 
         btn_setting = (Button) findViewById(R.id.btn_setting);
         btn_setting.setOnClickListener(this);
-
-
-//        Intent intent = new Intent(getApplicationContext(),MusicService.class);
-//        intent.putExtra("music",R.raw.main_background);
-//        startService(intent);
+        
         playMusic(R.raw.main_background);
+
+        Log.d(TAG, "onCreate: ");
     }
 
     @Override
     protected void onResume() {
+        Log.d(TAG, "onResume: ");
         super.onResume();
-//        Intent intent = new Intent(getApplicationContext(),MusicService.class);
-//        intent.putExtra("music",R.raw.main_background);
-//        startService(intent);
         playMusic(R.raw.main_background);
     }
 
@@ -139,10 +131,13 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        Intent intent = new Intent(this, MusicService.class);
-//        stopService(intent);
-//        playMusic(-1);
         stopMusic();
+        Log.d(TAG, "onDestroy: ");
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
     }
 
     private void showSettingDialog(){

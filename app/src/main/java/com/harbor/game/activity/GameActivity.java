@@ -92,6 +92,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_game);
 
         wrenchTextView = (TextView) findViewById(R.id.wrench_count);
@@ -399,10 +400,11 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
         animationHandler.postDelayed(runnable, 0); //for initial delay..
     }
 
+
+
     @Override
     public void onBackPressed() {
         stopMusic();
-//        playMusic(-1);
         timer.cancel();
 
         super.onBackPressed();
@@ -425,7 +427,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
     @Override
     public void buttonClicked(String buttonText) {
 
-        onClose();
+        this.onClose();
 
         Log.i(TAG, "buttonClicked: "+buttonText);
 
@@ -461,9 +463,10 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
     @Override
     protected void onPause() {
         super.onPause();
+
         GAME_PAUSED = true;
         Log.i(TAG, "onPause event fired, save game automatically." );
-//        playMusic(-1);
+
         stopMusic();
         timer.cancel();
         saveGame();
@@ -472,10 +475,9 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
     @Override
     protected void onResume() {
+        super.onResume();
 
         Log.i(TAG, "onResume called.");
-
-        super.onResume();
 
         if(GAME_PAUSED==true){
             //wait for the user to click the continue button.
@@ -487,21 +489,5 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
         timer.start();
     }
-
-//    /**
-//     * @param musicResourceId, set as  -1 to stop background music
-//     */
-//    private void playMusic(int musicResourceId){
-//
-//        if(musicResourceId==-1){
-//            Intent intent = new Intent(GameActivity.this, MusicService.class);
-//            stopService(intent);
-//            return;
-//        }
-//
-//        Intent intent = new Intent(GameActivity.this, MusicService.class);
-//        intent.putExtra("music", musicResourceId);
-//        startService(intent);
-//    }
 
 }

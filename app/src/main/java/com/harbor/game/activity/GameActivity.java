@@ -162,7 +162,6 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
        // game_required_pipe_count.setText(gameData.getMissionCount()+"");
         refreshMissionCount();
-
         generateNextPipe();
 
         LinearLayout panelButtonBar = (LinearLayout) findViewById(R.id.buttonBar);
@@ -190,8 +189,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
                 Log.i(TAG, "Game time onFinish: ");
                 gameData.decreaseSecondRemain();
                 timeRemainTextView.setText(gameData.getSecondRemain() + "");
-                Intent intent = new Intent(GameActivity.this, MusicService.class);
-                stopService(intent);
+                playMusic(-1);
                 calculateScore( animationOn);
             }
 
@@ -208,23 +206,14 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
                 Log.i(TAG, "onTick: seconds remain is "+gameData.getSecondRemain());
                 if (gameData.getSecondRemain() == 10) {
                     Log.i(TAG, "onTick: change background music as  hurry_count_down");
-//                    Utils.startMusicService(GameActivity.this, R.raw.hurry_count_down);
-                    Intent intent = new Intent(GameActivity.this, MusicService.class);
-                    intent.putExtra("music", R.raw.hurry_count_down);
-                    GameActivity.this.startService(intent);
+                    GameActivity.this.playMusic( R.raw.hurry_count_down);
                 }
 
             }
 
         };
 
-        Intent intent = new Intent(GameActivity.this, MusicService.class);
-        intent.putExtra("music", gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
-        GameActivity.this.startService(intent);
-//        Utils.startMusicService(GameActivity.this, gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
-//
-//        timer.start();
-
+        playMusic(gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
     }
 
     private void generateNextPipe() {
@@ -252,15 +241,12 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
       //  Log.i(TAG, "refreshMissionCount: before head["+ gameData.getHeadPosition()+"]="+gameData.getHeadImage());
 
         ScoreCalculator calculator = new ScoreCalculator(gameData);
-
         calculator.execute();
 
         Log.i(TAG, "refreshMissionCount: requiredCount, = "+ requiredCount+", finishedCount = "+(calculator.getAnimationTaskList().size()-1));
-
         int remain = requiredCount - calculator.getAnimationTaskList().size() + 1;
 
         Log.i(TAG, "getAnimationTaskList size is : " + calculator.getAnimationTaskList().size());
-
         int progress = (calculator.getAnimationTaskList().size()-1) * 100 / gameData.getMissionCount() ;
 
         gameData.setProgress(progress);
@@ -391,11 +377,20 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
                 if (i > animationTaskList.size() - 1 ) {
 
-                    if(animationTaskList.size() -  gameData.getMissionCount() > 0){
-                        Utils.showDialog(GameActivity.this,GameActivity.this, "Level succeeded, try next level "+(gameData.getLevel()+1),"Next level","Back");
-                    }else{
-                        Utils.showDialog(GameActivity.this,GameActivity.this,"Game over, your score is " + total+".","Play again","Back");
-                    }
+                    boolean gamePassed = animationTaskList.size() -  gameData.getMissionCount() > 0;
+
+                    String message = "Level " +(gamePassed ? "succeeded, ":"failed, ");
+                    message+="pipe count is " + (animationTaskList.size()-1);
+                    message+=", your score is " +total+".";
+                    String[] buttonTexts = {gamePassed?"Next level":"Play again","Back"};
+
+//                    if(animationTaskList.size() -  gameData.getMissionCount() > 0){
+//                        Utils.showDialog(GameActivity.this,GameActivity.this, "Level succeeded, try next level "+(gameData.getLevel()+1),"Next level","Back");
+//                    }else{
+//                        Utils.showDialog(GameActivity.this,GameActivity.this,"Game over, your score is " + total + ".","Play again","Back");
+//                    }
+
+                    Utils.showDialog(GameActivity.this,GameActivity.this,message,buttonTexts);
 
                     return;
                 }
@@ -408,14 +403,12 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
     @Override
     public void onBackPressed() {
 
-        Intent intent = new Intent(GameActivity.this, MusicService.class);
-        stopService(intent);
+        playMusic(-1);
         timer.cancel();
 
         super.onBackPressed();
 
         //send message to stop the running handler
-
         animationHandler.sendEmptyMessage(0);
 
         saveGame();
@@ -458,10 +451,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
         }else if("Continue".equals(buttonText)){
             //Game pauses, only start up music service is enough
-//            Utils.startMusicService(this, gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
-            Intent intent = new Intent(GameActivity.this, MusicService.class);
-            intent.putExtra("music", gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
-            GameActivity.this.startService(intent);
+            playMusic(gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
         }
         timer.start();
         GAME_PAUSED=false;
@@ -472,20 +462,12 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
     @Override
     protected void onPause() {
         super.onPause();
-
         GAME_PAUSED = true;
-
         Log.i(TAG, "onPause event fired, save game automatically." );
-
-        //stop background music
-        Intent intent = new Intent(GameActivity.this, MusicService.class);
-        stopService(intent);
+        playMusic(-1);
         timer.cancel();
-
         saveGame();
-
      //   animationHandler.sendEmptyMessage(0);
-
     }
 
     @Override
@@ -501,12 +483,22 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
             return;
         }
 
-//        Utils.startMusicService(this, gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
-        Intent intent = new Intent(GameActivity.this, MusicService.class);
-        intent.putExtra("music", gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
-        GameActivity.this.startService(intent);
+        playMusic(gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
 
         timer.start();
+    }
+
+    private void playMusic(int musicResourceId){
+
+        if(musicResourceId==-1){
+            Intent intent = new Intent(GameActivity.this, MusicService.class);
+            stopService(intent);
+            return;
+        }
+
+        Intent intent = new Intent(GameActivity.this, MusicService.class);
+        intent.putExtra("music", musicResourceId);
+        startService(intent);
     }
 
 }

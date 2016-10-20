@@ -113,6 +113,7 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
+            this.finish();
             return;
         }
 

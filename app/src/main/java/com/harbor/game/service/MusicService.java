@@ -6,7 +6,6 @@ import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.harbor.game.R;
 import com.harbor.game.util.ApplicationConfig;
 
 import java.io.IOException;
@@ -15,18 +14,19 @@ import java.io.IOException;
  * Created by harbor on 8/23/2016.
  */
 public class MusicService extends Service{
+
     private MediaPlayer mediaPlayer = null;
 
     private boolean isReady = false;
 
-    @Override
-    public void onCreate() {
-        //onCreate在Service的生命周期中只会调用一次
-        super.onCreate();
-
-        initMediaPlayer( R.raw.main_background);
-
-    }
+//    @Override
+//    public void onCreate() {
+//        //onCreate在Service的生命周期中只会调用一次
+//        super.onCreate();
+//
+//   //     initMediaPlayer( R.raw.main_background);
+//
+//    }
 
     private void initMediaPlayer(int resourceId){
 
@@ -134,4 +134,5 @@ public class MusicService extends Service{
             //Toast.makeText(this, "停止播放背景音乐", Toast.LENGTH_LONG).show();
         }
     }
+
 }

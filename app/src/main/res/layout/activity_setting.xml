@@ -28,7 +28,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:textColor="@color/game_font_color"
-                    android:text="English" />
+                    android:text="English"
+                    android:checked="true" />
 
                 <RadioButton
                     android:id="@+id/lang_chinese"

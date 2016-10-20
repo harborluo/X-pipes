@@ -12,11 +12,14 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.harbor.game.R;
 import com.harbor.game.service.MusicService;
+import com.harbor.game.util.ApplicationConfig;
 
 public class MainActivity extends Activity implements View.OnClickListener{
 
@@ -142,14 +145,13 @@ public class MainActivity extends Activity implements View.OnClickListener{
         // Get the layout inflater
         LayoutInflater inflater = LayoutInflater.from(this);
 
-        View view = inflater.inflate(R.layout.activity_setting,null);
+        final View view = inflater.inflate(R.layout.activity_setting,null);
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the
         // dialog layout
-        builder.setCancelable(true);
+        builder.setCancelable(false);
 
         builder.setView(view);
-
 
         //dialog.setTitle("Game setting");
         TextView title = new TextView(this);
@@ -169,7 +171,19 @@ public class MainActivity extends Activity implements View.OnClickListener{
         final Button saveButton = (Button) view.findViewById(R.id.btn_save_setting);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                CheckBox animationBox = (CheckBox) view.findViewById(R.id.checkBox_animation);
+                CheckBox soundBox = (CheckBox) view.findViewById(R.id.checkBox_sound);
+                CheckBox backgroundMusicBox = (CheckBox) view.findViewById(R.id.checkBox_bg_music);
+                RadioButton enButton = (RadioButton)  view.findViewById(R.id.lang_english);
+              //  RadioButton cnButton = (RadioButton)  view.findViewById(R.id.lang_chinese);
+
+                ApplicationConfig.getInstance().setGameAnimationOn(animationBox.isChecked());
+                ApplicationConfig.getInstance().setGameSoundOn(soundBox.isChecked());
+                ApplicationConfig.getInstance().setBackgroundMusicOn(backgroundMusicBox.isChecked());
+                ApplicationConfig.getInstance().setLang(enButton.isChecked()?"en":"cn");
+
+                ApplicationConfig.getInstance().save();
                 dialog.dismiss();
 
             }
@@ -179,9 +193,27 @@ public class MainActivity extends Activity implements View.OnClickListener{
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ApplicationConfig.getInstance().reset();
                 dialog.dismiss();
             }
         });
+
+        //dialog initialization
+        CheckBox animationBox = (CheckBox) view.findViewById(R.id.checkBox_animation);
+        CheckBox soundBox = (CheckBox) view.findViewById(R.id.checkBox_sound);
+        CheckBox backgroundMusicBox = (CheckBox) view.findViewById(R.id.checkBox_bg_music);
+        RadioButton enButton = (RadioButton)  view.findViewById(R.id.lang_english);
+        RadioButton cnButton = (RadioButton)  view.findViewById(R.id.lang_chinese);
+
+        animationBox.setChecked(ApplicationConfig.getInstance().isGameAnimationOn());
+        soundBox.setChecked(ApplicationConfig.getInstance().isGameSoundOn());
+        backgroundMusicBox.setChecked(ApplicationConfig.getInstance().isBackgroundMusicOn());
+
+        if("en".equals(ApplicationConfig.getInstance().getLang())){
+            enButton.setChecked(true);
+        }else{
+            cnButton.setChecked(true);
+        }
 
         dialog .getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.show();

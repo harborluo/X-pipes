@@ -4,8 +4,10 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.harbor.game.R;
+import com.harbor.game.util.ApplicationConfig;
 
 import java.io.IOException;
 
@@ -38,6 +40,12 @@ public class MusicService extends Service{
             mediaPlayer.release();
             //Toast.makeText(this, "停止播放背景音乐", Toast.LENGTH_LONG).show();
             mediaPlayer=null;
+        }
+
+        Log.i("Music service", "initMediaPlayer: backgroundMusicOn = " + ApplicationConfig.getInstance().isBackgroundMusicOn());
+
+        if(ApplicationConfig.getInstance().isBackgroundMusicOn()==false){
+            return;
         }
 
         //初始化媒体播放器
@@ -74,12 +82,25 @@ public class MusicService extends Service{
         }
     }
 
+    /**
+     * 每次调用Context的startService都会触发onStartCommand回调方法
+     * 所以onStartCommand在Service的生命周期中可能会被调用多次
+     * @param intent
+     * @param flags
+     * @param startId
+     * @return
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        Log.i("MusicService", "onStartCommand: music resource id = " + intent.getIntExtra("music",-1));
+
         initMediaPlayer(intent.getIntExtra("music",-1));
-        //每次调用Context的startService都会触发onStartCommand回调方法
-        //所以onStartCommand在Service的生命周期中可能会被调用多次
+
+        if(ApplicationConfig.getInstance().isBackgroundMusicOn()==false){
+            return START_STICKY;
+        }
+
         if(isReady && !mediaPlayer.isPlaying()){
             //播放背景音乐
             mediaPlayer.start();

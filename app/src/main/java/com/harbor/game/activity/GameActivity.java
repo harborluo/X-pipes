@@ -317,12 +317,13 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
 
     private boolean reduceWrenchCount() {
 
-        if (gameData.getWrenchCount()> 0) {
-            gameData.decreaseWrenchCount();
-            wrenchTextView.setText(new String(gameData.getWrenchCount() + ""));
-            return true;
+        if (gameData.getWrenchCount() == 0) {
+          return false;
         }
-        return false;
+
+        gameData.decreaseWrenchCount();
+        wrenchTextView.setText(new String(gameData.getWrenchCount() + ""));
+        return true;
     }
 
     public void calculateScore( final boolean animationOn) {
@@ -488,6 +489,9 @@ public class GameActivity extends Activity implements View.OnClickListener, Dial
         timer.start();
     }
 
+    /**
+     * @param musicResourceId, set as  -1 to stop background music
+     */
     private void playMusic(int musicResourceId){
 
         if(musicResourceId==-1){

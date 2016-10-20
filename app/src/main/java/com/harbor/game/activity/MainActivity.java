@@ -5,11 +5,14 @@ package com.harbor.game.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.harbor.game.R;
@@ -143,11 +146,25 @@ public class MainActivity extends Activity implements View.OnClickListener{
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the
         // dialog layout
-        builder.setCancelable(false);
+        builder.setCancelable(true);
 
         builder.setView(view);
 
+
+        //dialog.setTitle("Game setting");
+        TextView title = new TextView(this);
+// You Can Customise your Title here
+        title.setText("Game setting");
+        title.setBackgroundColor(Color.DKGRAY);
+        title.setPadding(20, 20, 20, 20);
+        title.setGravity(Gravity.CENTER_VERTICAL);
+        title.setTextColor(Color.WHITE);
+        title.setTextSize(20);
+
+        builder.setCustomTitle(title);
+
         final AlertDialog dialog = builder.create();
+//        dialog.setIcon(R.mipmap.ic_launcher);
 
         final Button saveButton = (Button) view.findViewById(R.id.btn_save_setting);
         saveButton.setOnClickListener(new View.OnClickListener() {

@@ -20,9 +20,7 @@ public class AbstractActivity extends Activity {
     }
 
     public void stopMusic(){
-            Intent intent = new Intent(this, MusicService.class);
-            stopService(intent);
-            return;
-
+        Intent intent = new Intent(this, MusicService.class);
+        stopService(intent);
     }
 }

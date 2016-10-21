@@ -69,7 +69,9 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
 
         if(files.length==0){
 //            Utils.buildDialog(this, this,"Notification","No saved games found.","OK");
-            Utils.showDialog(this,this,"No saved games found.","Start new game","Back");
+            Utils.showDialog(this,this,getResources().getString(R.string.game_message_no_saved_game_found),
+                    getResources().getString(R.string.game_text_button_start_new_game),
+                    getResources().getString(R.string.game_text_dialog_button_back));
         }
 
     }
@@ -93,7 +95,7 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
     public void buttonClicked(String buttonText) {
         Log.i(TAG, "buttonClicked: "+buttonText);
         this.finish();
-        if("Start new game".equals(buttonText)){
+        if((buttonText.equals(getResources().getString(R.string.game_text_button_start_new_game)))){
             Intent intent = new Intent();
             intent.setAction("game");
             startActivity(intent);

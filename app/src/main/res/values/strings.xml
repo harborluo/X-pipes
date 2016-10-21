@@ -33,6 +33,7 @@
     <string name="game_text_label_sound">游戏声音</string>
     <string name="game_text_label_animation">算分动画</string>
 
-
-
+<!-- load game activity  -->
+    <string name="game_message_no_saved_game_found">找不到游戏存档。</string>
+    <string name="game_text_button_start_new_game">新游戏</string>
 </resources>

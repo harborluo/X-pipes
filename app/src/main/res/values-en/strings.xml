@@ -34,4 +34,7 @@
     <string name="game_text_label_sound">Game sound</string>
     <string name="game_text_label_animation">Score calculate animation</string>
 
+    <!-- load game activity  -->
+    <string name="game_message_no_saved_game_found">No saved games found.</string>
+    <string name="game_text_button_start_new_game">New game</string>
 </resources>

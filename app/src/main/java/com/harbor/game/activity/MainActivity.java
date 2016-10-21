@@ -81,7 +81,7 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
             break;
 
             case R.id.btn_new_game :{
-                Intent intent = new Intent();//new Intent(MainActivity.this,GameActiviy.class);
+                Intent intent = new Intent();//new Intent(MainActivity.this,GameActivity.class);
                 intent.setAction("game");
                 startActivity(intent);
             }
@@ -157,7 +157,7 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
         //dialog.setTitle("Game setting");
         TextView title = new TextView(this);
 // You Can Customise your Title here
-        title.setText("Game setting");
+        title.setText(getResources().getString(R.string.game_text_label_setting));
         title.setBackgroundColor(Color.DKGRAY);
         title.setPadding(20, 20, 20, 20);
         title.setGravity(Gravity.CENTER_VERTICAL);
@@ -207,6 +207,7 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
             @Override
             public void onClick(View view) {
                 ApplicationConfig.getInstance().reset();
+                MainActivity.this.playMusic(R.raw.main_background);
                 dialog.dismiss();
             }
         });

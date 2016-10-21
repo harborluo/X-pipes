@@ -1,9 +1,32 @@
 <resources>
-    <string name="app_name">X-pipes</string><string name="level">Lev</string>
-    <string name="required">Req</string>
-<!--
-    <string name="title_activity_game_activiy">GameActiviy</string>
+    <string name="app_name">X-pipes</string>
 
-    <string name="next_coming_pipe">Next coming pipe</string>
-    -->
+    <string name="game_text_label_score">得分</string>
+    <string name="game_text_label_next">下一个</string>
+    <string name="game_text_label_Level">关卡</string>
+    <string name="game_text_label_required">任务</string>
+    <string name="game_text_label_time">时间</string>
+
+    <string name="game_message_level_pass">你真棒，挑战关卡{0}成功，水管总数{1}，得分{2}。</string>
+    <string name="game_message_level_fail">很可惜，挑战关卡{0}失败，水管总数{1}，得分{2}。</string>
+    <string name="game_message_level_pause">游戏已暂停。</string>
+
+    <string name="game_text_button_setting">设置</string>
+    <string name="game_text_button_start">开始</string>
+    <string name="game_text_button_load">存档</string>
+    <string name="game_text_button_help">帮助</string>
+    <string name="game_text_button_quit">离开</string>
+
+    <string name="game_text_dialog_button_continue">继续</string>
+    <string name="game_text_dialog_button_play_again">还要玩</string>
+    <string name="game_text_dialog_button_next_level">下一关</string>
+    <string name="game_text_dialog_button_back">返回</string>
+
+    <string name="game_text_label_setting">游戏设置</string>
+    <string name="game_text_dialog_button_reset">重置</string>
+    <string name="game_text_dialog_button_save">保存</string>
+    <string name="game_text_label_bg_music">背景音乐</string>
+    <string name="game_text_label_sound">游戏声音</string>
+    <string name="game_text_label_animation">算分动画</string>
+
 </resources>

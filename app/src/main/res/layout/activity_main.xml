@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:width="250dp"
-            android:text="X - Pipes"
+            android:text="@string/app_name"
             android:textAllCaps="false"
             android:textColor="@android:color/holo_orange_light"
             android:textSize="60dp"
@@ -42,7 +42,7 @@
             android:width="160dp"
             android:height="40dp"
             android:background="@drawable/game_button"
-            android:text="Settings"
+            android:text="@string/game_text_button_setting"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
 
@@ -56,7 +56,7 @@
             android:width="160dp"
             android:height="40dp"
             android:background="@drawable/game_button"
-            android:text="New Game"
+            android:text="@string/game_text_button_start"
             android:textAllCaps="false"
             android:textColor="@android:color/white" />
 
@@ -68,7 +68,7 @@
             android:width="160dp"
             android:height="40dp"
             android:background="@drawable/game_button"
-            android:text="Load Game"
+            android:text="@string/game_text_button_load"
             android:textAllCaps="false"
             android:textColor="@android:color/white" />
 
@@ -81,7 +81,7 @@
             android:width="160dp"
             android:height="40dp"
             android:background="@drawable/game_button"
-            android:text="Help"
+            android:text="@string/game_text_button_help"
             android:textAllCaps="false"
             android:textColor="@android:color/white" />
 
@@ -93,7 +93,7 @@
             android:width="160dp"
             android:height="40dp"
             android:background="@drawable/game_button"
-            android:text="Quit Game"
+            android:text="@string/game_text_button_quit"
             android:textAllCaps="false"
             android:textColor="@android:color/white" />
 

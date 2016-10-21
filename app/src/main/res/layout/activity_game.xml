@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Score"
+            android:text="@string/game_text_label_score"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:paddingLeft="5sp"
@@ -42,12 +42,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/required"
+            android:text="@string/game_text_label_required"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:paddingLeft="5sp"
             android:layout_weight="1"/>
-
 
         <TextView
             android:id="@+id/game_required_pipe_count"
@@ -65,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Next"
+            android:text="@string/game_text_label_next"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:paddingLeft="5sp"
@@ -84,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Time"
+            android:text="@string/game_text_label_time"
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:paddingLeft="5sp"

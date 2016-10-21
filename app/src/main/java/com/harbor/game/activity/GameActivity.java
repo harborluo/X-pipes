@@ -24,6 +24,7 @@ import com.harbor.game.widget.DialogMonitor;
 import com.harbor.game.widget.ImageAdapter;
 
 import java.io.File;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -380,12 +381,18 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
                     boolean gamePassed = animationTaskList.size() -  gameData.getMissionCount() > 0;
 
-                    String message = "Level " +(gamePassed ? "succeeded, ":"failed, ");
-                    message+="pipe count is " + (animationTaskList.size()-1);
-                    message+=", your score is " +total+".";
-                    String[] buttonTexts = {gamePassed?"Next level":"Play again","Back"};
+                    String message = gamePassed ? getResources().getString(R.string.game_message_level_pass) : getResources().getString(R.string.game_message_level_fail);
+                    //"Level " +(gamePassed ? "succeeded, ":"failed, ");
+                    //message+="pipe count is " + (animationTaskList.size()-1);
+                    //message+=", your score is " +total+".";
+                    message = MessageFormat.format(message,gameData.getLevel(),animationTaskList.size()-1, total);
 
-                    Utils.showDialog(GameActivity.this,GameActivity.this,message,buttonTexts);
+
+                    String[] buttonTexts = {gamePassed?getResources().getString(R.string.game_text_dialog_button_next_level):
+                            getResources().getString(R.string.game_text_dialog_button_play_again),
+                            getResources().getString(R.string.game_text_dialog_button_back)};
+
+                    Utils.showDialog(GameActivity.this,GameActivity.this,message, buttonTexts);
 
                     return;
                 }
@@ -426,10 +433,10 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
         Log.i(TAG, "buttonClicked: "+buttonText);
 
-        if(buttonText.equals("Back")){
+        if(buttonText.equals(getResources().getString(R.string.game_text_dialog_button_back))){
             this.finish();
             return;
-        }else if("Play again".equals(buttonText)){
+        }else if(getResources().getString(R.string.game_text_dialog_button_play_again).equals(buttonText)){
 
             String path = Utils.getDefaultFilePath();
             File file = new File(path + File.separator + gameData.getName());
@@ -440,12 +447,12 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
             //Start a new game
             this.gameData = new GameData(1, gameData.getNumOfRows(), gameData.getNumOfColumns());
             initGame(true,true);
-        }else if("Next level".equals(buttonText)){
+        }else if(getResources().getString(R.string.game_text_dialog_button_next_level).equals(buttonText)){
            // initGame(this.gameData.isOver()!=false);
             gameData = gameData.nextLevel();
             initGame(true,true);
 
-        }else if("Continue".equals(buttonText)){
+        }else if(getResources().getString(R.string.game_text_dialog_button_continue).equals(buttonText)){
             //Game pauses, only start up music service is enough
             playMusic(gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
         }
@@ -476,7 +483,10 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
         if(GAME_PAUSED==true){
             //wait for the user to click the continue button.
-            Utils.showDialog(GameActivity.this,GameActivity.this,"Game paused", "Continue", "Back");
+            Utils.showDialog(GameActivity.this, GameActivity.this,
+                    getResources().getString(R.string.game_message_level_pause),
+                    getResources().getString(R.string.game_text_dialog_button_continue),
+                    getResources().getString(R.string.game_text_dialog_button_back));
             return;
         }
 

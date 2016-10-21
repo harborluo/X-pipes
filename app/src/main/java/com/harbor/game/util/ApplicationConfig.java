@@ -18,7 +18,7 @@ public class ApplicationConfig implements Serializable {
 
     private  boolean backgroundMusicOn = true, gameSoundOn = true, gameAnimationOn=true;
 
-    private  String lang = "en";//cn
+    private  String lang = "en";//cn,en,tw
 
     public  boolean isBackgroundMusicOn() {
         return backgroundMusicOn;

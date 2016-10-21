@@ -190,6 +190,7 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
                 CheckBox soundBox = (CheckBox) view.findViewById(R.id.checkBox_sound);
                 CheckBox backgroundMusicBox = (CheckBox) view.findViewById(R.id.checkBox_bg_music);
                 RadioButton enButton = (RadioButton)  view.findViewById(R.id.lang_english);
+                RadioButton cnButton = (RadioButton)  view.findViewById(R.id.lang_chinese);
 
               //  RadioButton cnButton = (RadioButton)  view.findViewById(R.id.lang_chinese);
 
@@ -198,7 +199,7 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
                 ApplicationConfig.getInstance().setGameAnimationOn(animationBox.isChecked());
                 ApplicationConfig.getInstance().setGameSoundOn(soundBox.isChecked());
                 ApplicationConfig.getInstance().setBackgroundMusicOn(backgroundMusicBox.isChecked());
-                ApplicationConfig.getInstance().setLang(enButton.isChecked()?"en":"cn");
+                ApplicationConfig.getInstance().setLang(enButton.isChecked()?"en":(cnButton.isChecked()?"cn":"tw"));
 
                 if(backgroundMusicChanged){
 
@@ -248,15 +249,22 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
         CheckBox backgroundMusicBox = (CheckBox) view.findViewById(R.id.checkBox_bg_music);
         RadioButton enButton = (RadioButton)  view.findViewById(R.id.lang_english);
         RadioButton cnButton = (RadioButton)  view.findViewById(R.id.lang_chinese);
+        RadioButton twButton = (RadioButton)  view.findViewById(R.id.lang_chinese_tw);
 
         animationBox.setChecked(ApplicationConfig.getInstance().isGameAnimationOn());
         soundBox.setChecked(ApplicationConfig.getInstance().isGameSoundOn());
         backgroundMusicBox.setChecked(ApplicationConfig.getInstance().isBackgroundMusicOn());
 
-        if("en".equals(ApplicationConfig.getInstance().getLang())){
-            enButton.setChecked(true);
-        }else{
-            cnButton.setChecked(true);
+        switch (ApplicationConfig.getInstance().getLang()){
+            case "en" : {
+                enButton.setChecked(true);
+            }break;
+            case "cn" : {
+                cnButton.setChecked(true);
+            }break;
+            case "tw" : {
+                twButton.setChecked(true);
+            }break;
         }
 
         dialog .getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;

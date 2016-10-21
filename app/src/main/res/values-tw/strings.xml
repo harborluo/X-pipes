@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">X-pipes</string>
+
+    <string name="game_text_label_score">得分</string>
+    <string name="game_text_label_total_score">總分</string>
+    <string name="game_text_label_next">下一個</string>
+    <string name="game_text_label_Level">關卡</string>
+    <string name="game_text_label_required">任務</string>
+    <string name="game_text_label_time">時間</string>
+    <string name="game_text_label_progress">進度</string>
+
+    <string name="game_message_level_pass">你真棒，挑戰關卡{0}成功，水管總數{1}，得分{2}。</string>
+    <string name="game_message_level_fail">很可惜，挑戰關卡{0}失敗，水管總數{1}，得分{2}。</string>
+    <string name="game_message_level_pause">遊戲已暫停。</string>
+
+    <string name="game_text_label_back_prompt">再按一次退出遊戲</string>
+
+    <string name="game_text_button_setting">設置</string>
+    <string name="game_text_button_start">開始</string>
+    <string name="game_text_button_load">存檔</string>
+    <string name="game_text_button_help">幫助</string>
+    <string name="game_text_button_quit">離開</string>
+
+    <string name="game_text_dialog_button_continue">繼續</string>
+    <string name="game_text_dialog_button_play_again">還要玩</string>
+    <string name="game_text_dialog_button_next_level">下一關</string>
+    <string name="game_text_dialog_button_back">返回</string>
+
+    <string name="game_text_label_setting">遊戲設置</string>
+    <string name="game_text_dialog_button_reset">重置</string>
+    <string name="game_text_dialog_button_save">保存</string>
+    <string name="game_text_label_bg_music">背景音樂</string>
+    <string name="game_text_label_sound">遊戲聲音</string>
+    <string name="game_text_label_animation">算分動畫</string>
+
+    <!-- load game activity  -->
+    <string name="game_message_no_saved_game_found">找不到遊戲存檔。</string>
+    <string name="game_text_button_start_new_game">新遊戲</string>
+</resources>

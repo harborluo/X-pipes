@@ -58,7 +58,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
     //    private Handler mainHandler= new Handler();
 
-    public int[] pipeImages = {
+    int[] pipeImages = {
             R.mipmap.cross,
             R.mipmap.right_down,
             R.mipmap.right_up,

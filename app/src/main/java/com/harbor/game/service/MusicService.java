@@ -28,7 +28,7 @@ public class MusicService extends Service{
 //
 //    }
 
-    private void initMediaPlayer(int resourceId){
+    private void initMediaPlayer(int resourceId, boolean bgMusicOn){
 
         if(mediaPlayer != null){
             if(mediaPlayer.isPlaying()){
@@ -44,7 +44,7 @@ public class MusicService extends Service{
 
         Log.i("Music service", "initMediaPlayer: backgroundMusicOn = " + ApplicationConfig.getInstance().isBackgroundMusicOn());
 
-        if(ApplicationConfig.getInstance().isBackgroundMusicOn()==false){
+        if(bgMusicOn==false){
             return;
         }
 
@@ -93,15 +93,14 @@ public class MusicService extends Service{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Log.i("MusicService", "onStartCommand: music resource id = " + intent.getIntExtra("music",-1));
+        Log.i("MusicService", "onStartCommand: music resource id = " + intent.getIntExtra("music",-1)
+                +", backgroundMusicOn = "+ApplicationConfig.getInstance().isBackgroundMusicOn());
 
-        initMediaPlayer(intent.getIntExtra("music",-1));
+        boolean bgMusicOn = intent.getBooleanExtra("background_music_on",true);
 
-        if(ApplicationConfig.getInstance().isBackgroundMusicOn()==false){
-            return START_STICKY;
-        }
+        initMediaPlayer(intent.getIntExtra("music",-1),bgMusicOn);
 
-        if(isReady && !mediaPlayer.isPlaying()){
+        if(isReady && !mediaPlayer.isPlaying()&&bgMusicOn){
             //播放背景音乐
             mediaPlayer.start();
            // Toast.makeText(this, "开始播放背景音乐", Toast.LENGTH_LONG).show();

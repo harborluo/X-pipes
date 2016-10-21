@@ -17,6 +17,7 @@ import com.harbor.game.GameData;
 import com.harbor.game.R;
 import com.harbor.game.ScoreCalculator;
 import com.harbor.game.handler.AnimationHandler;
+import com.harbor.game.util.ApplicationConfig;
 import com.harbor.game.util.Utils;
 import com.harbor.game.widget.DialogButtonListener;
 import com.harbor.game.widget.DialogMonitor;
@@ -278,11 +279,9 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
         if (currentImage == R.mipmap.blank) {
 
-            new Handler().postDelayed(new Runnable() {
-                public void run() {
-                    soundPool.play(soundResources.get(1), 0.7f, 0.7f, 0, 0, 1);
-                }
-            }, 0);
+            if(ApplicationConfig.getInstance().isGameSoundOn()){
+               playSound(1);
+            }
 
             int nextImage = (int) nextPipe.getTag();
             imageView.setImageResource(nextImage);
@@ -300,11 +299,9 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
             imageView.setTag(R.mipmap.blank);
             gameData.setDataImage(view.getId(), R.mipmap.blank);
 
-            new Handler().postDelayed(new Runnable() {
-                public void run() {
-                    soundPool.play(soundResources.get(2),  0.7f, 0.7f, 0, 0, 1);
-                }
-            }, 0);
+            if(ApplicationConfig.getInstance().isGameSoundOn()){
+                playSound(2);
+            }
 
         }
 
@@ -344,6 +341,10 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
             saveGame();
         }
 
+        final boolean globalAnamationOn  =ApplicationConfig.getInstance().isGameAnimationOn();
+
+
+
         //play animation
         Runnable runnable = new Runnable() {
             int i = 0;
@@ -365,7 +366,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
                 int soundId = task[2]==50?soundResources.get(4):soundResources.get(3);
 
-                if(animationOn==true){
+                if(animationOn == true && globalAnamationOn == true){
                     soundPool.play(soundId, 0.7f, 0.7f, 0, 0, 1);
                 }
 
@@ -384,17 +385,11 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
                     message+=", your score is " +total+".";
                     String[] buttonTexts = {gamePassed?"Next level":"Play again","Back"};
 
-//                    if(animationTaskList.size() -  gameData.getMissionCount() > 0){
-//                        Utils.showDialog(GameActivity.this,GameActivity.this, "Level succeeded, try next level "+(gameData.getLevel()+1),"Next level","Back");
-//                    }else{
-//                        Utils.showDialog(GameActivity.this,GameActivity.this,"Game over, your score is " + total + ".","Play again","Back");
-//                    }
-
                     Utils.showDialog(GameActivity.this,GameActivity.this,message,buttonTexts);
 
                     return;
                 }
-                animationHandler.postDelayed(this, animationOn ? 800 : 0);  //for interval...
+                animationHandler.postDelayed(this, animationOn && globalAnamationOn ? 800 : 0);  //for interval...
             }
         };
         animationHandler.postDelayed(runnable, 0); //for initial delay..
@@ -488,6 +483,14 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
         playMusic(gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
 
         timer.start();
+    }
+
+    private void playSound(final int soundKey){
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                soundPool.play(soundResources.get(soundKey), 0.7f, 0.7f, 0, 0, 1);
+            }
+        }, 0);
     }
 
 }

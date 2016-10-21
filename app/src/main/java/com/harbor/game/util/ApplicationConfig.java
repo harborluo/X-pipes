@@ -61,9 +61,10 @@ public class ApplicationConfig implements Serializable {
         if(obj!=null){
            ApplicationConfig config = (ApplicationConfig) obj;
             instance.backgroundMusicOn = config.isBackgroundMusicOn();
-            instance.gameAnimationOn = config.isGameSoundOn();
+            instance.gameSoundOn = config.isGameSoundOn();
             instance.gameAnimationOn = config.isGameAnimationOn();
             instance.lang = config.getLang();
+            Log.i("ApplicationConfig", "init static : gameAnimationOn = " + instance.backgroundMusicOn);
         }else{
             instance.save();
         }

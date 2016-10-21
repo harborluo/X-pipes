@@ -177,12 +177,24 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
                 CheckBox soundBox = (CheckBox) view.findViewById(R.id.checkBox_sound);
                 CheckBox backgroundMusicBox = (CheckBox) view.findViewById(R.id.checkBox_bg_music);
                 RadioButton enButton = (RadioButton)  view.findViewById(R.id.lang_english);
+
               //  RadioButton cnButton = (RadioButton)  view.findViewById(R.id.lang_chinese);
+
+                boolean backgroundMusicChanged = backgroundMusicBox.isChecked()!=ApplicationConfig.getInstance().isBackgroundMusicOn();
 
                 ApplicationConfig.getInstance().setGameAnimationOn(animationBox.isChecked());
                 ApplicationConfig.getInstance().setGameSoundOn(soundBox.isChecked());
                 ApplicationConfig.getInstance().setBackgroundMusicOn(backgroundMusicBox.isChecked());
                 ApplicationConfig.getInstance().setLang(enButton.isChecked()?"en":"cn");
+
+                if(backgroundMusicChanged){
+
+                  if(backgroundMusicBox.isChecked()==false){
+                     MainActivity.this.stopMusic();
+                  }else{
+                      MainActivity.this.playMusic(R.raw.main_background);
+                  }
+                }
 
                 ApplicationConfig.getInstance().save();
                 dialog.dismiss();

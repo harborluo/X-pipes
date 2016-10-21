@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">X-pipes</string>
+
+    <string name="game_text_label_score">Score</string>
+    <string name="game_text_label_total_score">Total score</string>
+
+    <string name="game_text_label_next">Next</string>
+    <string name="game_text_label_Level">Level</string>
+    <string name="game_text_label_required">Req</string>
+    <string name="game_text_label_time">Time</string>
+    <string name="game_text_label_progress">Level progress</string>
+
+    <string name="game_message_level_pass">Good job, level {0} succeeded, pipe count is{1}, score is{2}.</string>
+    <string name="game_message_level_fail">What a pity, level {0} fail, pipe count is{1}, score is{2}.</string>
+    <string name="game_message_level_pause">Game paused.</string>
+
+    <string name="game_text_label_back_prompt">Press BACK again to quick the game</string>
+
+    <string name="game_text_button_setting">Setting</string>
+    <string name="game_text_button_start">Start</string>
+    <string name="game_text_button_load">Load</string>
+    <string name="game_text_button_help">Help</string>
+    <string name="game_text_button_quit">Quit</string>
+
+    <string name="game_text_dialog_button_continue">continue</string>
+    <string name="game_text_dialog_button_play_again">Play again</string>
+    <string name="game_text_dialog_button_next_level">Next Level</string>
+    <string name="game_text_dialog_button_back">Back</string>
+
+    <string name="game_text_label_setting">Game setting</string>
+    <string name="game_text_dialog_button_reset">Rest</string>
+    <string name="game_text_dialog_button_save">Save</string>
+    <string name="game_text_label_bg_music">Background music</string>
+    <string name="game_text_label_sound">Game sound</string>
+    <string name="game_text_label_animation">Score calculate animation</string>
+
+</resources>

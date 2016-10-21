@@ -16,7 +16,8 @@
 
         <activity
             android:name=".activity.MainActivity"
-            android:theme="@style/FullscreenTheme">
+            android:theme="@style/FullscreenTheme"
+            android:configChanges="locale">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

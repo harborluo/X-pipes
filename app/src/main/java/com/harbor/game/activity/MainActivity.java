@@ -4,9 +4,12 @@ package com.harbor.game.activity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,6 +22,8 @@ import android.widget.Toast;
 
 import com.harbor.game.R;
 import com.harbor.game.util.ApplicationConfig;
+
+import java.util.Locale;
 
 public class MainActivity extends AbstractActivity implements View.OnClickListener{
 
@@ -42,6 +47,15 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.d(TAG, "onCreate: ");
+
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.setLocale(new Locale(ApplicationConfig.getInstance().getLang()));
+        res.updateConfiguration(conf, dm);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -59,10 +73,9 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
 
         btn_setting = (Button) findViewById(R.id.btn_setting);
         btn_setting.setOnClickListener(this);
-        
+
         playMusic(R.raw.main_background);
 
-        Log.d(TAG, "onCreate: ");
     }
 
     @Override
@@ -157,7 +170,7 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
         //dialog.setTitle("Game setting");
         TextView title = new TextView(this);
 // You Can Customise your Title here
-        title.setText(getResources().getString(R.string.game_text_label_setting));
+        title.setText(R.string.game_text_label_setting);
         title.setBackgroundColor(Color.DKGRAY);
         title.setPadding(20, 20, 20, 20);
         title.setGravity(Gravity.CENTER_VERTICAL);
@@ -197,6 +210,15 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
                 }
 
                 ApplicationConfig.getInstance().save();
+
+                Resources res = getResources();
+                DisplayMetrics dm = res.getDisplayMetrics();
+                Configuration conf = res.getConfiguration();
+                conf.setLocale(new Locale(ApplicationConfig.getInstance().getLang()));
+                res.updateConfiguration(conf, dm);
+
+                MainActivity.this.onConfigurationChanged(conf);
+
                 dialog.dismiss();
 
             }
@@ -208,6 +230,14 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
             public void onClick(View view) {
                 ApplicationConfig.getInstance().reset();
                 MainActivity.this.playMusic(R.raw.main_background);
+
+                Resources res = getResources();
+                DisplayMetrics dm = res.getDisplayMetrics();
+                Configuration conf = res.getConfiguration();
+                conf.setLocale(new Locale(ApplicationConfig.getInstance().getLang()));
+                res.updateConfiguration(conf, dm);
+                MainActivity.this.onConfigurationChanged(conf);
+
                 dialog.dismiss();
             }
         });
@@ -232,6 +262,18 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
         dialog .getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.show();
 
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        // refresh your views here
+        btn_setting.setText(R.string.game_text_button_setting);
+        btn_help.setText(R.string.game_text_button_help);
+        btn_new_game.setText(R.string.game_text_button_start);
+        btn_load.setText(R.string.game_text_button_load);
+        btn_quit_game.setText(R.string.game_text_button_quit);
+//        this.recreate();
+        super.onConfigurationChanged(newConfig);
     }
 
 }

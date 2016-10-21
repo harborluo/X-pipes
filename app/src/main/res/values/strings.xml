@@ -2,10 +2,12 @@
     <string name="app_name">X-pipes</string>
 
     <string name="game_text_label_score">得分</string>
+    <string name="game_text_label_total_score">总分</string>
     <string name="game_text_label_next">下一个</string>
     <string name="game_text_label_Level">关卡</string>
     <string name="game_text_label_required">任务</string>
     <string name="game_text_label_time">时间</string>
+    <string name="game_text_label_progress">进度</string>
 
     <string name="game_message_level_pass">你真棒，挑战关卡{0}成功，水管总数{1}，得分{2}。</string>
     <string name="game_message_level_fail">很可惜，挑战关卡{0}失败，水管总数{1}，得分{2}。</string>

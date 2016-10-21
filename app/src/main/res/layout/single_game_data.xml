@@ -30,15 +30,15 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|left"
                 android:textColor="@color/white"
-                android:layout_weight="2"
-                android:text="Level"
+                android:layout_weight="3"
+                android:text="@string/game_text_label_Level"
                 android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/txtLev"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:gravity="center_vertical|left"
                 android:textColor="@color/game_font_color"
                 android:textSize="14dp" />
@@ -52,15 +52,15 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|left"
                 android:textColor="@color/white"
-                android:layout_weight="2"
-                android:text="Required"
+                android:layout_weight="3"
+                android:text="@string/game_text_label_required"
                 android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/txtReq"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:gravity="center_vertical|left"
                 android:textColor="@color/game_font_color"
                 android:textSize="14dp" />
@@ -74,15 +74,15 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|left"
                 android:textColor="@color/white"
-                android:layout_weight="2"
-                android:text="Score"
+                android:layout_weight="3"
+                android:text="@string/game_text_label_total_score"
                 android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/txtScore"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:gravity="center_vertical|left"
                 android:textColor="@color/game_font_color"
                 android:textSize="14dp" />
@@ -97,15 +97,15 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|left"
                 android:textColor="@color/white"
-                android:layout_weight="2"
-                android:text="Time"
+                android:layout_weight="3"
+                android:text="@string/game_text_label_time"
                 android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/txtSeconds"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:gravity="center_vertical|left"
                 android:textColor="@color/game_font_color"
                 android:textSize="14dp" />
@@ -120,7 +120,7 @@
                 android:gravity="center_vertical|left"
                 android:textColor="@color/white"
                 android:layout_weight="2"
-                android:text="Progress"
+                android:text="@string/game_text_label_progress"
                 android:textSize="16dp" />
 
             <ProgressBar
@@ -128,7 +128,7 @@
                 android:progressDrawable="@drawable/bar_color"
                 android:layout_width="0dp"
                 android:layout_height="18dp"
-                android:layout_weight="3"
+                android:layout_weight="2"
                 android:gravity="center_vertical|left"
                 android:id="@+id/gameProgressBar"
                 />

@@ -41,6 +41,8 @@ public class HelpActivity extends Activity implements View.OnClickListener {
 
         testTextView = (TextView)  findViewById(R.id.testTextView);
 
+        //TODO add game help tutorial here
+
     }
 
     @Override

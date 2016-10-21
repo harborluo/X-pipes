@@ -70,7 +70,7 @@ public class ScoreCalculator {
         // soundPool.play(soundResources.get(3),1, 1, 0, 0, 1);
         data[headerPosition] = head_on_image;
 
-        //TODO add animation task here
+        //add animation task here
         animationTaskList.add(new int[]{headerPosition, head_on_image, 0 });
 
         int rowPos = headerPosition/numOfColumns;
@@ -220,7 +220,7 @@ public class ScoreCalculator {
         }
 
         if(targetImage>-1){
-            //TODO add animation task here
+            //add animation task here
             score = targetImage==R.mipmap.cross_full_on?50:10;
 
             animationTaskList.add(new int[]{pos, targetImage, score});

@@ -214,7 +214,42 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
         };
 
+        timer = initTimer(animationOn);
+
         playMusic(gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
+    }
+
+    private CountDownTimer initTimer(final boolean animationOn ){
+        return  new CountDownTimer(gameData.getSecondRemain() * 1000, 1000) {
+            @Override
+            public void onFinish() {
+                Log.i(TAG, "Game time onFinish: ");
+                gameData.decreaseSecondRemain();
+                timeRemainTextView.setText(gameData.getSecondRemain() + "");
+                //playMusic(-1);
+                stopMusic();
+                calculateScore( animationOn);
+            }
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+                if (GameActivity.this.isFinishing()) {
+                    this.cancel();
+                }
+
+                gameData.decreaseSecondRemain();
+                timeRemainTextView.setText("" + gameData.getSecondRemain());
+
+                Log.i(TAG, "onTick: seconds remain is "+gameData.getSecondRemain());
+                if (gameData.getSecondRemain() == 10) {
+                    Log.i(TAG, "onTick: change background music as  hurry_count_down");
+                    GameActivity.this.playMusic( R.raw.hurry_count_down);
+                }
+
+            }
+
+        };
     }
 
     private void generateNextPipe() {
@@ -471,6 +506,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
         stopMusic();
         timer.cancel();
+        timer = initTimer(true);
         saveGame();
      //   animationHandler.sendEmptyMessage(0);
     }

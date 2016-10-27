@@ -471,7 +471,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
         if(buttonText.equals(getResources().getString(R.string.game_text_dialog_button_back))){
             this.finish();
             return;
-        }else if(getResources().getString(R.string.game_text_dialog_button_play_again).equals(buttonText)){
+        }else if(buttonText.equals(getResources().getString(R.string.game_text_dialog_button_play_again))){
 
             String path = Utils.getDefaultFilePath();
             File file = new File(path + File.separator + gameData.getName());
@@ -482,15 +482,16 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
             //Start a new game
             this.gameData = new GameData(1, gameData.getNumOfRows(), gameData.getNumOfColumns());
             initGame(true,true);
-        }else if(getResources().getString(R.string.game_text_dialog_button_next_level).equals(buttonText)){
+        }else if(buttonText.equals(getResources().getString(R.string.game_text_dialog_button_next_level))){
            // initGame(this.gameData.isOver()!=false);
             gameData = gameData.nextLevel();
             initGame(true,true);
 
-        }else if(getResources().getString(R.string.game_text_dialog_button_continue).equals(buttonText)){
+        }else if(buttonText.equals(getResources().getString(R.string.game_text_dialog_button_continue))){
             //Game pauses, only start up music service is enough
             playMusic(gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
         }
+
         timer.start();
         GAME_PAUSED=false;
     }

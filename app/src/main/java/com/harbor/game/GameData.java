@@ -156,7 +156,9 @@ public class GameData implements Serializable, Parcelable{
         this.secondRemain --;
     }
 
-
+    public void dropSecondRemain() {
+        this.secondRemain=0;
+    }
 
     public int getNumOfRows() {
         return numOfRows;

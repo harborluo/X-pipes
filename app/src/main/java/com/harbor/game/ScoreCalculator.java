@@ -35,6 +35,12 @@ public class ScoreCalculator {
         return animationTaskList;
     }
 
+    private boolean nexbPipeBlocked = false;
+
+    public boolean isNexbPipeBlocked() {
+        return nexbPipeBlocked;
+    }
+
     public void execute() {
 
         int head_on_image = -1;
@@ -114,6 +120,7 @@ public class ScoreCalculator {
             }
 
             if(nextPipePassed==false){
+                nexbPipeBlocked = true;
                 break;
             }
 
@@ -142,77 +149,70 @@ public class ScoreCalculator {
                     targetImage = R.mipmap.vertical_on;
                 }else if(currentImage==R.mipmap.cross){
                     targetImage = R.mipmap.cross_vertical_on;
-                }
-                else if(currentImage==R.mipmap.cross_horizontal_on){
+                }else if(currentImage==R.mipmap.cross_horizontal_on){
                     targetImage = R.mipmap.cross_full_on;
-                }
-                else if(currentImage==R.mipmap.left_down){
+                }else if(currentImage==R.mipmap.left_down){
                     targetImage = R.mipmap.left_down_on;
                     newDirection="l";
-                }
-                else if(currentImage==R.mipmap.right_down){
+                }else if(currentImage==R.mipmap.right_down){
                     targetImage = R.mipmap.right_down_on;
                     newDirection="r";
+                }else if(currentImage!=R.mipmap.blank){
+                    nexbPipeBlocked = true;
                 }
             }
             break;
             case "d":{
                 if(currentImage==R.mipmap.vertical){
                     targetImage = R.mipmap.vertical_on;
-                }
-                else if(currentImage==R.mipmap.cross){
+                }else if(currentImage==R.mipmap.cross){
                     targetImage = R.mipmap.cross_vertical_on;
-                }
-                else if(currentImage==R.mipmap.cross_horizontal_on){
+                }else if(currentImage==R.mipmap.cross_horizontal_on){
                     targetImage = R.mipmap.cross_full_on;
-                }
-                else if(currentImage==R.mipmap.left_up){
+                }else if(currentImage==R.mipmap.left_up){
                     targetImage = R.mipmap.left_up_on;
                     newDirection="l";
-                }
-                else if(currentImage==R.mipmap.right_up){
+                }else if(currentImage==R.mipmap.right_up){
                     targetImage = R.mipmap.right_up_on;
                     newDirection="r";
+                }else if(currentImage!=R.mipmap.blank){
+                    nexbPipeBlocked = true;
                 }
             }
             break;
             case "l":{
                 if(currentImage==R.mipmap.horizontal){
                     targetImage = R.mipmap.horizontal_on;
-                }
-                else if(currentImage==R.mipmap.cross){
+                }else if(currentImage==R.mipmap.cross){
                     targetImage = R.mipmap.cross_horizontal_on;
-                }
-                else if(currentImage==R.mipmap.cross_vertical_on){
+                }else if(currentImage==R.mipmap.cross_vertical_on){
                     targetImage = R.mipmap.cross_full_on;
-                }
-                else if(currentImage==R.mipmap.right_up){
+                }else if(currentImage==R.mipmap.right_up){
                     targetImage = R.mipmap.right_up_on;
                     newDirection="u";
-                }
-                else if(currentImage==R.mipmap.right_down){
+                }else if(currentImage==R.mipmap.right_down){
                     targetImage = R.mipmap.right_down_on;
                     newDirection="d";
+                }else if(currentImage!=R.mipmap.blank){
+                    nexbPipeBlocked = true;
                 }
             }
             break;
             case "r":{
                 if(currentImage==R.mipmap.horizontal){
                     targetImage = R.mipmap.horizontal_on;
-                }
-                else if(currentImage==R.mipmap.cross){
+                }else if(currentImage==R.mipmap.cross){
                     targetImage = R.mipmap.cross_horizontal_on;
-                }
-                else if(currentImage==R.mipmap.cross_vertical_on){
+                }else if(currentImage==R.mipmap.cross_vertical_on){
                     targetImage = R.mipmap.cross_full_on;
-                }
-                else if(currentImage==R.mipmap.left_up){
+                }else if(currentImage==R.mipmap.left_up){
                     targetImage = R.mipmap.left_up_on;
                     newDirection="u";
-                }
-                else if(currentImage==R.mipmap.left_down){
+                }else if(currentImage==R.mipmap.left_down){
                     targetImage = R.mipmap.left_down_on;
                     newDirection="d";
+                }else if(currentImage!=R.mipmap.blank){
+                    nexbPipeBlocked = true;
                 }
             }
             break;

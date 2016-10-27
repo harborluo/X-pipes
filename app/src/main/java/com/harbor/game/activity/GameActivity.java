@@ -183,44 +183,18 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
         GameActivity.this.gameScoreTextView.setText("0");
 
-        timer = new CountDownTimer(gameData.getSecondRemain() * 1000, 1000) {
-            @Override
-            public void onFinish() {
-                Log.i(TAG, "Game time onFinish: ");
-                gameData.decreaseSecondRemain();
-                timeRemainTextView.setText(gameData.getSecondRemain() + "");
-                //playMusic(-1);
-                stopMusic();
-                calculateScore( animationOn);
-            }
+        if(timer!=null){
 
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-                if (GameActivity.this.isFinishing()) {
-                    this.cancel();
-                }
-
-                gameData.decreaseSecondRemain();
-                timeRemainTextView.setText("" + gameData.getSecondRemain());
-
-                Log.i(TAG, "onTick: seconds remain is "+gameData.getSecondRemain());
-                if (gameData.getSecondRemain() == 10) {
-                    Log.i(TAG, "onTick: change background music as  hurry_count_down");
-                    GameActivity.this.playMusic( R.raw.hurry_count_down);
-                }
-
-            }
-
-        };
-
+        timer.cancel();
+        }
+        
         timer = initTimer(animationOn);
 
         playMusic(gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
     }
 
     private CountDownTimer initTimer(final boolean animationOn ){
-        return  new CountDownTimer(gameData.getSecondRemain() * 1000, 1000) {
+        return new CountDownTimer(gameData.getSecondRemain() * 1000, 1000) {
             @Override
             public void onFinish() {
                 Log.i(TAG, "Game time onFinish: ");
@@ -250,6 +224,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
             }
 
         };
+
     }
 
     private void generateNextPipe() {
@@ -279,6 +254,9 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
         ScoreCalculator calculator = new ScoreCalculator(gameData);
         calculator.execute();
 
+        //Toast.makeText(this, "next pipe is block = " + calculator.isNexbPipeBlocked(), Toast.LENGTH_SHORT).show();
+
+
         Log.i(TAG, "refreshMissionCount: requiredCount, = "+ requiredCount+", finishedCount = "+(calculator.getAnimationTaskList().size()-1));
         int remain = requiredCount - calculator.getAnimationTaskList().size() + 1;
 
@@ -292,6 +270,13 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
         }
 
         game_required_pipe_count.setText("" + remain);
+
+        if(calculator.isNexbPipeBlocked() && gameData.getWrenchCount()==0 && gameData.getSecondRemain() > 0){
+            //TODO prompt message about game over and set seconds remain to zero immediately
+            gameData.dropSecondRemain();
+            //start game calculation immediately
+            timer.onFinish();
+        }
 
     }
 
@@ -492,6 +477,11 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
             playMusic(gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
         }
 
+        if(timer!=null){
+            timer.cancel();
+        }
+
+        timer = initTimer(true);
         timer.start();
         GAME_PAUSED=false;
     }
@@ -507,7 +497,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
         stopMusic();
         timer.cancel();
-        timer = initTimer(true);
+//        timer = initTimer(true);
         saveGame();
      //   animationHandler.sendEmptyMessage(0);
     }
@@ -529,6 +519,8 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
         playMusic(gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
 
+//        timer.cancel();
+//        timer = initTimer(true);
         timer.start();
     }
 

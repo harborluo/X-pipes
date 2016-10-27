@@ -9,8 +9,8 @@
     <string name="game_text_label_time">时间</string>
     <string name="game_text_label_progress">进度</string>
 
-    <string name="game_message_level_pass">你真棒，挑战关卡{0}成功，连通水管总数{1}，得分{2}。</string>
-    <string name="game_message_level_fail">很可惜，挑战关卡{0}失败，连通水管总数{1}，得分{2}。</string>
+    <string name="game_message_level_pass">你真棒，挑战关卡 {0} 成功，连通水管总数 {1}，得分 {2}。</string>
+    <string name="game_message_level_fail">很可惜，挑战关卡 {0} 失败，连通水管总数 {1}，得分 {2}。</string>
     <string name="game_message_level_pause">游戏已暂停。</string>
 
     <string name="game_text_label_back_prompt">再按一次退出游戏</string>

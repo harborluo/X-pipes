@@ -10,8 +10,8 @@
     <string name="game_text_label_time">Time</string>
     <string name="game_text_label_progress">Level progress</string>
 
-    <string name="game_message_level_pass">Good job, level {0} succeeded, connected pipe count is{1}, score is{2}.</string>
-    <string name="game_message_level_fail">What a pity, level {0} fail, connected pipe count is{1}, score is{2}.</string>
+    <string name="game_message_level_pass">Good job, level {0} succeeded, connected pipe count is {1}, score is {2}.</string>
+    <string name="game_message_level_fail">What a pity, level {0} fail, connected pipe count is {1}, score is {2}.</string>
     <string name="game_message_level_pause">Game paused.</string>
 
     <string name="game_text_label_back_prompt">Press BACK again to quick the game</string>

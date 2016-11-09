@@ -1,74 +1,51 @@
 package com.harbor.game;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 /**
  * Created by harbor on 8/30/2016.
  */
-public class GameData implements Serializable, Parcelable{
+public class GameData implements Serializable{
 
     private int nextPipe = R.mipmap.blank;
 
-    protected GameData(Parcel in) {
-        nextPipe = in.readInt();
-        name = in.readString();
-        totalScore = in.readInt();
-        headImages = in.createIntArray();
-        secondRemain = in.readInt();
-        progress = in.readInt();
-        numOfRows = in.readInt();
-        numOfColumns = in.readInt();
-        data = in.createIntArray();
-        level = in.readInt();
-        headPosition = in.readInt();
-        headImage = in.readInt();
-        missionCount = in.readInt();
-        wrenchCount = in.readInt();
-        passed = in.readByte() != 0;
+    private int currentPipeIndex = 0;
+
+    private int total = 0;
+
+    private List<int[]> animationTaskList = new ArrayList<>();
+
+    public int getCurrentPipeIndex() {
+        return currentPipeIndex;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(nextPipe);
-        dest.writeString(name);
-        dest.writeInt(totalScore);
-        dest.writeIntArray(headImages);
-        dest.writeInt(secondRemain);
-        dest.writeInt(progress);
-        dest.writeInt(numOfRows);
-        dest.writeInt(numOfColumns);
-        dest.writeIntArray(data);
-        dest.writeInt(level);
-        dest.writeInt(headPosition);
-        dest.writeInt(headImage);
-        dest.writeInt(missionCount);
-        dest.writeInt(wrenchCount);
-        dest.writeByte((byte) (passed ? 1 : 0));
+    public void setCurrentPipeIndex(int currentPipeIndex) {
+        this.currentPipeIndex = currentPipeIndex;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public int getTotal() {
+        return total;
     }
 
-    public static final Creator<GameData> CREATOR = new Creator<GameData>() {
-        @Override
-        public GameData createFromParcel(Parcel in) {
-            return new GameData(in);
-        }
+    public void setTotal(int total) {
+        this.total = total;
+    }
 
-        @Override
-        public GameData[] newArray(int size) {
-            return new GameData[size];
-        }
-    };
+    public List<int[]> getAnimationTaskList() {
+        return animationTaskList;
+    }
+
+    public void setAnimationTaskList(List<int[]> animationTaskList) {
+        this.animationTaskList = animationTaskList;
+    }
+
+
 
     public int getNextPipe() {
         return nextPipe;
@@ -154,6 +131,14 @@ public class GameData implements Serializable, Parcelable{
             return;
         }
         this.secondRemain --;
+    }
+
+    /**
+     * for test only
+     * @param seconds
+     */
+    public void resetSecondRemain(int seconds) {
+        this.secondRemain =seconds;
     }
 
     public void dropSecondRemain() {
@@ -286,6 +271,9 @@ public class GameData implements Serializable, Parcelable{
         GameData next = new GameData(this.level+1,this.numOfRows,this.getNumOfColumns());
         next.addTotalScore(this.totalScore);
         next.setName(this.getName());
+        currentPipeIndex = 0;
+        total = 0;
+        animationTaskList = new ArrayList<>();
         return next;
     }
 
@@ -296,4 +284,5 @@ public class GameData implements Serializable, Parcelable{
     public void setProgress(int progress) {
         this.progress = progress>100?100:progress;
     }
+
 }

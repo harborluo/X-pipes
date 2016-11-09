@@ -121,8 +121,9 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
 
-       // this.gameData = (GameData) getIntent().getSerializableExtra("gameDate");
-        this.gameData = getIntent().getParcelableExtra("gameDate");
+        this.gameData = (GameData) getIntent().getSerializableExtra("gameData");
+       // this.gameData = getIntent().getParcelableExtra("gameDate");
+
 
         if(gameData==null){
 
@@ -139,6 +140,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
             gameData = new GameData(1, numOfRows, numOfColumns);
         }else{
 
+           //gameData.resetSecondRemain(3);
             pipeWidth = screenWidth / gameData.getNumOfColumns();
 
         }
@@ -343,12 +345,19 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
         return true;
     }
 
+
+
     public void calculateScore( final boolean animationOn) {
 
-        ScoreCalculator calculator = new ScoreCalculator(gameData);
+        if(gameData.getAnimationTaskList().isEmpty()){
+            ScoreCalculator calculator = new ScoreCalculator(gameData);
+            calculator.execute();
+            gameData.setAnimationTaskList(calculator.getAnimationTaskList());
+        }
 
-        calculator.execute();
-        final List<int[]> animationTaskList = calculator.getAnimationTaskList();
+        final List<int[]> animationTaskList = gameData.getAnimationTaskList();
+
+        Log.i(TAG, "calculateScore: animationTaskList size is : " + animationTaskList.size());
 
         gameData.setPassed(animationTaskList.size()-gameData.getMissionCount()>0);
 
@@ -362,22 +371,40 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
             saveGame();
         }
 
-        final boolean globalAnamationOn  =ApplicationConfig.getInstance().isGameAnimationOn();
+        final boolean globalAnimationOn  =ApplicationConfig.getInstance().isGameAnimationOn();
 
-
+        animationHandler.resetTerminate();
 
         //play animation
-        Runnable runnable = new Runnable() {
-            int i = 0;
-            int total = 0;
+        Runnable drawConnectedPipe = new Runnable() {
+
+            int currentPipeIndex = gameData.getCurrentPipeIndex();
+            int total = gameData.getTotal();
 
             public void run() {
 
                 if(animationHandler.isTerminate()==true){
+                    saveGame();
                     return;
                 }
 
-                int[] task = animationTaskList.get(i);
+                if (currentPipeIndex > animationTaskList.size() - 1 ) {
+                    saveGame();
+                    boolean gamePassed = animationTaskList.size() -  gameData.getMissionCount() > 0;
+                    String message = gamePassed ? getResources().getString(R.string.game_message_level_pass) : getResources().getString(R.string.game_message_level_fail);
+                    //"Level " +(gamePassed ? "succeeded, ":"failed, ");
+                    //message+="pipe count is " + (animationTaskList.size()-1);
+                    //message+=", your score is " +total+".";
+                    message = MessageFormat.format(message,gameData.getLevel(),animationTaskList.size()-1, total);
+                    String[] buttonTexts = {gamePassed?getResources().getString(R.string.game_text_dialog_button_next_level):
+                            getResources().getString(R.string.game_text_dialog_button_play_again),
+                            getResources().getString(R.string.game_text_dialog_button_back)};
+
+                    Utils.showDialog(GameActivity.this,GameActivity.this,message, buttonTexts);
+                    return;
+                }
+
+                int[] task = animationTaskList.get(currentPipeIndex);
 
                 ImageView imgView = (ImageView) gridView.findViewById(task[0]);
 
@@ -387,7 +414,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
                 int soundId = task[2]==50?soundResources.get(4):soundResources.get(3);
 
-                if(animationOn == true && globalAnamationOn == true){
+                if(animationOn == true && globalAnimationOn == true){
                     soundPool.play(soundId, 0.7f, 0.7f, 0, 0, 1);
                 }
 
@@ -395,34 +422,18 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
                 gameScoreTextView.setText(total+"");
 
-                i++;
+                currentPipeIndex++;
 
-                if (i > animationTaskList.size() - 1 ) {
+                gameData.setDataImage(task[0], task[1]);
+                gameData.setCurrentPipeIndex(currentPipeIndex);
+                gameData.setTotal(total);
 
-                    boolean gamePassed = animationTaskList.size() -  gameData.getMissionCount() > 0;
-
-                    String message = gamePassed ? getResources().getString(R.string.game_message_level_pass) : getResources().getString(R.string.game_message_level_fail);
-                    //"Level " +(gamePassed ? "succeeded, ":"failed, ");
-                    //message+="pipe count is " + (animationTaskList.size()-1);
-                    //message+=", your score is " +total+".";
-                    message = MessageFormat.format(message,gameData.getLevel(),animationTaskList.size()-1, total);
-
-
-                    String[] buttonTexts = {gamePassed?getResources().getString(R.string.game_text_dialog_button_next_level):
-                            getResources().getString(R.string.game_text_dialog_button_play_again),
-                            getResources().getString(R.string.game_text_dialog_button_back)};
-
-                    Utils.showDialog(GameActivity.this,GameActivity.this,message, buttonTexts);
-
-                    return;
-                }
-                animationHandler.postDelayed(this, animationOn && globalAnamationOn ? 800 : 0);  //for interval...
+               // animationHandler.postDelayed(this, animationOn && globalAnimationOn ? 800 : 0);  //for interval...
+                animationHandler.postDelayed(this, globalAnimationOn ? 800 : 0);  //for interval...
             }
         };
-        animationHandler.postDelayed(runnable, 0); //for initial delay..
+        animationHandler.postDelayed(drawConnectedPipe, 0); //for initial delay..
     }
-
-
 
     @Override
     public void onBackPressed() {
@@ -499,7 +510,8 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
         timer.cancel();
 //        timer = initTimer(true);
         saveGame();
-     //   animationHandler.sendEmptyMessage(0);
+        animationHandler.sendEmptyMessage(0);
+
     }
 
     @Override

@@ -34,7 +34,7 @@ public class GameDataAdapter extends ArrayAdapter<GameData> {
     private String TAG = "GameDataAdapter";
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, final ViewGroup parent) {
 
         ViewHolder viewHolder=null;
         GameData gameData = games.get(position);
@@ -58,6 +58,27 @@ public class GameDataAdapter extends ArrayAdapter<GameData> {
             viewHolder.gridView.setTag(position);
 
             convertView.setTag(viewHolder);
+
+//            viewHolder.gridView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+////                    Toast.makeText(this,"",2).show();
+//                    Toast.makeText(parent.getContext(), "next pipe is block = ", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//            viewHolder.gridView.setOnItemClickListener(null);
+//            viewHolder.gridView.setOnClickListener(null);
+
+//            viewHolder.gridView.setOnTouchInvalidPositionListener(new OnTouchInvalidPositionListener() {
+//
+//                @Override
+//                public boolean onTouchInvalidPosition(int motionEvent) {
+//                /*当返回false的时候代表交由父级控件处理，当return true的时候表示你已经处理了该事件并不
+//
+//让该事件再往上传递。为了出发listview的item点击就得返回false了*/
+//                    return false;
+//                }
+//            });
 
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
@@ -87,6 +108,8 @@ public class GameDataAdapter extends ArrayAdapter<GameData> {
        // viewHolder.dateTextView.setText(gameData.getDateCreated());
         viewHolder.secondsTextView.setText(gameData.getSecondRemain()+"");
         viewHolder.progressBar.setProgress(gameData.getProgress());
+
+
 
         return convertView;
     }

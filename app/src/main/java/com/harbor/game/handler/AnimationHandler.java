@@ -21,5 +21,11 @@ public class AnimationHandler extends Handler {
         terminate=true;
     }
 
+    public void resetTerminate() {
+        terminate = false;
+    }
+
+
+
 
 }

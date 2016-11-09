@@ -3,7 +3,6 @@ package com.harbor.game.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -86,7 +85,7 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
         Intent intent = new Intent(LoadGameActivity.this, GameActivity.class);
         //String fileName = game.getName();
         //intent.putExtra("fileName",fileName);
-        intent.putExtra("gameDate", (Parcelable) game);
+        intent.putExtra("gameData",game);
         startActivity(intent);
 
     }

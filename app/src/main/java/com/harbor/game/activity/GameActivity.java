@@ -353,6 +353,8 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
             ScoreCalculator calculator = new ScoreCalculator(gameData);
             calculator.execute();
             gameData.setAnimationTaskList(calculator.getAnimationTaskList());
+        }else{
+            gameScoreTextView.setText(gameData.getTotal()+"");
         }
 
         final List<int[]> animationTaskList = gameData.getAnimationTaskList();
@@ -367,9 +369,9 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
             }
         }
 
-        if(animationOn==true){
-            saveGame();
-        }
+//        if(animationOn==true){
+//            saveGame();
+//        }
 
         final boolean globalAnimationOn  =ApplicationConfig.getInstance().isGameAnimationOn();
 
@@ -392,9 +394,6 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
                     saveGame();
                     boolean gamePassed = animationTaskList.size() -  gameData.getMissionCount() > 0;
                     String message = gamePassed ? getResources().getString(R.string.game_message_level_pass) : getResources().getString(R.string.game_message_level_fail);
-                    //"Level " +(gamePassed ? "succeeded, ":"failed, ");
-                    //message+="pipe count is " + (animationTaskList.size()-1);
-                    //message+=", your score is " +total+".";
                     message = MessageFormat.format(message,gameData.getLevel(),animationTaskList.size()-1, total);
                     String[] buttonTexts = {gamePassed?getResources().getString(R.string.game_text_dialog_button_next_level):
                             getResources().getString(R.string.game_text_dialog_button_play_again),

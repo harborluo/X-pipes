@@ -412,9 +412,9 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
                     imgView.setImageResource(task[1]);
                 }
 
-                int soundId = task[2]==50?soundResources.get(4):soundResources.get(3);
-
-                if(animationOn == true && globalAnimationOn == true){
+                //if(animationOn == true && globalAnimationOn == true){
+                if(ApplicationConfig.getInstance().isGameSoundOn()){
+                    int soundId = task[2]==50?soundResources.get(4):soundResources.get(3);
                     soundPool.play(soundId, 0.7f, 0.7f, 0, 0, 1);
                 }
 

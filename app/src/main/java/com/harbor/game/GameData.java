@@ -271,9 +271,25 @@ public class GameData implements Serializable{
         GameData next = new GameData(this.level+1,this.numOfRows,this.getNumOfColumns());
         next.addTotalScore(this.totalScore);
         next.setName(this.getName());
-        currentPipeIndex = 0;
-        total = 0;
-        animationTaskList = new ArrayList<>();
+        next.currentPipeIndex = 0;
+        next.total = 0;
+        next.animationTaskList = new ArrayList<>();
+        return next;
+    }
+
+    /**
+     * try the current level again
+     * @return
+     */
+    public GameData cloneLevel() {
+        GameData next = new GameData(this.level,this.numOfRows,this.getNumOfColumns());
+        //next.addTotalScore(this.totalScore);
+        //next.totalScore -= next.total;
+        next.totalScore = this.totalScore - this.total;
+        next.setName(this.getName());
+        next.currentPipeIndex = 0;
+        next.total = 0;
+        next.animationTaskList = new ArrayList<>();
         return next;
     }
 

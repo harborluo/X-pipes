@@ -428,7 +428,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
                 gameData.setTotal(total);
 
                // animationHandler.postDelayed(this, animationOn && globalAnimationOn ? 800 : 0);  //for interval...
-                animationHandler.postDelayed(this, globalAnimationOn ? 800 : 0);  //for interval...
+                animationHandler.postDelayed(this, ApplicationConfig.getInstance().isGameSoundOn() ? 800 : 0);  //for interval...
             }
         };
         animationHandler.postDelayed(drawConnectedPipe, 0); //for initial delay..
@@ -475,7 +475,8 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
             }
 
             //Start a new game
-            this.gameData = new GameData(1, gameData.getNumOfRows(), gameData.getNumOfColumns());
+            gameData = gameData.cloneLevel();
+                    //new GameData(1, gameData.getNumOfRows(), gameData.getNumOfColumns());
             initGame(true,true);
         }else if(buttonText.equals(getResources().getString(R.string.game_text_dialog_button_next_level))){
            // initGame(this.gameData.isOver()!=false);

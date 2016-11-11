@@ -12,8 +12,10 @@
     >
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@mipmap/blank"
+
         android:id="@+id/pipe_image"
         android:src="@mipmap/blank"/>
 
@@ -28,5 +30,20 @@
         android:layout_height="wrap_content"
         android:id="@+id/btn_test"
         android:text="Test"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_clean"
+        android:text="Clean all save game"
+        android:onClick="cleanAllSavedGames"/>
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:id="@+id/pipe_image_test"
+        android:background="@mipmap/blank"
+        android:src="@mipmap/horizontal"
+        android:scaleType="fitXY"/>
 
 </LinearLayout>

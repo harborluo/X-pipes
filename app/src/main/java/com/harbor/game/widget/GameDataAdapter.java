@@ -109,8 +109,6 @@ public class GameDataAdapter extends ArrayAdapter<GameData> {
         viewHolder.secondsTextView.setText(gameData.getSecondRemain()+"");
         viewHolder.progressBar.setProgress(gameData.getProgress());
 
-
-
         return convertView;
     }
 

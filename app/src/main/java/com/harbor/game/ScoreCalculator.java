@@ -35,10 +35,10 @@ public class ScoreCalculator {
         return animationTaskList;
     }
 
-    private boolean nexbPipeBlocked = false;
+    private boolean nextPipeBlocked = false;
 
-    public boolean isNexbPipeBlocked() {
-        return nexbPipeBlocked;
+    public boolean isNextPipeBlocked() {
+        return nextPipeBlocked;
     }
 
     public void execute() {
@@ -120,7 +120,7 @@ public class ScoreCalculator {
             }
 
             if(nextPipePassed==false){
-                nexbPipeBlocked = true;
+                nextPipeBlocked = true;
                 break;
             }
 
@@ -158,7 +158,7 @@ public class ScoreCalculator {
                     targetImage = R.mipmap.right_down_on;
                     newDirection="r";
                 }else if(currentImage!=R.mipmap.blank){
-                    nexbPipeBlocked = true;
+                    nextPipeBlocked = true;
                 }
             }
             break;
@@ -176,7 +176,7 @@ public class ScoreCalculator {
                     targetImage = R.mipmap.right_up_on;
                     newDirection="r";
                 }else if(currentImage!=R.mipmap.blank){
-                    nexbPipeBlocked = true;
+                    nextPipeBlocked = true;
                 }
             }
             break;
@@ -194,7 +194,7 @@ public class ScoreCalculator {
                     targetImage = R.mipmap.right_down_on;
                     newDirection="d";
                 }else if(currentImage!=R.mipmap.blank){
-                    nexbPipeBlocked = true;
+                    nextPipeBlocked = true;
                 }
             }
             break;
@@ -212,7 +212,7 @@ public class ScoreCalculator {
                     targetImage = R.mipmap.left_down_on;
                     newDirection="d";
                 }else if(currentImage!=R.mipmap.blank){
-                    nexbPipeBlocked = true;
+                    nextPipeBlocked = true;
                 }
             }
             break;

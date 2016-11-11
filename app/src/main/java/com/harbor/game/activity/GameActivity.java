@@ -102,6 +102,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
         gridView = (GridView) findViewById(R.id.pipe_container);
         timeRemainTextView = (TextView) findViewById(R.id.game_time_remain);
         nextPipe = (ImageView) findViewById(R.id.next_pipe_image);
+
         gameScoreTextView = (TextView) findViewById(R.id.game_score) ;
 
         AudioAttributes attributes = new AudioAttributes.Builder()
@@ -140,7 +141,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
             gameData = new GameData(1, numOfRows, numOfColumns);
         }else{
 
-           //gameData.resetSecondRemain(3);
+           //gameData.resetSecondRemain(30);
             pipeWidth = screenWidth / gameData.getNumOfColumns();
 
         }
@@ -233,16 +234,17 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
         int nextImage;
         if(gameData.getNextPipe()!=R.mipmap.blank){
+            //load next pipe from save game data
             nextImage = gameData.getNextPipe();
             gameData.setNextPipe(R.mipmap.blank);
         }else{
             Random random = new Random();
-             nextImage = pipeImages[random.nextInt(pipeImages.length)];
+            nextImage = pipeImages[random.nextInt(pipeImages.length)];
         }
 
-
         nextPipe.setImageResource(nextImage);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(pipeWidth *7/10, pipeWidth *7/10);
+        nextPipe.setScaleType(ImageView.ScaleType.FIT_XY);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(pipeWidth *8/10, pipeWidth *8/10);
         nextPipe.setLayoutParams(layoutParams);
         nextPipe.setTag(nextImage);
     }
@@ -253,17 +255,30 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
       //  Log.i(TAG, "refreshMissionCount: before head["+ gameData.getHeadPosition()+"]="+gameData.getHeadImage());
 
-        ScoreCalculator calculator = new ScoreCalculator(gameData);
-        calculator.execute();
+
+        List<int[]> taskList = gameData.getAnimationTaskList();
+
+        if(taskList.isEmpty()){
+
+            ScoreCalculator calculator = new ScoreCalculator(gameData);
+            calculator.execute();
+            taskList=calculator.getAnimationTaskList();
+
+            if(calculator.isNextPipeBlocked() && gameData.getWrenchCount()==0 && gameData.getSecondRemain() > 0){
+                //TODO prompt message about game over and set seconds remain to zero immediately
+                gameData.dropSecondRemain();
+                //start game calculation immediately
+                timer.onFinish();
+            }
+        }
 
         //Toast.makeText(this, "next pipe is block = " + calculator.isNexbPipeBlocked(), Toast.LENGTH_SHORT).show();
 
+        Log.i(TAG, "refreshMissionCount: requiredCount, = "+ requiredCount+", finishedCount = "+(taskList.size()-1));
+        int remain = requiredCount - taskList.size() + 1;
 
-        Log.i(TAG, "refreshMissionCount: requiredCount, = "+ requiredCount+", finishedCount = "+(calculator.getAnimationTaskList().size()-1));
-        int remain = requiredCount - calculator.getAnimationTaskList().size() + 1;
-
-        Log.i(TAG, "getAnimationTaskList size is : " + calculator.getAnimationTaskList().size());
-        int progress = (calculator.getAnimationTaskList().size()-1) * 100 / gameData.getMissionCount() ;
+        Log.i(TAG, "getAnimationTaskList size is : " + taskList.size());
+        int progress = (taskList.size()-1) * 100 / gameData.getMissionCount() ;
 
         gameData.setProgress(progress);
 
@@ -272,13 +287,6 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
         }
 
         game_required_pipe_count.setText("" + remain);
-
-        if(calculator.isNexbPipeBlocked() && gameData.getWrenchCount()==0 && gameData.getSecondRemain() > 0){
-            //TODO prompt message about game over and set seconds remain to zero immediately
-            gameData.dropSecondRemain();
-            //start game calculation immediately
-            timer.onFinish();
-        }
 
     }
 
@@ -336,8 +344,11 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
     private boolean reduceWrenchCount() {
 
+
+
         if (gameData.getWrenchCount() == 0) {
-          return false;
+            //return true; for test only
+            return false;
         }
 
         gameData.decreaseWrenchCount();
@@ -373,7 +384,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 //            saveGame();
 //        }
 
-        final boolean globalAnimationOn  =ApplicationConfig.getInstance().isGameAnimationOn();
+        //final boolean globalAnimationOn  =ApplicationConfig.getInstance().isGameAnimationOn();
 
         animationHandler.resetTerminate();
 

@@ -65,12 +65,15 @@ public class HelpActivity extends Activity implements View.OnClickListener {
         };
         handler.postDelayed(runnable, 0); //for initial delay..
 
+    }
+
+    public void cleanAllSavedGames(View view){
 
         String path = Utils.getDefaultFilePath();
 
         File dir = new File(path);
 
-        File[] files = dir.listFiles(new FileFilter() {
+        dir.listFiles(new FileFilter() {
             @Override
             public boolean accept(File file) {
                 // file.delete();
@@ -82,7 +85,6 @@ public class HelpActivity extends Activity implements View.OnClickListener {
                 return false;
             }
         });
-
     }
 
 }

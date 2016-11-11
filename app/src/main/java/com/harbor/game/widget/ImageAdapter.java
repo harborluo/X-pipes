@@ -11,6 +11,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.harbor.game.R;
+
 
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
@@ -51,37 +53,17 @@ public class ImageAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-/**
-        ImageView imageView = new ImageView(mContext);
-        imageView.setImageResource(itemCache[position]);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setLayoutParams(new GridView.LayoutParams(this.imageWidth, this.imageWidth));
-        imageView.setId(position);
 
-        if(listener!=null){
-            imageView.setOnClickListener(listener);
-        }
-
-        else{
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(mContext, "You Clicked at image....", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            imageView.setOnClickListener(null);
-        }
-
-
-        imageView.setTag(itemCache[position]);
-
-        return imageView;
- **/
         if(convertView==null){
             ImageView imageView = new ImageView(mContext);
-            imageView.setImageResource(itemCache[position]);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+            imageView.setBackgroundResource(R.mipmap.blank);
+
+            if(itemCache[position]!=R.mipmap.blank){
+              imageView.setImageResource(itemCache[position]);
+            }
+
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setLayoutParams(new GridView.LayoutParams(this.imageWidth, this.imageWidth));
             imageView.setId(position);
 

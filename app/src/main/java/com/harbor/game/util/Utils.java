@@ -187,5 +187,28 @@ public class Utils {
 //
 //    }
 
+    public static String pipes2String(Integer[] possiblePipes){
+        String msg = "";
+        for(Integer i:possiblePipes){
+            if(i==R.mipmap.cross){
+                msg+="cross, ";
+            }else if(i==R.mipmap.left_up){
+                msg+="left_up, ";
+            }else if(i==R.mipmap.right_up){
+                msg+="right_up, ";
+            }else if(i==R.mipmap.left_down){
+                msg+="left_down, ";
+            }else if(i==R.mipmap.right_down){
+                msg+="right_down, ";
+            }else if(i==R.mipmap.vertical){
+                msg+="vertical, ";
+            }else if(i==R.mipmap.horizontal){
+                msg+="horizontal, ";
+            }
+        }
+
+        return msg.replaceAll(", $","");
+    }
+
 
 }

@@ -1,7 +1,13 @@
 package com.harbor.game;
 
+import android.util.Log;
+
+import com.harbor.game.util.Utils;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by harbor on 8/28/2016.
@@ -12,6 +18,20 @@ public class ScoreCalculator {
     int headImageResource;
     int[] data;
     private int numOfRows=3, numOfColumns=3;
+
+    Integer[] possiblePipes = {
+            R.mipmap.right_down,
+            R.mipmap.right_up,
+            R.mipmap.left_down,
+            R.mipmap.left_up,
+            R.mipmap.vertical,
+            R.mipmap.horizontal,
+            R.mipmap.cross
+    };
+
+    public Integer[] getPossiblePipes() {
+        return possiblePipes;
+    }
 
     /**
      * Integer[]{pos, targetImage, score}
@@ -86,51 +106,131 @@ public class ScoreCalculator {
 
         //Toast.makeText(this, "rowPos = "+rowPos+", colPos = "+colPos+", pos = "+pos , Toast.LENGTH_LONG).show();
 
-        boolean nextPipePassed=true;
+        boolean nextPipeFound=true;
 
-        while(nextPipePassed==true){
+        while(nextPipeFound==true){
 
             switch (direction){
                 case "d" :{
                     rowPos++;
                     if(rowPos==numOfRows){
-                        nextPipePassed = false;
+                        nextPipeFound = false;
                     }
                 }break;
                 case "u" : {
                     rowPos--;
                     if(rowPos<0){
-                        nextPipePassed = false;
+                        nextPipeFound = false;
                     }
 
                 }break;
                 case "l":{
                     colPos--;
                     if(colPos<0){
-                        nextPipePassed = false;
+                        nextPipeFound = false;
                     }
                 }break;
                 case "r":{
                     colPos++;
                     if(colPos==numOfColumns){
-                        nextPipePassed = false;
+                        nextPipeFound = false;
                     }
                 }break;
 
             }
 
-            if(nextPipePassed==false){
+            if(nextPipeFound==false){
                 nextPipeBlocked = true;
                 break;
             }
 
             VerifyResult result = verifyNextPipe(direction, rowPos * numOfColumns + colPos);
-
             direction = result.getDirection();
+            nextPipeFound = result.getScore()>0;
+        }
 
-            nextPipePassed = result.getScore()>0;
+        if(nextPipeBlocked==true){
+            return;
+        }
+
+        Log.i("ScoreCalculator", "execute: direction = "+ direction
+                             + ", rowPos = " + rowPos
+                             + ", colPos = " + colPos
+                             + ", nextPipeBlocked = " + nextPipeBlocked);
+
+        Set<Integer> pipes = new HashSet<>();
+
+        for(int p : possiblePipes){
+            pipes.add(p);
+        }
+
+        //Log.i("ScoreCalculator", "possiblePipes size before : " + pipes.size() );
+
+        //TODO calculate possible pipe needed by player
+
+        switch (direction){
+            case "d" :{
+                pipes.remove(R.mipmap.left_down);
+                pipes.remove(R.mipmap.right_down);
+                pipes.remove(R.mipmap.horizontal);
+            }break;
+            case "u" : {
+                pipes.remove(R.mipmap.left_up);
+                pipes.remove(R.mipmap.right_up);
+                pipes.remove(R.mipmap.horizontal);
+
+            }break;
+            case "l":{
+                pipes.remove(R.mipmap.left_down);
+                pipes.remove(R.mipmap.left_up);
+                pipes.remove(R.mipmap.vertical);
+            }break;
+            case "r":{
+                pipes.remove(R.mipmap.right_up);
+                pipes.remove(R.mipmap.right_down);
+                pipes.remove(R.mipmap.vertical);
+            }break;
 
         }
+
+        //Log.i("ScoreCalculator", "possiblePipes size before edge : " + pipes.size() );
+
+        //edge hits
+        if(rowPos==numOfRows-1 && !direction.equals("u")){
+            Log.i("ScoreCalculator", "down denied");
+            pipes.remove(R.mipmap.vertical);
+            pipes.remove(R.mipmap.left_down);
+            pipes.remove(R.mipmap.right_down);
+            pipes.remove(R.mipmap.cross);
+        }
+
+        if(rowPos==0&& !direction.equals("d")){
+            Log.i("ScoreCalculator", "up denied");
+            pipes.remove(R.mipmap.vertical);
+            pipes.remove(R.mipmap.left_up);
+            pipes.remove(R.mipmap.right_up);
+            pipes.remove(R.mipmap.cross);
+        }
+
+        if(colPos==0&& !direction.equals("r")){
+            Log.i("ScoreCalculator", "left denied");
+            pipes.remove(R.mipmap.horizontal);
+            pipes.remove(R.mipmap.left_up);
+            pipes.remove(R.mipmap.left_down);
+            pipes.remove(R.mipmap.cross);
+        }
+
+        if(colPos==numOfColumns-1&& !direction.equals("l")){
+            Log.i("ScoreCalculator", "right denied");
+            pipes.remove(R.mipmap.horizontal);
+            pipes.remove(R.mipmap.right_up);
+            pipes.remove(R.mipmap.right_down);
+            pipes.remove(R.mipmap.cross);
+        }
+
+        possiblePipes = pipes.toArray(new Integer[pipes.size()]);
+
+        Log.i("ScoreCalculator", " possible pipes ("+pipes.size()+") : " + Utils.pipes2String(possiblePipes));
 
     }
 

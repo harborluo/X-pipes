@@ -58,8 +58,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
     //    private Handler mainHandler= new Handler();
 
-    int[] pipeImages = {
-            R.mipmap.cross,
+    Integer[] pipeImages = {
             R.mipmap.right_down,
             R.mipmap.right_up,
             R.mipmap.left_down,
@@ -238,8 +237,13 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
             nextImage = gameData.getNextPipe();
             gameData.setNextPipe(R.mipmap.blank);
         }else{
+            //Log.i(TAG, "generateNextPipe: " + pipeImages.length );
+
             Random random = new Random();
             nextImage = pipeImages[random.nextInt(pipeImages.length)];
+
+            Log.i("GameActivity", "generateNextPipe : possible pipes ("+pipeImages.length+") : " + Utils.pipes2String(pipeImages)
+                    + ", result = " + Utils.pipes2String(new Integer[]{nextImage}));
         }
 
         nextPipe.setImageResource(nextImage);
@@ -263,6 +267,10 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
             ScoreCalculator calculator = new ScoreCalculator(gameData);
             calculator.execute();
             taskList=calculator.getAnimationTaskList();
+
+            //set the next possible pipes base on the calculation
+            this.pipeImages = calculator.getPossiblePipes();
+            Log.i("GameActivity", " refreshMissionCount : pipes ("+pipeImages.length+") : " + Utils.pipes2String(pipeImages));
 
             if(calculator.isNextPipeBlocked() && gameData.getWrenchCount()==0 && gameData.getSecondRemain() > 0){
                 //TODO prompt message about game over and set seconds remain to zero immediately
@@ -308,18 +316,19 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
             return;
         }
 
+        refreshMissionCount();
+
         if (currentImage == R.mipmap.blank) {
 
-            if(ApplicationConfig.getInstance().isGameSoundOn()){
-               playSound(1);
-            }
+            //drop the pie to current grid.
+            playSound(1);
 
             int nextImage = (int) nextPipe.getTag();
             imageView.setImageResource(nextImage);
             imageView.setTag(nextImage);
             generateNextPipe();
 
-            gameData.setDataImage(view.getId(),nextImage);
+            gameData.setDataImage(view.getId(), nextImage);
 
         } else if (reduceWrenchCount() == true) {
 
@@ -330,9 +339,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
             imageView.setTag(R.mipmap.blank);
             gameData.setDataImage(view.getId(), R.mipmap.blank);
 
-            if(ApplicationConfig.getInstance().isGameSoundOn()){
-                playSound(2);
-            }
+            playSound(2);
 
         }
 
@@ -344,10 +351,8 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
     private boolean reduceWrenchCount() {
 
-
-
         if (gameData.getWrenchCount() == 0) {
-            //return true; for test only
+//            return true; //for test only
             return false;
         }
 
@@ -355,8 +360,6 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
         wrenchTextView.setText(new String(gameData.getWrenchCount() + ""));
         return true;
     }
-
-
 
     public void calculateScore( final boolean animationOn) {
 
@@ -548,6 +551,11 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
     }
 
     private void playSound(final int soundKey){
+
+        if(ApplicationConfig.getInstance().isGameSoundOn()==false){
+            return;
+        }
+
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 soundPool.play(soundResources.get(soundKey), 0.7f, 0.7f, 0, 0, 1);

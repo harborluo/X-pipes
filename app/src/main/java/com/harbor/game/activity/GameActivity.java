@@ -386,7 +386,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 //            saveGame();
 //        }
 
-        //final boolean globalAnimationOn  =ApplicationConfig.getInstance().isGameAnimationOn();
+        final boolean globalAnimationOn  = isGameAnimationOn();
 
         animationHandler.resetTerminate();
 
@@ -424,8 +424,8 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
                     imgView.setImageResource(task[1]);
                 }
 
-                //if(animationOn == true && globalAnimationOn == true){
-                if(isGameSoundOn()){
+                if(animationOn == true && globalAnimationOn == true){
+                //if(isGameSoundOn()){
                     int soundId = task[2]==50?soundResources.get(4):soundResources.get(3);
                     soundPool.play(soundId, 0.7f, 0.7f, 0, 0, 1);
                 }
@@ -440,8 +440,8 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
                 gameData.setCurrentPipeIndex(currentPipeIndex);
                 gameData.setTotal(total);
 
-               // animationHandler.postDelayed(this, animationOn && globalAnimationOn ? 800 : 0);  //for interval...
-                animationHandler.postDelayed(this, GameActivity.this.isGameSoundOn() ? 800 : 0);  //for interval...
+                animationHandler.postDelayed(this, animationOn && globalAnimationOn ? 800 : 0);  //for interval...
+//                animationHandler.postDelayed(this, GameActivity.this.isGameSoundOn() ? 800 : 0);  //for interval...
             }
         };
         animationHandler.postDelayed(drawConnectedPipe, 0); //for initial delay..

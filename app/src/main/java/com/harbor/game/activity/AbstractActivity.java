@@ -84,10 +84,15 @@ public class AbstractActivity extends Activity {
 
     public void reset() {
         SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean("backgroundMusicOn",true);
-        editor.putBoolean("gameSoundOn",true);
-        editor.putString("lang","en");
-        editor.putBoolean("gameAnimationOn",true);
+        editor.remove("backgroundMusicOn");
+        editor.remove("gameSoundOn");
+        editor.remove("lang");
+        editor.remove("gameAnimationOn");
+
+//        editor.putBoolean("backgroundMusicOn",true);
+//        editor.putBoolean("gameSoundOn",true);
+//        editor.putString("lang","cn");
+//        editor.putBoolean("gameAnimationOn",true);
         editor.commit();
     }
 }

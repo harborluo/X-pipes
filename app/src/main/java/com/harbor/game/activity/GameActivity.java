@@ -17,7 +17,6 @@ import com.harbor.game.GameData;
 import com.harbor.game.R;
 import com.harbor.game.ScoreCalculator;
 import com.harbor.game.handler.AnimationHandler;
-import com.harbor.game.util.ApplicationConfig;
 import com.harbor.game.util.Utils;
 import com.harbor.game.widget.DialogButtonListener;
 import com.harbor.game.widget.DialogMonitor;
@@ -426,7 +425,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
                 }
 
                 //if(animationOn == true && globalAnimationOn == true){
-                if(ApplicationConfig.getInstance().isGameSoundOn()){
+                if(isGameSoundOn()){
                     int soundId = task[2]==50?soundResources.get(4):soundResources.get(3);
                     soundPool.play(soundId, 0.7f, 0.7f, 0, 0, 1);
                 }
@@ -442,7 +441,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
                 gameData.setTotal(total);
 
                // animationHandler.postDelayed(this, animationOn && globalAnimationOn ? 800 : 0);  //for interval...
-                animationHandler.postDelayed(this, ApplicationConfig.getInstance().isGameSoundOn() ? 800 : 0);  //for interval...
+                animationHandler.postDelayed(this, GameActivity.this.isGameSoundOn() ? 800 : 0);  //for interval...
             }
         };
         animationHandler.postDelayed(drawConnectedPipe, 0); //for initial delay..
@@ -552,7 +551,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
     private void playSound(final int soundKey){
 
-        if(ApplicationConfig.getInstance().isGameSoundOn()==false){
+        if(isGameSoundOn()==false){
             return;
         }
 

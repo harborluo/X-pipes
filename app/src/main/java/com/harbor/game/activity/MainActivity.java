@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.harbor.game.R;
-import com.harbor.game.util.ApplicationConfig;
 
 import java.util.Locale;
 
@@ -48,12 +47,14 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        super.onCreate(savedInstanceState);
+
         Log.d(TAG, "onCreate: ");
 
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
         Configuration conf = res.getConfiguration();
-        conf.setLocale(new Locale(ApplicationConfig.getInstance().getLang()));
+        conf.setLocale(new Locale(getLang()));
         res.updateConfiguration(conf, dm);
 
         super.onCreate(savedInstanceState);
@@ -194,12 +195,12 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
 
               //  RadioButton cnButton = (RadioButton)  view.findViewById(R.id.lang_chinese);
 
-                boolean backgroundMusicChanged = backgroundMusicBox.isChecked()!=ApplicationConfig.getInstance().isBackgroundMusicOn();
+                boolean backgroundMusicChanged = backgroundMusicBox.isChecked()!= MainActivity.this.isBackgroundMusicOn();
 
-                ApplicationConfig.getInstance().setGameAnimationOn(animationBox.isChecked());
-                ApplicationConfig.getInstance().setGameSoundOn(soundBox.isChecked());
-                ApplicationConfig.getInstance().setBackgroundMusicOn(backgroundMusicBox.isChecked());
-                ApplicationConfig.getInstance().setLang(enButton.isChecked()?"en":(cnButton.isChecked()?"cn":"tw"));
+                MainActivity.this.setGameAnimationOn(animationBox.isChecked());
+                MainActivity.this.setGameSoundOn(soundBox.isChecked());
+                MainActivity.this.setBackgroundMusicOn(backgroundMusicBox.isChecked());
+                MainActivity.this.setLang(enButton.isChecked()?"en":(cnButton.isChecked()?"cn":"tw"));
 
                 if(backgroundMusicChanged){
 
@@ -210,12 +211,12 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
                   }
                 }
 
-                ApplicationConfig.getInstance().save();
+//                ApplicationConfig.getInstance().save();
 
                 Resources res = getResources();
                 DisplayMetrics dm = res.getDisplayMetrics();
                 Configuration conf = res.getConfiguration();
-                conf.setLocale(new Locale(ApplicationConfig.getInstance().getLang()));
+                conf.setLocale(new Locale(MainActivity.this.getLang()));
                 res.updateConfiguration(conf, dm);
 
                 MainActivity.this.onConfigurationChanged(conf);
@@ -229,13 +230,13 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ApplicationConfig.getInstance().reset();
+                MainActivity.this.reset();
                 MainActivity.this.playMusic(R.raw.main_background);
 
                 Resources res = getResources();
                 DisplayMetrics dm = res.getDisplayMetrics();
                 Configuration conf = res.getConfiguration();
-                conf.setLocale(new Locale(ApplicationConfig.getInstance().getLang()));
+                conf.setLocale(new Locale(MainActivity.this.getLang()));
                 res.updateConfiguration(conf, dm);
                 MainActivity.this.onConfigurationChanged(conf);
 
@@ -251,11 +252,11 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
         RadioButton cnButton = (RadioButton)  view.findViewById(R.id.lang_chinese);
         RadioButton twButton = (RadioButton)  view.findViewById(R.id.lang_chinese_tw);
 
-        animationBox.setChecked(ApplicationConfig.getInstance().isGameAnimationOn());
-        soundBox.setChecked(ApplicationConfig.getInstance().isGameSoundOn());
-        backgroundMusicBox.setChecked(ApplicationConfig.getInstance().isBackgroundMusicOn());
+        animationBox.setChecked(MainActivity.this.isGameAnimationOn());
+        soundBox.setChecked(MainActivity.this.isGameSoundOn());
+        backgroundMusicBox.setChecked(MainActivity.this.isBackgroundMusicOn());
 
-        switch (ApplicationConfig.getInstance().getLang()){
+        switch (MainActivity.this.getLang()){
             case "en" : {
                 enButton.setChecked(true);
             }break;

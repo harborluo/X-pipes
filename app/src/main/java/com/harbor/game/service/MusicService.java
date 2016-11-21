@@ -6,8 +6,6 @@ import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.harbor.game.util.ApplicationConfig;
-
 import java.io.IOException;
 
 /**
@@ -42,7 +40,7 @@ public class MusicService extends Service{
             mediaPlayer=null;
         }
 
-        Log.i("Music service", "initMediaPlayer: backgroundMusicOn = " + ApplicationConfig.getInstance().isBackgroundMusicOn());
+//        Log.i("Music service", "initMediaPlayer: backgroundMusicOn = " + ApplicationConfig.getInstance().isBackgroundMusicOn());
 
         if(bgMusicOn==false){
             return;
@@ -93,8 +91,8 @@ public class MusicService extends Service{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Log.i("MusicService", "onStartCommand: music resource id = " + intent.getIntExtra("music",-1)
-                +", backgroundMusicOn = "+ApplicationConfig.getInstance().isBackgroundMusicOn());
+//        Log.i("MusicService", "onStartCommand: music resource id = " + intent.getIntExtra("music",-1)
+//                +", backgroundMusicOn = "+ApplicationConfig.getInstance().isBackgroundMusicOn());
 
         boolean bgMusicOn = intent.getBooleanExtra("background_music_on",true);
 

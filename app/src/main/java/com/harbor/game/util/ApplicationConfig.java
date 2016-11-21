@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 /**
  * Created by harbor on 10/20/2016.
+ * @deprecated
  */
 public class ApplicationConfig implements Serializable {
 

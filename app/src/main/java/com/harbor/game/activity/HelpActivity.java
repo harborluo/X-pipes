@@ -89,7 +89,7 @@ public class HelpActivity extends Activity implements View.OnClickListener {
             }
         });
 
-        dbHelper.removeAllGame();
+        dbHelper.removeGame();
 
     }
 

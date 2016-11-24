@@ -65,10 +65,15 @@ public class DBHelper  extends SQLiteOpenHelper {
         db.endTransaction();
     }
 
-    public void removeAllGame(){
+    public void removeGame(Object... args){
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
-        db.execSQL("delete from game_data");
+        if(args.length==0){
+           db.execSQL("delete from game_data");
+
+        }else{
+            db.execSQL("delete from game_data where id = ?", args);
+        }
         db.setTransactionSuccessful();
         db.endTransaction();
     }

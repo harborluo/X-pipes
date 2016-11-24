@@ -21,7 +21,7 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
 
     ListView listView = null;
 
-    private String TAG ="LoadGameActivity";
+    private String TAG = "LoadGameActivity";
 
     DBHelper dbHelper = null;
 
@@ -33,7 +33,7 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
         dbHelper = new DBHelper(this);
-       initGameList();
+        initGameList();
 
     }
 
@@ -43,7 +43,7 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
         initGameList();
     }
 
-    private void initGameList(){
+    private void initGameList() {
 /*
         String path = Utils.getDefaultFilePath();
         File dir = new File(path);
@@ -64,14 +64,34 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
         }
 */
 
-        List<GameData> gamesList = dbHelper.getAllGameData();
+        final List<GameData> gamesList = dbHelper.getAllGameData();
 
-        GameDataAdapter adapter = new GameDataAdapter(LoadGameActivity.this, gamesList);
+        final GameDataAdapter adapter = new GameDataAdapter(LoadGameActivity.this, gamesList);
 
         listView.setAdapter(adapter);
 
-        if(gamesList.size()==0){
-            Utils.showDialog(this,this,getResources().getString(R.string.game_message_no_saved_game_found),
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+//                listView.removeViewAt(i);
+
+//                Object item =  listView.getItemAtPosition(i);
+                GameData gameSelected = gamesList.get(i);
+                dbHelper.removeGame(gameSelected.getId());
+                gamesList.remove(gameSelected);
+
+                adapter.notifyDataSetChanged();
+
+
+                return true;
+            }
+        });
+
+        if (gamesList.size() == 0) {
+            Utils.showDialog(this, this, getResources().getString(R.string.game_message_no_saved_game_found),
                     getResources().getString(R.string.game_text_button_start_new_game),
                     getResources().getString(R.string.game_text_dialog_button_back));
         }
@@ -88,16 +108,16 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
         Intent intent = new Intent(LoadGameActivity.this, GameActivity.class);
         //String fileName = game.getName();
         //intent.putExtra("fileName",fileName);
-        intent.putExtra("gameData",game);
+        intent.putExtra("gameData", game);
         startActivity(intent);
 
     }
 
     @Override
     public void buttonClicked(String buttonText) {
-        Log.i(TAG, "buttonClicked: "+buttonText);
+        Log.i(TAG, "buttonClicked: " + buttonText);
         this.finish();
-        if((buttonText.equals(getResources().getString(R.string.game_text_button_start_new_game)))){
+        if ((buttonText.equals(getResources().getString(R.string.game_text_button_start_new_game)))) {
             Intent intent = new Intent();
             intent.setAction("game");
             startActivity(intent);

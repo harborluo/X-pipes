@@ -282,6 +282,7 @@ public class GameData implements Serializable {
 
     public GameData nextLevel() {
         GameData next = new GameData(this.level+1,this.numOfRows,this.getNumOfColumns());
+        next.id = this.id;
         next.addTotalScore(this.totalScore);
         next.setName(this.getName());
         next.currentPipeIndex = 0;

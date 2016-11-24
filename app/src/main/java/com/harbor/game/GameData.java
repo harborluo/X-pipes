@@ -1,7 +1,12 @@
 package com.harbor.game;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,7 +16,15 @@ import java.util.Random;
 /**
  * Created by harbor on 8/30/2016.
  */
-public class GameData implements Serializable{
+public class GameData implements Serializable {
+
+    private int id = -1;
+
+    private String name = null;
+
+    private int totalScore = 0;
+
+    private Date dateCreated = new Date();
 
     private int nextPipe = R.mipmap.blank;
 
@@ -20,6 +33,22 @@ public class GameData implements Serializable{
     private int total = 0;
 
     private List<int[]> animationTaskList = new ArrayList<>();
+
+    private int secondRemain = 0;
+
+    private int progress=0;
+
+    private int numOfRows = 3, numOfColumns = 3;
+
+    private int[] data;
+
+    private int level;
+
+    private int headPosition=0, headImage=0;
+
+    private int missionCount = 15;
+
+    private boolean passed = false;
 
     public int getCurrentPipeIndex() {
         return currentPipeIndex;
@@ -37,6 +66,14 @@ public class GameData implements Serializable{
         this.total = total;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     public List<int[]> getAnimationTaskList() {
         return animationTaskList;
     }
@@ -45,8 +82,6 @@ public class GameData implements Serializable{
         this.animationTaskList = animationTaskList;
     }
 
-
-
     public int getNextPipe() {
         return nextPipe;
     }
@@ -54,12 +89,6 @@ public class GameData implements Serializable{
     public void setNextPipe(int nextPipe) {
         this.nextPipe = nextPipe;
     }
-
-    private String name = null;
-
-    private int totalScore = 0;
-
-    private Date dateCreated = new Date();
 
     public String getDateCreated(){
         DateFormat format = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
@@ -73,6 +102,8 @@ public class GameData implements Serializable{
     public void addTotalScore(int score){
         this.totalScore= this.totalScore + score;
     }
+
+
 
     public String getName() {
 
@@ -101,22 +132,6 @@ public class GameData implements Serializable{
             R.mipmap.head_up,
             R.mipmap.head_down
     };
-
-    private int secondRemain = 0;
-
-//    private int pipeWidth = 0;
-    private int progress=0;
-
-
-    private int numOfRows = 3, numOfColumns = 3;
-
-    private int[] data;
-
-    private int level;
-
-    private int headPosition=0, headImage=0;
-
-    private int missionCount = 15;
 
     public int getMissionCount() {
         return missionCount;
@@ -257,8 +272,6 @@ public class GameData implements Serializable{
 
     }
 
-    private boolean passed = false;
-
     public void setPassed(boolean b) {
         passed=b;
     }
@@ -299,6 +312,102 @@ public class GameData implements Serializable{
 
     public void setProgress(int progress) {
         this.progress = progress>100?100:progress;
+    }
+
+    public String toJson(){
+
+        JSONObject jsonObj = new JSONObject();
+        try {
+            jsonObj.put("id", id);
+            jsonObj.put("name", name);
+            jsonObj.put("totalScore", totalScore);
+            jsonObj.put("dateCreated", getDateCreated());
+            jsonObj.put("nextPipe", nextPipe);
+            jsonObj.put("currentPipeIndex", currentPipeIndex);
+            jsonObj.put("total", total);
+            jsonObj.put("secondRemain",secondRemain);
+            jsonObj.put("progress",progress);
+            jsonObj.put("numOfRows",numOfRows);
+            jsonObj.put("numOfColumns",numOfColumns);
+            jsonObj.put("level",level);
+            jsonObj.put("headPosition",headPosition);
+            jsonObj.put("headImage",headImage);
+            jsonObj.put("missionCount",missionCount);
+            jsonObj.put("passed",passed);
+
+            JSONArray dataArray = new JSONArray();
+            for (int pipe : data ) {
+                dataArray.put(pipe);
+            }
+            jsonObj.put("data", dataArray);
+
+            JSONArray animationTaskListArray = new JSONArray();
+            for(int[] task : animationTaskList){
+                JSONArray rowArray = new JSONArray();
+                for(int i : task){
+                    rowArray.put(i);
+                }
+                animationTaskListArray.put(rowArray);
+            }
+            jsonObj.put("animationTaskList",animationTaskListArray);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObj.toString();
+    }
+
+    /**
+     *
+     * @param jsonString
+     */
+    public GameData(String jsonString){
+
+        try{
+            JSONObject jsonObject = new JSONObject(jsonString);
+            id = jsonObject.getInt("id");
+            name = jsonObject.getString("name");
+            totalScore  = jsonObject.getInt("totalScore");
+            DateFormat format = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
+            dateCreated = format.parse(jsonObject.getString("dateCreated"));
+            nextPipe = jsonObject.getInt("nextPipe");
+            currentPipeIndex = jsonObject.getInt("currentPipeIndex");
+            total = jsonObject.getInt("total");
+            secondRemain = jsonObject.getInt("secondRemain");
+            progress = jsonObject.getInt("progress");
+            numOfRows = jsonObject.getInt("numOfRows");
+            numOfColumns = jsonObject.getInt("numOfColumns");
+            level = jsonObject.getInt("level");
+            headPosition = jsonObject.getInt("headPosition");
+            headImage = jsonObject.getInt("headImage");
+            missionCount = jsonObject.getInt("missionCount");
+            passed = jsonObject.getBoolean("passed");
+
+            JSONArray dataArray = jsonObject.getJSONArray("data");
+            int size = dataArray.length();
+            data = new int[size];
+            for(int i=0;i<size;i++){
+                data[i] = dataArray.getInt(i);
+            }
+
+            JSONArray animationTaskListArray = jsonObject.getJSONArray("animationTaskList");
+            size = animationTaskListArray.length();
+            animationTaskList = new ArrayList<>(size);
+            for(int i=0;i<size;i++){
+                JSONArray rowArray = animationTaskListArray.getJSONArray(i);
+                int[] row = new int[rowArray.length()];
+                for(int j=0;j<row.length;j++){
+                    row[j] = rowArray.getInt(j);
+                }
+                animationTaskList.add(row);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
 }

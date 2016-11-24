@@ -10,13 +10,11 @@ import android.widget.ListView;
 
 import com.harbor.game.GameData;
 import com.harbor.game.R;
+import com.harbor.game.util.DBHelper;
 import com.harbor.game.util.Utils;
 import com.harbor.game.widget.DialogButtonListener;
 import com.harbor.game.widget.GameDataAdapter;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class LoadGameActivity extends Activity implements AdapterView.OnItemClickListener, DialogButtonListener {
@@ -25,6 +23,8 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
 
     private String TAG ="LoadGameActivity";
 
+    DBHelper dbHelper = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +32,7 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
 
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
-
+        dbHelper = new DBHelper(this);
        initGameList();
 
     }
@@ -44,14 +44,12 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
     }
 
     private void initGameList(){
+/*
         String path = Utils.getDefaultFilePath();
-
         File dir = new File(path);
         File[] files = dir.listFiles(new FileFilter() {
             @Override
             public boolean accept(File file) {
-               // file.delete();
-               // return false;
                 return file.getName().endsWith(".pipe");
             }
         });
@@ -59,15 +57,20 @@ public class LoadGameActivity extends Activity implements AdapterView.OnItemClic
         List<GameData> gamesList = new ArrayList<>(files.length);
         for(File f : files){
             GameData gameData = (GameData)  Utils.readObject(Utils.getDefaultFilePath() + File.separator + f.getName());
-            gamesList.add(gameData);
+            //gamesList.add(gameData);
+            gamesList.add(new GameData(gameData.toJson()));
+
+            Log.d(TAG, "initGameList: " + gameData.toJson());
         }
+*/
+
+        List<GameData> gamesList = dbHelper.getAllGameData();
 
         GameDataAdapter adapter = new GameDataAdapter(LoadGameActivity.this, gamesList);
 
         listView.setAdapter(adapter);
 
-        if(files.length==0){
-//            Utils.buildDialog(this, this,"Notification","No saved games found.","OK");
+        if(gamesList.size()==0){
             Utils.showDialog(this,this,getResources().getString(R.string.game_message_no_saved_game_found),
                     getResources().getString(R.string.game_text_button_start_new_game),
                     getResources().getString(R.string.game_text_dialog_button_back));

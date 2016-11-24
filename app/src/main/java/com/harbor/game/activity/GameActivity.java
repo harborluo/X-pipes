@@ -17,12 +17,12 @@ import com.harbor.game.GameData;
 import com.harbor.game.R;
 import com.harbor.game.ScoreCalculator;
 import com.harbor.game.handler.AnimationHandler;
+import com.harbor.game.util.DBHelper;
 import com.harbor.game.util.Utils;
 import com.harbor.game.widget.DialogButtonListener;
 import com.harbor.game.widget.DialogMonitor;
 import com.harbor.game.widget.ImageAdapter;
 
-import java.io.File;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -89,11 +89,15 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
     CountDownTimer timer = null;
 
+    DBHelper dbHelper = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_game);
+
+        dbHelper = new DBHelper(this);
 
         wrenchTextView = (TextView) findViewById(R.id.wrench_count);
         game_required_pipe_count = (TextView) findViewById(R.id.game_required_pipe_count);
@@ -424,7 +428,8 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
                     imgView.setImageResource(task[1]);
                 }
 
-                if(animationOn == true && globalAnimationOn == true){
+               // if(animationOn == true && globalAnimationOn == true){
+                if( globalAnimationOn == true){
                 //if(isGameSoundOn()){
                     int soundId = task[2]==50?soundResources.get(4):soundResources.get(3);
                     soundPool.play(soundId, 0.7f, 0.7f, 0, 0, 1);
@@ -440,7 +445,8 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
                 gameData.setCurrentPipeIndex(currentPipeIndex);
                 gameData.setTotal(total);
 
-                animationHandler.postDelayed(this, animationOn && globalAnimationOn ? 800 : 0);  //for interval...
+                animationHandler.postDelayed(this, globalAnimationOn ? 800 : 0);  //for interval...
+               // animationHandler.postDelayed(this, animationOn && globalAnimationOn ? 800 : 0);  //for interval...
 //                animationHandler.postDelayed(this, GameActivity.this.isGameSoundOn() ? 800 : 0);  //for interval...
             }
         };
@@ -463,9 +469,11 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
     private void saveGame(){
 
-        String path = Utils.getDefaultFilePath();
-        gameData.setNextPipe((int) this.nextPipe.getTag());
-        Utils.saveObject(this.gameData,   path + File.separator + gameData.getName());
+//        String path = Utils.getDefaultFilePath();
+//        gameData.setNextPipe((int) this.nextPipe.getTag());
+//        Utils.saveObject(this.gameData,   path + File.separator + gameData.getName());
+
+        dbHelper.saveGame(gameData);
 
     }
 
@@ -481,11 +489,11 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
             return;
         }else if(buttonText.equals(getResources().getString(R.string.game_text_dialog_button_play_again))){
 
-            String path = Utils.getDefaultFilePath();
-            File file = new File(path + File.separator + gameData.getName());
-            if(file.exists()){
-                file.delete();
-            }
+//            String path = Utils.getDefaultFilePath();
+//            File file = new File(path + File.separator + gameData.getName());
+//            if(file.exists()){
+//                file.delete();
+//            }
 
             //Start a new game
             gameData = gameData.cloneLevel();
@@ -522,7 +530,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
         stopMusic();
         timer.cancel();
 //        timer = initTimer(true);
-        saveGame();
+//        saveGame();
         animationHandler.sendEmptyMessage(0);
 
     }

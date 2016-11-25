@@ -17,8 +17,9 @@
     <string name="game_text_label_back_prompt">Press BACK again to quick the game</string>
 
     <string name="game_text_button_setting">Setting</string>
-    <string name="game_text_button_start">Start</string>
-    <string name="game_text_button_load">Load</string>
+    <string name="game_text_button_start">Challenge mode</string>
+    <string name="game_text_button_start_level">Level mode</string>
+    <string name="game_text_button_load">Load game</string>
     <string name="game_text_button_help">Help</string>
     <string name="game_text_button_quit">Quit</string>
 
@@ -37,4 +38,5 @@
     <!-- load game activity  -->
     <string name="game_message_no_saved_game_found">No saved games found.</string>
     <string name="game_text_button_start_new_game">New game</string>
+
 </resources>

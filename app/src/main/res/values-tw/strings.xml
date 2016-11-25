@@ -16,8 +16,9 @@
     <string name="game_text_label_back_prompt">再按一次退出遊戲</string>
 
     <string name="game_text_button_setting">設置</string>
-    <string name="game_text_button_start">開始</string>
-    <string name="game_text_button_load">存檔</string>
+    <string name="game_text_button_start">挑戰模式</string>
+    <string name="game_text_button_start_level">關卡模式</string>
+    <string name="game_text_button_load">讀取存檔</string>
     <string name="game_text_button_help">幫助</string>
     <string name="game_text_button_quit">離開</string>
 
@@ -35,5 +36,5 @@
 
     <!-- load game activity  -->
     <string name="game_message_no_saved_game_found">找不到遊戲存檔。</string>
-    <string name="game_text_button_start_new_game">新遊戲</string>
+    <string name="game_text_button_start_new_game">開始新遊戲</string>
 </resources>

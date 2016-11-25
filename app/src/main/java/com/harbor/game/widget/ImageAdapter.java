@@ -54,31 +54,28 @@ public class ImageAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if(convertView==null){
-            ImageView imageView = new ImageView(mContext);
-
-            imageView.setBackgroundResource(R.mipmap.blank);
-
-            if(itemCache[position]!=R.mipmap.blank){
-              imageView.setImageResource(itemCache[position]);
-            }
-
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            imageView.setLayoutParams(new GridView.LayoutParams(this.imageWidth, this.imageWidth));
-            imageView.setId(position);
-
-            if(listener!=null){
-                imageView.setOnClickListener(listener);
-            }
-
-            imageView.setTag(itemCache[position]);
-
-            return imageView;
-
-        }
+        if(convertView!=null) {
             return  convertView;
+        }
 
+        ImageView imageView = new ImageView(mContext);
 
+        imageView.setBackgroundResource(R.mipmap.blank);
 
+         if(itemCache[position]!=R.mipmap.blank){
+            imageView.setImageResource(itemCache[position]);
+         }
+
+         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+         imageView.setLayoutParams(new GridView.LayoutParams(this.imageWidth, this.imageWidth));
+         imageView.setId(position);
+
+         if(listener!=null){
+            imageView.setOnClickListener(listener);
+         }
+
+         imageView.setTag(itemCache[position]);
+
+         return imageView;
     }
 }

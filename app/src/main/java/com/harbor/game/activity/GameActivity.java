@@ -130,8 +130,16 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
         this.gameData = (GameData) getIntent().getSerializableExtra("gameData");
        // this.gameData = getIntent().getParcelableExtra("gameDate");
 
-
         if(gameData==null){
+
+            int defaultLevel = getIntent().getIntExtra("gameLevel",0);
+
+            String mode="Challenge";
+
+            if(defaultLevel==0){
+                mode="Level";
+                defaultLevel = 1;
+            }
 
             int numOfRows , numOfColumns = 3;
             pipeWidth = screenWidth / numOfColumns;
@@ -143,7 +151,8 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
             numOfRows = screenHeight/pipeWidth -1;
 
-            gameData = new GameData(1, numOfRows, numOfColumns);
+            gameData = new GameData(defaultLevel, numOfRows, numOfColumns, mode);
+
         }else{
 
            //gameData.resetSecondRemain(30);

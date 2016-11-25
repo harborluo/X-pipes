@@ -26,7 +26,7 @@ import java.util.Locale;
 
 public class MainActivity extends AbstractActivity implements View.OnClickListener{
 
-    Button btn_quit_game,btn_new_game, btn_help, btn_load, btn_setting = null;
+    Button btn_quit_game,btn_new_game, btn_game_with_level, btn_help, btn_load, btn_setting = null;
 
     private static String TAG = "MainActivity";
 
@@ -65,6 +65,9 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
 
         btn_new_game = (Button) findViewById(R.id.btn_new_game);
         btn_new_game.setOnClickListener(this);
+
+        btn_game_with_level = (Button) findViewById(R.id.btn_new_game_level);
+        btn_game_with_level.setOnClickListener(this);
 
         btn_help = (Button) findViewById(R.id.btn_help);
         btn_help.setOnClickListener(this);
@@ -106,11 +109,18 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
                 startActivity(intent);
             }
             break;
+
             case R.id.btn_load_game :{
                 Intent intent = new Intent(MainActivity.this,LoadGameActivity.class);
                 startActivity(intent);
+            }break;
+
+            case R.id.btn_new_game_level :{
+                Intent intent = new Intent(MainActivity.this,  GameLevelActivity.class);
+                startActivity(intent);
             }
             break;
+
             case R.id.btn_setting:{
 //                Intent intent = new Intent(MainActivity.this,SettingActivity.class);
 //                startActivity(intent);
@@ -279,6 +289,7 @@ public class MainActivity extends AbstractActivity implements View.OnClickListen
         btn_setting.setText(R.string.game_text_button_setting);
         btn_help.setText(R.string.game_text_button_help);
         btn_new_game.setText(R.string.game_text_button_start);
+        btn_game_with_level.setText(R.string.game_text_button_start_level);
         btn_load.setText(R.string.game_text_button_load);
         btn_quit_game.setText(R.string.game_text_button_quit);
 //        this.recreate();

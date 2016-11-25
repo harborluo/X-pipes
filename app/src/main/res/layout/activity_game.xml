@@ -143,7 +143,6 @@
 
     </LinearLayout>
 
-
     <GridView
         android:id="@+id/pipe_container"
         android:layout_width="match_parent"

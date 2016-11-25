@@ -21,7 +21,6 @@
             android:configChanges="locale">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,7 +30,6 @@
             android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="game" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -59,6 +57,10 @@
             android:name=".activity.SettingActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/FullscreenTheme">
+        </activity>
+
+        <activity android:name=".activity.GameLevelActivity"
+                  android:theme="@style/FullscreenTheme">
         </activity>
 
     </application>

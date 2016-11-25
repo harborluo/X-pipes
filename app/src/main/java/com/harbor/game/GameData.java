@@ -50,6 +50,12 @@ public class GameData implements Serializable {
 
     private boolean passed = false;
 
+    private String mode;
+
+    public String getMode() {
+        return mode;
+    }
+
     public int getCurrentPipeIndex() {
         return currentPipeIndex;
     }
@@ -253,7 +259,7 @@ public class GameData implements Serializable {
         this.wrenchCount--;
     }
 
-    public GameData(int level, int numOfRows, int numOfColumns) {
+    public GameData(int level, int numOfRows, int numOfColumns, String mode) {
         this.numOfRows = numOfRows;
         this.numOfColumns = numOfColumns;
         this.level = level;
@@ -261,6 +267,8 @@ public class GameData implements Serializable {
         this.secondRemain = 60 + (level - 1) * 15;
         this.wrenchCount = 3 + level - 1;
         this.missionCount = 15 + (level -1 ) * 5;
+
+        this.mode = mode;
 
         data = new int[numOfRows * numOfColumns];
 
@@ -281,7 +289,7 @@ public class GameData implements Serializable {
     }
 
     public GameData nextLevel() {
-        GameData next = new GameData(this.level+1,this.numOfRows,this.getNumOfColumns());
+        GameData next = new GameData(this.level+1,this.numOfRows,this.getNumOfColumns(), this.mode);
         next.id = this.id;
         next.addTotalScore(this.totalScore);
         next.setName(this.getName());
@@ -296,7 +304,7 @@ public class GameData implements Serializable {
      * @return
      */
     public GameData cloneLevel() {
-        GameData next = new GameData(this.level,this.numOfRows,this.getNumOfColumns());
+        GameData next = new GameData(this.level,this.numOfRows,this.getNumOfColumns(), this.mode);
         //next.addTotalScore(this.totalScore);
         //next.totalScore -= next.total;
         next.id = this.id;
@@ -336,6 +344,7 @@ public class GameData implements Serializable {
             jsonObj.put("headImage",headImage);
             jsonObj.put("missionCount",missionCount);
             jsonObj.put("passed",passed);
+            jsonObj.put("mode",mode);
 
             JSONArray dataArray = new JSONArray();
             for (int pipe : data ) {
@@ -385,6 +394,7 @@ public class GameData implements Serializable {
             headImage = jsonObject.getInt("headImage");
             missionCount = jsonObject.getInt("missionCount");
             passed = jsonObject.getBoolean("passed");
+            mode = jsonObject.getString("mode");
 
             JSONArray dataArray = jsonObject.getJSONArray("data");
             int size = dataArray.length();
@@ -410,6 +420,7 @@ public class GameData implements Serializable {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
     }
 
 }

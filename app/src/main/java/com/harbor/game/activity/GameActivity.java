@@ -87,7 +87,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
     private TextView wrenchTextView = null;
 
-    CountDownTimer timer = null;
+    CountDownTimer gameTimer = null;
 
     DBHelper dbHelper = null;
 
@@ -193,12 +193,12 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
         GameActivity.this.gameScoreTextView.setText("0");
 
-        if(timer!=null){
+        if(gameTimer!=null){
 
-        timer.cancel();
+            gameTimer.cancel();
         }
-        
-        timer = initTimer(animationOn);
+
+        gameTimer = initTimer(animationOn);
 
         playMusic(gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
     }
@@ -207,7 +207,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
         return new CountDownTimer(gameData.getSecondRemain() * 1000, 1000) {
             @Override
             public void onFinish() {
-                Log.i(TAG, "Game time onFinish: ");
+                Log.i(TAG, "Game time run out: ");
                 gameData.decreaseSecondRemain();
                 timeRemainTextView.setText(gameData.getSecondRemain() + "");
                 //playMusic(-1);
@@ -282,9 +282,25 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
             if(calculator.isNextPipeBlocked() && gameData.getWrenchCount()==0 && gameData.getSecondRemain() > 0){
                 //TODO prompt message about game over and set seconds remain to zero immediately
-                gameData.dropSecondRemain();
+
                 //start game calculation immediately
-                timer.onFinish();
+                final int seconds = gameData.getSecondRemain();
+
+                CountDownTimer zeroTimer =  new CountDownTimer(seconds*50, 50) {
+                    @Override
+                    public void onTick(long l) {
+                        Log.i(TAG, "onTick: remain: "+l);
+                        timeRemainTextView.setText(gameData.getSecondRemain() + "");
+                        gameData.decreaseSecondRemain();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        gameTimer.onFinish();
+                    }
+                };
+                //gameData.dropSecondRemain();
+                zeroTimer.start();
             }
         }
 
@@ -461,7 +477,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
     @Override
     public void onBackPressed() {
         stopMusic();
-        timer.cancel();
+        gameTimer.cancel();
 
         super.onBackPressed();
 
@@ -514,12 +530,12 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
             playMusic(gameData.getSecondRemain()>10? R.raw.smooth_count_down:R.raw.hurry_count_down);
         }
 
-        if(timer!=null){
-            timer.cancel();
+        if(gameTimer!=null){
+            gameTimer.cancel();
         }
 
-        timer = initTimer(true);
-        timer.start();
+        gameTimer = initTimer(true);
+        gameTimer.start();
         GAME_PAUSED=false;
     }
 
@@ -533,7 +549,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
         Log.i(TAG, "onPause event fired, save game automatically." );
 
         stopMusic();
-        timer.cancel();
+        gameTimer.cancel();
 //        timer = initTimer(true);
 //        saveGame();
         animationHandler.sendEmptyMessage(0);
@@ -559,7 +575,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
 //        timer.cancel();
 //        timer = initTimer(true);
-        timer.start();
+        gameTimer.start();
     }
 
     private void playSound(final int soundKey){

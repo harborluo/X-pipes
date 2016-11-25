@@ -12,9 +12,55 @@
         android:layout_height="40dp"
         android:gravity="center_vertical"
         android:background="@mipmap/panel_bg"
-        android:baselineAligned="true"
-        >
+        android:baselineAligned="true">
 
+<!-- level info -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/game_text_label_Level"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:paddingLeft="5sp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/game_level"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/game_font_color"
+            android:textSize="16sp"
+            android:background="@android:color/transparent"
+            android:paddingLeft="5sp"
+            android:layout_weight="1"/>
+
+        <!-- mission info -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/game_text_label_required"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:paddingLeft="5sp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/game_required_pipe_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/game_font_color"
+            android:textSize="16sp"
+            android:background="@android:color/transparent"
+            android:paddingLeft="5sp"
+            android:layout_weight="1"/>
+
+        <!-- score info -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -38,48 +84,7 @@
             android:paddingLeft="5sp"
             android:layout_weight="1"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/game_text_label_required"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:paddingLeft="5sp"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/game_required_pipe_count"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="0"
-            android:textColor="@color/game_font_color"
-            android:textSize="16sp"
-            android:background="@android:color/transparent"
-            android:paddingLeft="5sp"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/game_text_label_next"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
-            android:paddingLeft="5sp"
-            android:layout_weight="1"/>
-
-        <ImageView
-            android:id="@+id/next_pipe_image"
-            android:src="@mipmap/blank"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingLeft="5sp"
-            android:background="@mipmap/blank"
-            android:layout_weight="1"/>
-
+       <!-- time info -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -102,6 +107,18 @@
             android:paddingLeft="5sp"
             android:layout_weight="1"/>
 
+        <!-- next pipe info -->
+        <ImageView
+            android:id="@+id/next_pipe_image"
+            android:src="@mipmap/blank"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="5sp"
+            android:background="@mipmap/blank"
+            android:layout_weight="1"/>
+
+        <!-- wrench info -->
         <ImageView
             android:id="@+id/wrench_image"
             android:src="@mipmap/wrench"

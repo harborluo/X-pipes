@@ -85,11 +85,13 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
     private GameData gameData = null;
 
-    TextView wrenchTextView = null;
+    private TextView wrenchTextView = null;
 
     CountDownTimer timer = null;
 
     DBHelper dbHelper = null;
+
+    private TextView gameLevelTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +108,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
         nextPipe = (ImageView) findViewById(R.id.next_pipe_image);
 
         gameScoreTextView = (TextView) findViewById(R.id.game_score) ;
+        gameLevelTextView = (TextView) findViewById(R.id.game_level);
 
         AudioAttributes attributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_MEDIA)
@@ -161,6 +164,8 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
         DisplayMetrics displayMetrics = this.getApplicationContext().getResources().getDisplayMetrics();
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
+
+        gameLevelTextView.setText(""+gameData.getLevel());
 
         gridView.setNumColumns(gameData.getNumOfColumns());
         gridView.setAdapter(new ImageAdapter(this, this, pipeWidth, gameData.getData()));

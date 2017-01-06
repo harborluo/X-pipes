@@ -90,6 +90,7 @@ public class HelpActivity extends Activity implements View.OnClickListener {
         });
 
         dbHelper.removeGame();
+        dbHelper.resetAllGameWithLevels();
 
     }
 

@@ -115,4 +115,13 @@ public class DBHelper  extends SQLiteOpenHelper {
 
         return list;
     }
+
+    public void resetAllGameWithLevels(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        db.execSQL("update game_level set is_locked = ? where level <> ?",new Object[]{ "Y", 1});
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
 }

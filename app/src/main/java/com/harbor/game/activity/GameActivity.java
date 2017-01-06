@@ -385,8 +385,8 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
     private boolean reduceWrenchCount() {
 
         if (gameData.getWrenchCount() == 0) {
-//            return true; //for test only
-            return false;
+            return true; //for test only
+//            return false;
         }
 
         gameData.decreaseWrenchCount();

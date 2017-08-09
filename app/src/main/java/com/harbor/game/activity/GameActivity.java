@@ -1,5 +1,9 @@
 package com.harbor.game.activity;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -181,7 +185,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
        // game_required_pipe_count.setText(gameData.getMissionCount()+"");
         refreshMissionCount();
-        generateNextPipe();
+        generateNextPipe(null);
 
         LinearLayout panelButtonBar = (LinearLayout) findViewById(R.id.buttonBar);
         int panelHeight = screenHeight - pipeWidth * gameData.getNumOfRows();
@@ -246,7 +250,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
 
     }
 
-    private void generateNextPipe() {
+    public void generateNextPipe(View v) {
 
         int nextImage;
         if(gameData.getNextPipe()!=R.mipmap.blank){
@@ -359,7 +363,7 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
             int nextImage = (int) nextPipe.getTag();
             imageView.setImageResource(nextImage);
             imageView.setTag(nextImage);
-            generateNextPipe();
+            generateNextPipe(null);
 
             gameData.setDataImage(view.getId(), nextImage);
 
@@ -577,6 +581,25 @@ public class GameActivity extends AbstractActivity implements View.OnClickListen
                     getResources().getString(R.string.game_message_level_pause),
                     getResources().getString(R.string.game_text_dialog_button_continue),
                     getResources().getString(R.string.game_text_dialog_button_back));
+
+            ////////////////////////////////////////////
+            NotificationManager nm = (NotificationManager) this.getSystemService(NOTIFICATION_SERVICE);
+            Notification.Builder builder = new Notification.Builder(this);
+            Intent notificationIntent = new Intent(this, GameActivity.class);
+            PendingIntent contentIntent = PendingIntent.getActivity(this,0,notificationIntent,0);
+
+            //set
+            builder.setContentIntent(contentIntent);
+            builder.setSmallIcon(R.mipmap.ic_launcher);
+            builder.setContentText(getResources().getString(R.string.game_message_level_pause));
+//            builder.setContentTitle(getResources().getString(R.string.game));
+            builder.setAutoCancel(true);
+            builder.setDefaults(Notification.DEFAULT_ALL);
+
+            Notification notification = builder.build();
+            nm.notify((int)System.currentTimeMillis(),notification);
+
+
             return;
         }
 
